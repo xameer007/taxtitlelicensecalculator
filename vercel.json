@@ -1,0 +1,43 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "public/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/",
+      "dest": "/public/index.html"
+    },
+    {
+      "src": "/texas-vehicle-tax-title-and-license-calculator",
+      "dest": "/public/texas.html"
+    },
+    {
+      "src": "/california-tax-title-and-license-calculator",
+      "dest": "/public/california.html"
+    },
+    {
+      "src": "/florida-tax-title-and-license-calculator",
+      "dest": "/public/florida.html"
+    },
+    {
+      "src": "/new-york-tax-title-and-license-calculator",
+      "dest": "/public/new-york.html"
+    },
+    {
+      "src": "/pennsylvania-tax-title-and-license-calculator",
+      "dest": "/public/pennsylvania.html"
+    },
+    {
+      "src": "/illinois-tax-title-and-license-calculator",
+      "dest": "/public/illinois.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/$1"
+    }
+  ]
+}

@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Texas tax title license calculator 2025. Calculate TX vehicle sales tax 6.25%, DMV fees, registration costs with SPV, trade-in credits, and EV fees. Complete Texas TTL guide with accurate calculations.">
+    <title>Texas Tax Title License Calculator 2025 - TX TTL Fees & DMV Costs</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background-color: #f8f9fa; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Header */
+        header { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 1rem 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.3rem; font-weight: bold; }
+        .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+        .nav-links a { color: white; text-decoration: none; transition: opacity 0.3s; }
+        .nav-links a:hover { opacity: 0.8; }
+        
+        /* Hero */
+        .hero { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 3rem 0; text-align: center; }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 1rem; line-height: 1.2; }
+        .hero p { font-size: 1.1rem; opacity: 0.95; margin-bottom: 0.5rem; }
+        .breadcrumb { margin-bottom: 1rem; opacity: 0.9; font-size: 0.95rem; }
+        .breadcrumb a { color: #fbbf24; text-decoration: none; }
+        
+        /* Calculator Section */
+        .calculator-section { background: white; padding: 3rem 0; }
+        .calc-layout { display: grid; grid-template-columns: 1.2fr 1fr; gap: 2rem; max-width: 1300px; margin: 0 auto; }
+        
+        .calculator-main { background: #f8f9fa; padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .calculator-main h2 { color: #1e3a8a; margin-bottom: 2rem; text-align: center; font-size: 1.8rem; }
+        
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group.full-width { grid-column: 1 / -1; }
+        .form-group label { display: block; margin-bottom: 0.6rem; font-weight: 600; color: #1e3a8a; font-size: 0.95rem; }
+        .form-group input, .form-group select { width: 100%; padding: 0.85rem; border: 2px solid #e5e7eb; border-radius: 6px; font-size: 1rem; transition: border-color 0.3s; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+        
+        .help-text { font-size: 0.85rem; color: #6b7280; margin-top: 0.4rem; display: flex; align-items: center; gap: 0.3rem; }
+        .help-text a { color: #3b82f6; text-decoration: none; }
+        .help-text a:hover { text-decoration: underline; }
+        .help-icon { display: inline-block; width: 16px; height: 16px; background: #3b82f6; color: white; border-radius: 50%; text-align: center; line-height: 16px; font-size: 0.7rem; cursor: help; }
+        
+        .calculate-btn { width: 100%; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; padding: 1.1rem; border: none; border-radius: 8px; font-size: 1.15rem; font-weight: bold; cursor: pointer; transition: transform 0.2s, box-shadow 0.3s; margin-top: 1rem; }
+        .calculate-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4); }
+        .calculate-btn:active { transform: translateY(0); }
+        
+        /* Results Panel */
+        .results-panel { background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); position: sticky; top: 2rem; max-height: 90vh; overflow-y: auto; }
+        .results-panel h3 { color: #1e3a8a; margin-bottom: 1.5rem; font-size: 1.5rem; text-align: center; }
+        
+        .result-section { margin-bottom: 2rem; }
+        .result-section-title { font-size: 1.1rem; font-weight: 600; color: #1e3a8a; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e5e7eb; }
+        
+        .result-item { display: flex; justify-content: space-between; padding: 0.7rem 0; border-bottom: 1px solid #f3f4f6; }
+        .result-item:last-child { border-bottom: none; }
+        .result-label { color: #6b7280; font-size: 0.95rem; }
+        .result-value { font-weight: 600; color: #1f2937; }
+        
+        .result-total { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 1.3rem; border-radius: 8px; margin-top: 1.5rem; }
+        .result-total .result-item { border-bottom: none; padding: 0.4rem 0; }
+        .result-total .result-label, .result-total .result-value { color: white; }
+        .result-total .total-amount { font-size: 2rem; font-weight: bold; }
+        
+        .info-alert { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 1rem; margin: 1.5rem 0; border-radius: 4px; font-size: 0.9rem; color: #1e40af; }
+        .warning-alert { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 1rem; margin: 1.5rem 0; border-radius: 4px; font-size: 0.9rem; color: #92400e; }
+        
+        /* Content Section */
+        .content-section { padding: 4rem 0; background: white; }
+        .content-wrapper { max-width: 1100px; margin: 0 auto; }
+        .content-wrapper h2 { color: #1e3a8a; margin-bottom: 1.5rem; font-size: 2rem; margin-top: 3rem; }
+        .content-wrapper h2:first-child { margin-top: 0; }
+        .content-wrapper h3 { color: #1e3a8a; margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.5rem; }
+        .content-wrapper p { margin-bottom: 1.2rem; color: #555; line-height: 1.8; }
+        .content-wrapper ul { margin-left: 2rem; margin-bottom: 1.5rem; }
+        .content-wrapper li { margin-bottom: 0.8rem; color: #555; line-height: 1.7; }
+        .content-wrapper strong { color: #1e3a8a; }
+        
+        .info-box { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 1.5rem; margin: 2rem 0; border-radius: 5px; }
+        .info-box h3 { color: #1e3a8a; margin-bottom: 1rem; margin-top: 0; }
+        .info-box ul { margin-top: 1rem; }
+        
+        .external-link { color: #3b82f6; text-decoration: none; font-weight: 600; }
+        .external-link:hover { text-decoration: underline; }
+        
+        /* Table Styles */
+        .fee-table { width: 100%; border-collapse: collapse; margin: 2rem 0; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .fee-table th { background: #1e3a8a; color: white; padding: 1rem; text-align: left; font-weight: 600; }
+        .fee-table td { padding: 0.9rem 1rem; border-bottom: 1px solid #e5e7eb; }
+        .fee-table tr:hover { background: #f8f9fa; }
+        
+        /* Related States */
+        .related-states { padding: 3rem 0; background: #f8f9fa; }
+        .states-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; margin-top: 2rem; }
+        .state-link-box { background: white; padding: 1.2rem; border-radius: 8px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: transform 0.3s, box-shadow 0.3s; border-left: 4px solid #3b82f6; }
+        .state-link-box:hover { transform: translateY(-3px); box-shadow: 0 4px 15px rgba(0,0,0,0.12); }
+        .state-link-box a { color: #1e3a8a; text-decoration: none; font-weight: 600; font-size: 1.05rem; }
+        
+        /* Footer */
+        footer { background: #1e293b; color: white; padding: 2.5rem 0; text-align: center; }
+        footer a { color: #fbbf24; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+        
+        @media (max-width: 1024px) {
+            .calc-layout { grid-template-columns: 1fr; }
+            .results-panel { position: static; margin-top: 2rem; max-height: none; }
+        }
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2rem; }
+            .content-wrapper h2 { font-size: 1.7rem; }
+            .content-wrapper h3 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">🚗 Tax Title License Calculator</div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/#calculators">All States</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="/">Home</a> / <a href="/#calculators">State Calculators</a> / Texas
+            </div>
+            <h1>Texas Tax Title License Calculator 2025</h1>
+            <p>Calculate TX vehicle sales tax 6.25%, DMV fees, and registration costs</p>
+            <p>Includes SPV calculations, trade-in credits, EV fees, and county-specific rates</p>
+        </div>
+    </section>
+
+    <section class="calculator-section">
+        <div class="container">
+            <div class="calc-layout">
+                <!-- Calculator Form -->
+                <div class="calculator-main">
+                    <h2>Texas TTL Fee Calculator</h2>
+                    
+                    <form id="ttlCalculator">
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label for="purchaseType">Purchase Type</label>
+                                <select id="purchaseType" required>
+                                    <option value="dealer">Dealer Purchase (New or Used)</option>
+                                    <option value="private">Private Party Sale</option>
+                                    <option value="out-of-state">Out-of-State Purchase</option>
+                                    <option value="new-resident">New TX Resident</option>
+                                    <option value="gift">Gift Transfer</option>
+                                </select>
+                                <div class="help-text">
+                                    <span class="help-icon">?</span>
+                                    Dealer purchases use actual price; private sales may use Standard Presumptive Value (SPV)
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="vehiclePrice">Vehicle Purchase Price ($)</label>
+                                <input type="number" id="vehiclePrice" placeholder="30000" required>
+                            </div>
+                            
+                            <div class="form-group" id="spvGroup" style="display: none;">
+                                <label for="spvValue">Standard Presumptive Value (SPV) ($)</label>
+                                <input type="number" id="spvValue" placeholder="Enter SPV if known">
+                                <div class="help-text">
+                                    <span class="help-icon">?</span>
+                                    <a href="https://www.txdmv.gov/standard-presumptive-calculator" target="_blank" rel="nofollow">Check SPV</a>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="county">County</label>
+                                <select id="county" required>
+                                    <option value="harris">Harris County (Houston)</option>
+                                    <option value="dallas">Dallas County</option>
+                                    <option value="tarrant">Tarrant County (Fort Worth)</option>
+                                    <option value="bexar">Bexar County (San Antonio)</option>
+                                    <option value="travis">Travis County (Austin)</option>
+                                    <option value="collin">Collin County</option>
+                                    <option value="denton">Denton County</option>
+                                    <option value="elpaso">El Paso County</option>
+                                    <option value="fort-bend">Fort Bend County</option>
+                                    <option value="hidalgo">Hidalgo County</option>
+                                    <option value="williamson">Williamson County</option>
+                                    <option value="montgomery">Montgomery County</option>
+                                    <option value="other-emissions">Other Emissions County</option>
+                                    <option value="other">Other County (Non-Emissions)</option>
+                                </select>
+                                <div class="help-text">
+                                    <span class="help-icon">?</span>
+                                    Affects emissions testing requirements and local fees
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="tradeIn">Trade-In Value ($) - Optional</label>
+                                <input type="number" id="tradeIn" placeholder="0">
+                                <div class="help-text">Trade-ins reduce your taxable amount</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="vehicleType">Vehicle Type</label>
+                                <select id="vehicleType" required>
+                                    <option value="passenger">Passenger Car (≤6,000 lbs)</option>
+                                    <option value="light-truck">Light Truck (6,001-10,000 lbs)</option>
+                                    <option value="electric">Electric Vehicle (EV)</option>
+                                    <option value="hybrid">Hybrid Vehicle</option>
+                                    <option value="motorcycle">Motorcycle/Moped</option>
+                                    <option value="heavy">Heavy Vehicle (>10,000 lbs)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="vehicleAge">Vehicle Age</label>
+                                <select id="vehicleAge" required>
+                                    <option value="new">Brand New (0-2 years)</option>
+                                    <option value="used">Used (2-24 years)</option>
+                                    <option value="old">Older (24+ years)</option>
+                                </select>
+                                <div class="help-text">Affects emissions testing requirements</div>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="registrationType">Registration Type</label>
+                                <select id="registrationType" required>
+                                    <option value="new-2year">New Registration (2-Year Initial)</option>
+                                    <option value="new-1year">New Registration (1-Year)</option>
+                                    <option value="renewal">Annual Renewal</option>
+                                    <option value="transfer">Title Transfer</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="calculate-btn">Calculate Texas TTL Fees</button>
+                    </form>
+
+                    <div class="info-alert">
+                        <strong>2025 Update:</strong> Safety inspections eliminated for non-commercial vehicles. $7.50 Inspection Program Replacement Fee now applies instead.
+                    </div>
+                </div>
+
+                <!-- Results Panel -->
+                <div class="results-panel">
+                    <h3>Your Texas TTL Breakdown</h3>
+                    
+                    <div id="resultsContent" style="display: none;">
+                        <div class="result-section">
+                            <div class="result-section-title">Sales Tax Calculation</div>
+                            <div class="result-item">
+                                <span class="result-label">Vehicle Price</span>
+                                <span class="result-value" id="displayPrice">$0.00</span>
+                            </div>
+                            <div class="result-item" id="spvRow" style="display: none;">
+                                <span class="result-label">Standard Presumptive Value</span>
+                                <span class="result-value" id="displaySPV">$0.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Trade-In Credit</span>
+                                <span class="result-value" id="displayTradeIn">-$0.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Taxable Amount</span>
+                                <span class="result-value" id="displayTaxable">$0.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Sales Tax (6.25%)</span>
+                                <span class="result-value" id="displaySalesTax">$0.00</span>
+                            </div>
+                        </div>
+
+                        <div class="result-section">
+                            <div class="result-section-title">Title & Registration Fees</div>
+                            <div class="result-item">
+                                <span class="result-label">Title Transfer Fee</span>
+                                <span class="result-value" id="displayTitle">$0.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Base Registration Fee</span>
+                                <span class="result-value" id="displayRegistration">$0.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Local County Fee</span>
+                                <span class="result-value" id="displayCountyFee">$0.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Processing & Handling</span>
+                                <span class="result-value">$4.75</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Insurance Verification</span>
+                                <span class="result-value">$1.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Inspection Replacement Fee</span>
+                                <span class="result-value" id="displayInspection">$0.00</span>
+                            </div>
+                            <div class="result-item" id="emissionsRow" style="display: none;">
+                                <span class="result-label">Emissions Fee</span>
+                                <span class="result-value" id="displayEmissions">$0.00</span>
+                            </div>
+                            <div class="result-item" id="evFeeRow" style="display: none;">
+                                <span class="result-label">Electric Vehicle Fee</span>
+                                <span class="result-value" id="displayEVFee">$0.00</span>
+                            </div>
+                        </div>
+
+                        <div class="result-total">
+                            <div class="result-item">
+                                <span class="result-label" style="font-size: 1.1rem;">TOTAL TTL FEES</span>
+                                <span class="result-value total-amount" id="displayTotal">$0.00</span>
+                            </div>
+                            <div class="result-item" style="font-size: 0.9rem; opacity: 0.9;">
+                                <span class="result-label">Total Out-the-Door Cost</span>
+                                <span class="result-value" id="displayOutTheDoor">$0.00</span>
+                            </div>
+                        </div>
+
+                        <div id="notesSection" class="info-alert" style="display: none;">
+                            <strong>Important Notes:</strong>
+                            <ul id="notesList" style="margin-top: 0.5rem; margin-left: 1.2rem;"></ul>
+                        </div>
+                    </div>
+
+                    <div id="placeholderContent">
+                        <p style="text-align: center; color: #9ca3af; padding: 2rem;">
+                            Enter your vehicle information and click Calculate to see your complete Texas TTL breakdown
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="container">
+            <div class="content-wrapper">
+                <h2>Complete Guide to Texas Tax Title License Fees 2025</h2>
+                
+                <p>When purchasing a vehicle in Texas, understanding tax title and license (TTL) fees is essential for accurate budgeting. Texas has a straightforward motor vehicle sales tax structure of 6.25% statewide, plus various DMV fees that can total $80-$150 for registration depending on your county and vehicle type. Our comprehensive Texas tax title license calculator helps you estimate exact costs before completing your vehicle purchase.</p>
+
+                <div class="info-box">
+                    <h3>📋 Official Texas DMV Resources</h3>
+                    <p>For the most current information on Texas vehicle registration and fees, visit the official <a href="https://www.txdmv.gov/" class="external-link" target="_blank" rel="nofollow">Texas Department of Motor Vehicles</a>. You can also access vehicle fee information at <a href="https://www.txdmv.gov/motorists/register-your-vehicle" class="external-link" target="_blank" rel="nofollow">TxDMV Vehicle Registration</a> and check Standard Presumptive Values at the <a href="https://www.txdmv.gov/standard-presumptive-calculator" class="external-link" target="_blank" rel="nofollow">SPV Calculator</a>.</p>
+                </div>
+
+                <h2>Texas Motor Vehicle Sales Tax - 6.25% Statewide</h2>
+                
+                <p>Texas charges a uniform 6.25% motor vehicle sales tax on all vehicle purchases statewide. Unlike many states, Texas does not have additional local sales taxes for vehicles, making tax calculations straightforward and consistent whether you're in Houston, Dallas, Austin, or any other Texas city. This motor vehicle tax applies to the vehicle's purchase price minus any trade-in value, as Texas provides a generous trade-in tax credit.</p>
+
+                <p>The Texas motor vehicle sales tax is regulated by the Texas Comptroller of Public Accounts and collected by county tax assessor-collector offices. When you purchase from a licensed dealer, the dealer collects the tax and remits it to the state. For private party sales, you pay the tax directly to the county tax office when registering the vehicle within 30 days of purchase.</p>
+
+                <h3>Standard Presumptive Value (SPV) for Private Sales</h3>
+
+                <p>Texas uses a unique Standard Presumptive Value (SPV) system for private party vehicle sales to prevent tax evasion through artificially low reported sale prices. The SPV is based on Black Book wholesale values for similar vehicles in the Texas region. For private sales, you must pay sales tax on whichever is higher: the actual purchase price or 80% of the SPV.</p>
+
+                <p>For example, if you purchase a used vehicle for $15,000 but the SPV is $20,000, you'll pay tax on $16,000 (80% of SPV). However, you can avoid SPV taxation by obtaining a certified appraisal from a licensed insurance adjuster or motor vehicle dealer within 20 days of purchase. The appraisal must be provided at the time of title transfer.</p>
+
+                <p>You can preview a vehicle's SPV before purchase using the official <a href="https://www.txdmv.gov/standard-presumptive-calculator" class="external-link" target="_blank" rel="nofollow">TxDMV SPV Calculator</a> by entering the VIN and odometer reading. This helps you budget accurately for your Texas tax title license costs.</p>
+
+                <h2>Texas Title Transfer Fees</h2>
+
+                <p>The Texas certificate of title fee varies by county based on whether you reside in an emissions-compliant county. Most emissions-testing counties charge $33 for title transfers, while non-emissions counties charge $28. The title fee is a one-time charge paid when transferring ownership of a vehicle.</p>
+
+                <table class="fee-table">
+                    <tr>
+                        <th>Title Service</th>
+                        <th>Emissions County</th>
+                        <th>Non-Emissions County</th>
+                    </tr>
+                    <tr>
+                        <td>Standard Title Transfer</td>
+                        <td>$33</td>
+                        <td>$28</td>
+                    </tr>
+                    <tr>
+                        <td>Duplicate Title (by mail)</td>
+                        <td colspan="2">$2</td>
+                    </tr>
+                    <tr>
+                        <td>Duplicate Title (at Regional Service Center)</td>
+                        <td colspan="2">$5.45</td>
+                    </tr>
+                </table>
+
+                <p>When transferring a title in Texas, you must complete Form 130-U (Application for Texas Title and/or Registration) and submit it to your county tax assessor-collector office along with proof of ownership, insurance, and payment of all applicable fees. Out-of-state title transfers require additional documentation including the out-of-state title and a VIN inspection ($6-$10).</p>
+
+                <h2>Texas Vehicle Registration Fees 2025-2026</h2>
+
+                <p>Texas registration fees are based on vehicle weight and type. The base registration fee for passenger vehicles is $50.75 annually, with additional fees that bring the total to approximately $70-$90 for most counties. Registration is valid for one year and must be renewed annually by the expiration date shown on your registration sticker.</p>
+
+                <table class="fee-table">
+                    <tr>
+                        <th>Vehicle Type</th>
+                        <th>Weight Class</th>
+                        <th>Annual Base Fee</th>
+                    </tr>
+                    <tr>
+                        <td>Passenger Car/Truck</td>
+                        <td>≤ 6,000 lbs</td>
+                        <td>$50.75</td>
+                    </tr>
+                    <tr>
+                        <td>Light Truck</td>
+                        <td>6,001 - 10,000 lbs</td>
+                        <td>$54.00</td>
+                    </tr>
+                    <tr>
+                        <td>Motorcycle/Moped</td>
+                        <td>N/A</td>
+                        <td>$30.00</td>
+                    </tr>
+                    <tr>
+                        <td>Trailer</td>
+                        <td>≤ 6,000 lbs</td>
+                        <td>$45.00</td>
+                    </tr>
+                    <tr>
+                        <td>Heavy Vehicle</td>
+                        <td>> 10,000 lbs</td>
+                        <td>$110.00+</td>
+                    </tr>
+                </table>
+
+                <h3>Additional Registration Fee Components</h3>
+
+                <p>Beyond the base registration fee, Texas collects several mandatory fees at registration:</p>
+
+                <ul>
+                    <li><strong>Insurance Verification Fee:</strong> $1.00 for the TexasSure database system</li>
+                    <li><strong>Processing and Handling Fee:</strong> $4.75 for administrative costs</li>
+                    <li><strong>Local County Fee:</strong> $10.00-$21.50 depending on county (most charge $11.50)</li>
+                    <li><strong>Inspection Program Replacement Fee:</strong> $7.50 annually or $16.75 for 2-year initial registration</li>
+                    <li><strong>Emissions Testing Fee:</strong> $11.25 admin fee (17 designated counties only)</li>
+                </ul>
+
+                <p>The total annual registration cost for a typical passenger vehicle in Texas ranges from $70-$95 depending on your county's local fees and whether you're in an emissions-testing county. This makes Texas registration fees moderate compared to high-cost states like California ($300+) or low-cost states like Montana ($30-$50).</p>
+
+                <h2>2025 Texas Inspection Changes - House Bill 3297</h2>
+
+                <p>Effective January 1, 2025, Texas eliminated annual safety inspections for non-commercial vehicles under House Bill 3297. Drivers no longer need to visit inspection stations for safety checks of lights, brakes, steering, mirrors, windows, wipers, seat belts, and airbags before renewing registration.</p>
+
+                <p>However, the $7.50 safety inspection fee was not eliminated—it was renamed the "Inspection Program Replacement Fee" and continues to be collected at registration renewal. For new vehicles receiving two-year initial registration, the fee is $16.75 to cover both years.</p>
+
+                <div class="info-box">
+                    <h3>⚠️ Emissions Testing Still Required in 17 Counties</h3>
+                    <p>While safety inspections are eliminated, emissions testing remains mandatory for gasoline-powered vehicles aged 2-24 years in these counties:</p>
+                    <ul>
+                        <li>Brazoria, Collin, Dallas, Denton, Ellis, El Paso, Fort Bend</li>
+                        <li>Galveston, Harris, Johnson, Kaufman, Montgomery</li>
+                        <li>Parker, Rockwall, Tarrant, Travis, Williamson</li>
+                    </ul>
+                    <p>Vehicles in these counties must pass emissions testing before registration and pay an additional $11.25 admin fee plus $7-$25 for the actual test at certified stations.</p>
+                </div>
+
+                <h2>Texas Electric Vehicle Registration Fees</h2>
+
+                <p>Texas implemented electric vehicle registration fees in September 2023 under Senate Bill 505 to offset lost gasoline tax revenue. Fully electric vehicles with a gross vehicle weight of 10,000 pounds or less are assessed significant additional fees:</p>
+
+                <ul>
+                    <li><strong>Annual EV Registration Fee:</strong> $200 paid each year at renewal</li>
+                    <li><strong>Initial 2-Year EV Fee:</strong> $400 for new EVs receiving two-year registration</li>
+                    <li><strong>Hybrid Vehicles:</strong> Not subject to the EV fee (only applies to fully electric vehicles)</li>
+                    <li><strong>Heavy EVs:</strong> Vehicles over 10,000 lbs are exempt from the EV fee</li>
+                </ul>
+
+                <p>These fees apply in addition to all standard registration fees and sales tax. Electric vehicles do not receive any exemption from the 6.25% motor vehicle sales tax. When calculating your Texas tax title license costs for an EV, budget for approximately $270-$290 annually in registration fees ($200 EV fee + $70-$90 standard fees) compared to $70-$90 for gasoline vehicles.</p>
+
+                <p>The EV fee is collected by the county tax assessor-collector at the time of registration or renewal and deposited into the State Highway Fund for road construction and maintenance. Disabled veteran license plates and some other exemptions may waive the EV fee.</p>
+
+                <h2>Texas Trade-In Tax Credit Savings</h2>
+
+                <p>One of the most valuable benefits in Texas vehicle taxation is the trade-in tax credit. When you trade in your old vehicle to a licensed dealer as part of your new vehicle purchase, you only pay sales tax on the difference between the new vehicle price and your trade-in value.</p>
+
+                <p>This trade-in credit can save hundreds or thousands of dollars on your Texas tax title and license costs. Here's a real example:</p>
+
+                <div class="info-box">
+                    <h3>💰 Trade-In Tax Savings Example</h3>
+                    <p><strong>Without Trade-In:</strong></p>
+                    <ul>
+                        <li>Vehicle Price: $40,000</li>
+                        <li>Sales Tax (6.25%): $2,500</li>
+                        <li>Registration Fees: $80</li>
+                        <li>Title Fee: $33</li>
+                        <li><strong>Total TTL: $2,613</strong></li>
+                    </ul>
+                    <p><strong>With $15,000 Trade-In:</strong></p>
+                    <ul>
+                        <li>Vehicle Price: $40,000</li>
+                        <li>Trade-In Value: -$15,000</li>
+                        <li>Taxable Amount: $25,000</li>
+                        <li>Sales Tax (6.25%): $1,562.50</li>
+                        <li>Registration Fees: $80</li>
+                        <li>Title Fee: $33</li>
+                        <li><strong>Total TTL: $1,675.50</strong></li>
+                        <li><strong>Tax Savings: $937.50</strong></li>
+                    </ul>
+                </div>
+
+                <p>The trade-in must occur within 30 days of your new vehicle purchase to qualify for the tax credit. Both vehicles must be "on-highway" vehicles (not ATVs or off-road vehicles). The dealer will automatically apply the trade-in credit when calculating your sales tax—just verify it's properly reflected on your purchase contract.</p>
+
+                <h2>Out-of-State Vehicle Purchases and Texas Use Tax</h2>
+
+                <p>If you purchase a vehicle outside Texas and bring it into the state, you must pay Texas motor vehicle use tax at the same 6.25% rate. Texas does not offer credit for sales tax paid in other states, so you'll pay the full Texas rate regardless of taxes paid elsewhere. However, if you paid higher taxes in the purchase state, you may be able to request a refund from that state depending on their laws.</p>
+
+                <p>When registering an out-of-state vehicle in Texas, you must complete the following within 30 days:</p>
+
+                <ul>
+                    <li>Obtain a VIN inspection at an authorized station ($6-$10)</li>
+                    <li>Get Texas auto insurance meeting minimum requirements</li>
+                    <li>Complete Form 130-U (Application for Texas Title and/or Registration)</li>
+                    <li>Provide the out-of-state title signed by the seller</li>
+                    <li>Pay motor vehicle use tax (6.25% of purchase price)</li>
+                    <li>Pay title fee ($28 or $33)</li>
+                    <li>Pay registration fees ($70-$90+)</li>
+                    <li>Pass safety inspection (if commercial vehicle) or emissions test (if in designated county)</li>
+                </ul>
+
+                <h2>New Texas Resident Use Tax - $90 Flat Fee</h2>
+
+                <p>New Texas residents receive special treatment when bringing vehicles into the state. If you previously registered the vehicle in your name in another state or country and already paid sales tax there, you pay a flat $90 new resident use tax instead of the 6.25% sales tax.</p>
+
+                <p>This one-time $90 tax applies per vehicle and is paid at the time of title and registration transfer. You must transfer your vehicle title and registration within 30 days of establishing residency in Texas to qualify for the new resident rate. After 30 days, late penalties apply.</p>
+
+                <p>To qualify for the $90 new resident tax, you must provide proof of previous registration in another state and evidence that you paid sales tax on the vehicle at the time of original purchase. If you cannot provide proof of previous sales tax payment, you'll owe the full 6.25% Texas motor vehicle sales tax.</p>
+
+                <h2>Gift Vehicle Transfers in Texas</h2>
+
+                <p>Vehicles transferred as qualified gifts between immediate family members are subject to a $10 gift tax instead of the 6.25% sales tax. Qualified family relationships include:</p>
+
+                <ul>
+                    <li>Spouse to spouse</li>
+                    <li>Parent to child (or vice versa)</li>
+                    <li>Grandparent to grandchild (or vice versa)</li>
+                    <li>Siblings (brother/sister)</li>
+                </ul>
+
+                <p>To transfer a vehicle as a gift, both the donor and recipient must complete Texas State Comptroller Form 14-317 (Motor Vehicle Gift Transfer Affidavit). This form must be submitted with the title application at the county tax office along with the $10 gift tax and standard title and registration fees.</p>
+
+                <p>If the vehicle transfer doesn't qualify as a gift under Texas law (such as transfers between unmarried partners, in-laws, cousins, or friends), you'll pay the full 6.25% motor vehicle sales tax based on the vehicle's fair market value or Standard Presumptive Value.</p>
+
+                <h2>Texas County-Specific Fee Variations</h2>
+
+                <p>While Texas has uniform state-level fees, county tax assessor-collector offices assess varying local fees based on county commissioner court decisions. Most counties charge $11.50 in local fees ($10 road and bridge fund + $1.50 child safety fee), but some counties charge more:</p>
+
+                <table class="fee-table">
+                    <tr>
+                        <th>County</th>
+                        <th>Local Fee</th>
+                        <th>Emissions Testing</th>
+                        <th>Title Fee</th>
+                    </tr>
+                    <tr>
+                        <td>Harris (Houston)</td>
+                        <td>$11.50</td>
+                        <td>Yes</td>
+                        <td>$33</td>
+                    </tr>
+                    <tr>
+                        <td>Dallas</td>
+                        <td>$11.50</td>
+                        <td>Yes</td>
+                        <td>$33</td>
+                    </tr>
+                    <tr>
+                        <td>Tarrant (Fort Worth)</td>
+                        <td>$11.50</td>
+                        <td>Yes</td>
+                        <td>$33</td>
+                    </tr>
+                    <tr>
+                        <td>Bexar (San Antonio)</td>
+                        <td>$21.50</td>
+                        <td>No</td>
+                        <td>$28</td>
+                    </tr>
+                    <tr>
+                        <td>Travis (Austin)</td>
+                        <td>$11.50</td>
+                        <td>Yes</td>
+                        <td>$33</td>
+                    </tr>
+                    <tr>
+                        <td>Collin</td>
+                        <td>$11.50</td>
+                        <td>Yes</td>
+                        <td>$33</td>
+                    </tr>
+                    <tr>
+                        <td>El Paso</td>
+                        <td>$11.50</td>
+                        <td>Yes</td>
+                        <td>$33</td>
+                    </tr>
+                </table>
+
+                <p>Counties may charge up to $10 for road and bridge funds and up to $1.50 for child safety programs. Some counties also assess additional transportation fees for specific projects, though these are less common. Always verify your specific county's fees when calculating Texas tax title license costs.</p>
+
+                <h2>Late Registration Penalties in Texas</h2>
+
+                <p>Texas imposes strict penalties for late title transfers and registration renewals to encourage timely compliance:</p>
+
+                <ul>
+                    <li><strong>Title Application Penalty:</strong> $25 per month (maximum $250) if filed more than 30 days after purchase</li>
+                    <li><strong>Late Sales Tax Penalty:</strong> 5% of tax due if 1-30 days late; 10% if more than 30 days late</li>
+                    <li><strong>Interest Charges:</strong> May apply on unpaid balances beyond 60 days</li>
+                    <li><strong>Registration Renewal Penalty:</strong> 5% late fee for renewals 6-30 days overdue; up to 100% for longer delays</li>
+                    <li><strong>Traffic Citations:</strong> Driving with expired registration can result in $200+ citations</li>
+                </ul>
+
+                <p>You have 30 days from the date of purchase to title and register a vehicle purchased from a private party or brought into Texas from another state. For vehicles purchased from dealers, the dealer typically handles immediate registration and provides temporary tags valid for 30 days. Active duty military personnel receive a 60-day grace period instead of 30 days.</p>
+
+                <h2>How to Calculate Your Texas TTL Fees</h2>
+
+                <p>To manually calculate your complete Texas tax title and license costs, follow this formula:</p>
+
+                <div class="info-box">
+                    <h3>📊 Texas TTL Calculation Formula</h3>
+                    <p><strong>Step 1: Calculate Sales Tax</strong></p>
+                    <ul>
+                        <li>Taxable Amount = Purchase Price - Trade-In Value</li>
+                        <li>Sales Tax = Taxable Amount × 6.25%</li>
+                        <li>(For private sales: use higher of purchase price or 80% of SPV)</li>
+                    </ul>
+                    <p><strong>Step 2: Add Title Fee</strong></p>
+                    <ul>
+                        <li>Title Fee = $33 (emissions county) or $28 (other)</li>
+                    </ul>
+                    <p><strong>Step 3: Calculate Registration Fees</strong></p>
+                    <ul>
+                        <li>Base Registration = $50.75 (passenger car)</li>
+                        <li>County Fee = $11.50-$21.50</li>
+                        <li>Processing Fee = $4.75</li>
+                        <li>Insurance Fee = $1.00</li>
+                        <li>Inspection Fee = $7.50 (or $16.75 for 2-year)</li>
+                        <li>Emissions Fee = $11.25 (if applicable)</li>
+                        <li>EV Fee = $200 annual or $400 initial (if applicable)</li>
+                    </ul>
+                    <p><strong>Step 4: Total TTL Fees</strong></p>
+                    <ul>
+                        <li>Total = Sales Tax + Title + All Registration Fees</li>
+                    </ul>
+                </div>
+
+                <p>Our Texas tax title license calculator automates this entire process and accounts for all special circumstances including SPV calculations, trade-in credits, EV fees, county variations, and different purchase types.</p>
+
+                <h2>Texas TTL Payment Methods and Locations</h2>
+
+                <p>Texas tax title and license fees are paid at your local county tax assessor-collector office. Each Texas county has one or more offices that handle vehicle registration on behalf of TxDMV. When purchasing from a dealer, the dealer collects and remits your TTL fees for you, providing temporary tags while your permanent registration is processed.</p>
+
+                <p>For private party sales or out-of-state purchases, you must visit the county tax office in person within 30 days with the following documents:</p>
+
+                <ul>
+                    <li>Completed Form 130-U (Application for Texas Title and/or Registration)</li>
+                    <li>Signed vehicle title or out-of-state title</li>
+                    <li>Valid government-issued photo ID</li>
+                    <li>Proof of Texas auto insurance</li>
+                    <li>VIN inspection (if out-of-state or no Texas title)</li>
+                    <li>Emissions inspection report (if in designated county)</li>
+                    <li>Payment for all taxes and fees</li>
+                </ul>
+
+                <p>Most county tax offices accept cash, check, money order, and credit/debit cards. Some offices charge a convenience fee (typically $3 flat fee or 3% for credit card payments over $100). Payment must be made in full before the title and registration will be issued.</p>
+
+                <h2>Dealer Documentary Fees in Texas</h2>
+
+                <p>Unlike many states, Texas does not cap dealer documentary fees by law. Dealers may charge whatever documentation fee they choose to cover their administrative costs for processing DMV paperwork. The average dealer doc fee in Texas ranges from $150-$300, though some dealers charge significantly more.</p>
+
+                <p>Since documentary fees are negotiable in Texas, always question excessive fees when purchasing from a dealer. The dealer must disclose all fees separately on the purchase contract, including:</p>
+
+                <ul>
+                    <li>Documentary fee (negotiable)</li>
+                    <li>Sales tax (non-negotiable)</li>
+                    <li>Title and registration fees (non-negotiable)</li>
+                    <li>Optional add-ons like VIN etching, paint protection, GAP insurance (negotiable)</li>
+                </ul>
+
+                <p>Be wary of dealers who advertise low vehicle prices but compensate with excessive fees. Review the complete "out-the-door" cost including all Texas tax title license fees and dealer charges before finalizing any vehicle purchase.</p>
+
+                <h2>Frequently Asked Questions - Texas TTL Calculator</h2>
+
+                <h3>What is the vehicle sales tax rate in Texas?</h3>
+                <p>Texas charges a uniform 6.25% motor vehicle sales tax statewide on all vehicle purchases. There are no additional local sales taxes for vehicles, making the rate consistent across Houston, Dallas, Austin, San Antonio, and all other Texas cities.</p>
+
+                <h3>How much are Texas title and registration fees?</h3>
+                <p>The Texas title transfer fee is $28-$33 depending on your county. Registration fees for passenger vehicles are $50.75 base plus approximately $20-$40 in additional fees (county fees, processing, insurance verification, inspection replacement), totaling around $70-$95 annually for most vehicles.</p>
+
+                <h3>What is Standard Presumptive Value (SPV) in Texas?</h3>
+                <p>SPV is the minimum taxable value for private party used vehicle sales in Texas based on wholesale market data. You must pay sales tax on whichever is higher: your actual purchase price or 80% of the SPV. Check SPV values at <a href="https://www.txdmv.gov/standard-presumptive-calculator" class="external-link" target="_blank" rel="nofollow">TxDMV.gov</a> before buying.</p>
+
+                <h3>Does Texas give credit for vehicle trade-ins?</h3>
+                <p>Yes, Texas provides a full trade-in tax credit when you trade in your old vehicle to a licensed dealer. You only pay the 6.25% sales tax on the difference between your new vehicle price and the trade-in value, which can save hundreds or thousands of dollars on your Texas TTL fees.</p>
+
+                <h3>How much is the electric vehicle fee in Texas?</h3>
+                <p>Electric vehicles in Texas pay an additional $200 annual registration fee or $400 for initial two-year registration, implemented in September 2023. This is in addition to all standard registration fees and sales tax. Hybrid vehicles are not subject to the EV fee.</p>
+
+                <h3>What changed with Texas vehicle inspections in 2025?</h3>
+                <p>As of January 1, 2025, Texas eliminated annual safety inspections for non-commercial vehicles under House Bill 3297. However, a $7.50 Inspection Program Replacement Fee is still collected at registration. Emissions testing remains required in 17 designated counties for vehicles aged 2-24 years.</p>
+
+                <h3>Do I pay sales tax on an out-of-state vehicle purchase?</h3>
+                <p>Yes, you must pay 6.25% Texas motor vehicle use tax when registering an out-of-state vehicle. Texas does not offer credit for sales tax paid in other states, so you pay the full Texas rate. New Texas residents with previously registered vehicles pay only $90 instead of 6.25%.</p>
+
+                <h3>How long do I have to register a vehicle in Texas?</h3>
+                <p>You must title and register a purchased vehicle within 30 days of the purchase date. Late title transfers incur a $25/month penalty (up to $250 maximum). Late sales tax payments carry a 5-10% penalty. Active duty military personnel have 60 days instead of 30.</p>
+
+                <h3>Can I avoid SPV by reporting a lower sale price?</h3>
+                <p>No, reporting a false sale price is tax fraud. Texas compares your reported price to the SPV and taxes whichever is higher to prevent tax evasion. However, you can use a certified appraisal within 20 days of purchase to establish a lower taxable value than the SPV if the vehicle has condition issues.</p>
+
+                <h3>What fees apply to gift vehicle transfers in Texas?</h3>
+                <p>Qualified gift transfers between immediate family members pay a $10 gift tax instead of 6.25% sales tax. You must complete Form 14-317 (Motor Vehicle Gift Transfer Affidavit) signed by both donor and recipient. Standard title ($28-$33) and registration fees still apply.</p>
+
+                <p>For additional assistance with Texas vehicle registration and tax title license questions, contact your local <a href="https://www.txdmv.gov/contact-us" class="external-link" target="_blank" rel="nofollow">county tax assessor-collector office</a> or visit the <a href="https://www.txdmv.gov/" class="external-link" target="_blank" rel="nofollow">Texas Department of Motor Vehicles</a>. Our Texas tax title license calculator provides accurate estimates based on current 2025 regulations, but always verify final costs with your county office before completing your purchase.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related States Section -->
+    <section class="related-states">
+        <div class="container">
+            <h2 style="text-align: center; color: #1e3a8a; margin-bottom: 2rem; font-size: 1.8rem;">Tax Title License Calculators for Other States</h2>
+            <div class="states-grid">
+                <div class="state-link-box">
+                    <a href="/tax-title-and-license-calculator-california/">California TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/florida-tax-title-and-license-calculator/">Florida TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/new-york-tax-title-and-license-calculator/">New York TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/tax-title-and-license-calculator-arizona/">Arizona TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/georgia-tax-title-and-license-calculator/">Georgia TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/oklahoma-tax-title-license-calculator/">Oklahoma TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/tax-title-and-license-calculator-louisiana/">Louisiana TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/">View All States →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Tax Title License Calculator | <a href="/">Home</a> | <a href="/#calculators">All State Calculators</a></p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">Disclaimer: This calculator provides estimates based on current Texas law. Verify with your local county tax office for official fees.</p>
+        </div>
+    </footer>
+
+    <script>
+        const countyData = {
+            'harris': { name: 'Harris County (Houston)', localFee: 11.50, emissions: true, titleFee: 33 },
+            'dallas': { name: 'Dallas County', localFee: 11.50, emissions: true, titleFee: 33 },
+            'tarrant': { name: 'Tarrant County (Fort Worth)', localFee: 11.50, emissions: true, titleFee: 33 },
+            'bexar': { name: 'Bexar County (San Antonio)', localFee: 21.50, emissions: false, titleFee: 28 },
+            'travis': { name: 'Travis County (Austin)', localFee: 11.50, emissions: true, titleFee: 33 },
+            'collin': { name: 'Collin County', localFee: 11.50, emissions: true, titleFee: 33 },
+            'denton': { name: 'Denton County', localFee: 11.50, emissions: true, titleFee: 33 },
+            'elpaso': { name: 'El Paso County', localFee: 11.50, emissions: true, titleFee: 33 },
+            'fort-bend': { name: 'Fort Bend County', localFee: 11.50, emissions: true, titleFee: 33 },
+            'hidalgo': { name: 'Hidalgo County', localFee: 11.50, emissions: false, titleFee: 28 },
+            'williamson': { name: 'Williamson County', localFee: 11.50, emissions: true, titleFee: 33 },
+            'montgomery': { name: 'Montgomery County', localFee: 11.50, emissions: true, titleFee: 33 },
+            'other-emissions': { name: 'Other Emissions County', localFee: 11.50, emissions: true, titleFee: 33 },
+            'other': { name: 'Other County', localFee: 11.50, emissions: false, titleFee: 28 }
+        };
+
+        document.getElementById('purchaseType').addEventListener('change', function() {
+            const spvGroup = document.getElementById('spvGroup');
+            spvGroup.style.display = this.value === 'private' ? 'block' : 'none';
+        });
+
+        document.getElementById('ttlCalculator').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const purchaseType = document.getElementById('purchaseType').value;
+            let vehiclePrice = parseFloat(document.getElementById('vehiclePrice').value) || 0;
+            const spvValue = parseFloat(document.getElementById('spvValue').value) || 0;
+            const county = countyData[document.getElementById('county').value];
+            const tradeIn = parseFloat(document.getElementById('tradeIn').value) || 0;
+            const vehicleType = document.getElementById('vehicleType').value;
+            const vehicleAge = document.getElementById('vehicleAge').value;
+            const registrationType = document.getElementById('registrationType').value;
+            
+            const notes = [];
+            
+            let salesTaxRate = 0.0625;
+            let taxableAmount = 0;
+            let salesTax = 0;
+            let useSPV = false;
+            
+            if (purchaseType === 'new-resident') {
+                salesTax = 0;
+                taxableAmount = 0;
+                notes.push('New residents pay $90 one-time tax instead of 6.25% sales tax');
+            } else if (purchaseType === 'gift') {
+                salesTax = 0;
+                taxableAmount = 0;
+                notes.push('Gift transfers pay $10 gift tax instead of sales tax');
+            } else {
+                if (purchaseType === 'private' && spvValue > 0) {
+                    const effectiveSPV = spvValue * 0.80;
+                    if (effectiveSPV > vehiclePrice) {
+                        taxableAmount = effectiveSPV;
+                        useSPV = true;
+                        notes.push(`Tax calculated on SPV (80% of $${spvValue.toLocaleString()}) as it exceeds purchase price`);
+                    } else {
+                        taxableAmount = vehiclePrice - tradeIn;
+                    }
+                } else {
+                    taxableAmount = Math.max(0, vehiclePrice - tradeIn);
+                }
+                
+                salesTax = taxableAmount * salesTaxRate;
+                
+                if (tradeIn > 0) {
+                    notes.push(`Trade-in saved you $${(tradeIn * salesTaxRate).toFixed(2)} in sales tax`);
+                }
+            }
+            
+            let titleFee = 0;
+            if (registrationType !== 'renewal') {
+                titleFee = county.titleFee;
+            }
+            
+            let baseRegistration = 0;
+            let evFee = 0;
+            
+            switch(vehicleType) {
+                case 'passenger':
+                    baseRegistration = 50.75;
+                    break;
+                case 'light-truck':
+                    baseRegistration = 54.00;
+                    break;
+                case 'electric':
+                    baseRegistration = 50.75;
+                    if (registrationType === 'new-2year') {
+                        evFee = 400;
+                        notes.push('Electric vehicles pay $400 for initial 2-year registration');
+                    } else {
+                        evFee = 200;
+                        notes.push('Electric vehicles pay $200 annual fee');
+                    }
+                    break;
+                case 'hybrid':
+                    baseRegistration = 50.75;
+                    notes.push('Hybrids are not subject to the EV fee');
+                    break;
+                case 'motorcycle':
+                    baseRegistration = 30.00;
+                    break;
+                case 'heavy':
+                    baseRegistration = 110.00;
+                    notes.push('Heavy vehicles over 10,000 lbs have higher registration fees');
+                    break;
+            }
+            
+            let inspectionFee = 0;
+            if (registrationType === 'new-2year') {
+                inspectionFee = 16.75;
+            } else {
+                inspectionFee = 7.50;
+            }
+            
+            let emissionsFee = 0;
+            const needsEmissions = county.emissions && vehicleAge === 'used' && vehicleType !== 'electric';
+            if (needsEmissions) {
+                emissionsFee = 11.25;
+                notes.push('Emissions testing required in this county ($11.25 admin fee + $7-$25 test)');
+            }
+            
+            let specialTax = 0;
+            if (purchaseType === 'new-resident') {
+                specialTax = 90;
+            } else if (purchaseType === 'gift') {
+                specialTax = 10;
+            }
+            
+            const processingFee = 4.75;
+            const insuranceFee = 1.00;
+            const countyFee = county.localFee;
+            
+            const totalTTL = salesTax + titleFee + baseRegistration + countyFee + 
+                           processingFee + insuranceFee + inspectionFee + emissionsFee + 
+                           evFee + specialTax;
+            
+            const outTheDoor = vehiclePrice + totalTTL;
+            
+            document.getElementById('displayPrice').textContent = '$' + vehiclePrice.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('displayTradeIn').textContent = '-$' + tradeIn.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('displayTaxable').textContent = '$' + taxableAmount.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('displaySalesTax').textContent = '$' + salesTax.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('displayTitle').textContent = '$' + titleFee.toFixed(2);
+            document.getElementById('displayRegistration').textContent = '$' + baseRegistration.toFixed(2);
+            document.getElementById('displayCountyFee').textContent = '$' + countyFee.toFixed(2);
+            document.getElementById('displayInspection').textContent = '$' + inspectionFee.toFixed(2);
+            document.getElementById('displayTotal').textContent = '$' + totalTTL.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('displayOutTheDoor').textContent = '$' + outTheDoor.toLocaleString('en-US', {minimumFractionDigits: 2});
+            
+            const spvRow = document.getElementById('spvRow');
+            if (useSPV) {
+                spvRow.style.display = 'flex';
+                document.getElementById('displaySPV').textContent = '$' + spvValue.toLocaleString('en-US', {minimumFractionDigits: 2});
+            } else {
+                spvRow.style.display = 'none';
+            }
+            
+            const emissionsRow = document.getElementById('emissionsRow');
+            if (needsEmissions) {
+                emissionsRow.style.display = 'flex';
+                document.getElementById('displayEmissions').textContent = '$' + emissionsFee.toFixed(2);
+            } else {
+                emissionsRow.style.display = 'none';
+            }
+            
+            const evFeeRow = document.getElementById('evFeeRow');
+            if (evFee > 0) {
+                evFeeRow.style.display = 'flex';
+                document.getElementById('displayEVFee').textContent = '$' + evFee.toFixed(2);
+            } else {
+                evFeeRow.style.display = 'none';
+            }
+            
+            const notesSection = document.getElementById('notesSection');
+            const notesList = document.getElementById('notesList');
+            if (notes.length > 0) {
+                notesList.innerHTML = notes.map(note => `<li>${note}</li>`).join('');
+                notesSection.style.display = 'block';
+            } else {
+                notesSection.style.display = 'none';
+            }
+            
+            document.getElementById('placeholderContent').style.display = 'none';
+            document.getElementById('resultsContent').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

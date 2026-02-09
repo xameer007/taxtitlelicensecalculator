@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Illinois tax title license calculator 2026. Calculate IL vehicle sales tax 7.25%-10.25%, Secretary of State fees, registration costs. Chicago 10.25% highest. Free IL TTL calculator with $100 EV surcharge.">
+    <title>Illinois Tax Title License Calculator 2026 - IL TTL Fees & Secretary of State</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background-color: #f8f9fa; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+        header { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 1rem 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.3rem; font-weight: bold; }
+        .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+        .nav-links a { color: white; text-decoration: none; transition: opacity 0.3s; }
+        .nav-links a:hover { opacity: 0.8; }
+        .hero { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 3rem 0; text-align: center; }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 1rem; line-height: 1.2; }
+        .hero p { font-size: 1.1rem; opacity: 0.95; margin-bottom: 0.5rem; }
+        .breadcrumb { margin-bottom: 1rem; opacity: 0.9; font-size: 0.95rem; }
+        .breadcrumb a { color: #fbbf24; text-decoration: none; }
+        .calculator-section { background: white; padding: 3rem 0; }
+        .calc-layout { display: grid; grid-template-columns: 1.2fr 1fr; gap: 2rem; max-width: 1300px; margin: 0 auto; }
+        .calculator-main { background: #f8f9fa; padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .calculator-main h2 { color: #1e3a8a; margin-bottom: 2rem; text-align: center; font-size: 1.8rem; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group.full-width { grid-column: 1 / -1; }
+        .form-group label { display: block; margin-bottom: 0.6rem; font-weight: 600; color: #1e3a8a; font-size: 0.95rem; }
+        .form-group input, .form-group select { width: 100%; padding: 0.85rem; border: 2px solid #e5e7eb; border-radius: 6px; font-size: 1rem; transition: border-color 0.3s; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+        .help-text { font-size: 0.85rem; color: #6b7280; margin-top: 0.4rem; }
+        .checkbox-group { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem; }
+        .checkbox-group input[type="checkbox"] { width: auto; }
+        .calculate-btn { width: 100%; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; padding: 1.1rem; border: none; border-radius: 8px; font-size: 1.15rem; font-weight: bold; cursor: pointer; transition: transform 0.2s, box-shadow 0.3s; margin-top: 1rem; }
+        .calculate-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4); }
+        .results-panel { background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); position: sticky; top: 2rem; max-height: 90vh; overflow-y: auto; }
+        .results-panel h3 { color: #1e3a8a; margin-bottom: 1.5rem; font-size: 1.5rem; text-align: center; }
+        .result-section { margin-bottom: 2rem; }
+        .result-section-title { font-size: 1.1rem; font-weight: 600; color: #1e3a8a; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e5e7eb; }
+        .result-item { display: flex; justify-content: space-between; padding: 0.7rem 0; border-bottom: 1px solid #f3f4f6; }
+        .result-item:last-child { border-bottom: none; }
+        .result-label { color: #6b7280; font-size: 0.95rem; }
+        .result-value { font-weight: 600; color: #1f2937; }
+        .result-total { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 1.3rem; border-radius: 8px; margin-top: 1.5rem; }
+        .result-total .result-item { border-bottom: none; padding: 0.4rem 0; }
+        .result-total .result-label, .result-total .result-value { color: white; }
+        .result-total .total-amount { font-size: 2rem; font-weight: bold; }
+        .info-alert { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 1rem; margin: 1.5rem 0; border-radius: 4px; font-size: 0.9rem; color: #1e40af; }
+        .warning-alert { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 1rem; margin: 1.5rem 0; border-radius: 4px; font-size: 0.9rem; color: #92400e; }
+        .content-section { padding: 4rem 0; background: white; }
+        .content-wrapper { max-width: 1100px; margin: 0 auto; }
+        .content-wrapper h2 { color: #1e3a8a; margin-bottom: 1.5rem; font-size: 2rem; margin-top: 3rem; }
+        .content-wrapper h2:first-child { margin-top: 0; }
+        .content-wrapper h3 { color: #1e3a8a; margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.5rem; }
+        .content-wrapper p { margin-bottom: 1.2rem; color: #555; line-height: 1.8; }
+        .content-wrapper ul { margin-left: 2rem; margin-bottom: 1.5rem; }
+        .content-wrapper li { margin-bottom: 0.8rem; color: #555; line-height: 1.7; }
+        .content-wrapper strong { color: #1e3a8a; }
+        .info-box { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 1.5rem; margin: 2rem 0; border-radius: 5px; }
+        .info-box h3 { color: #1e3a8a; margin-bottom: 1rem; margin-top: 0; }
+        .fee-table { width: 100%; border-collapse: collapse; margin: 2rem 0; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .fee-table th { background: #1e3a8a; color: white; padding: 1rem; text-align: left; font-weight: 600; }
+        .fee-table td { padding: 0.9rem 1rem; border-bottom: 1px solid #e5e7eb; }
+        .fee-table tr:hover { background: #f8f9fa; }
+        .related-states { padding: 3rem 0; background: #f8f9fa; }
+        .states-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; margin-top: 2rem; }
+        .state-link-box { background: white; padding: 1.2rem; border-radius: 8px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: transform 0.3s, box-shadow 0.3s; border-left: 4px solid #3b82f6; }
+        .state-link-box:hover { transform: translateY(-3px); box-shadow: 0 4px 15px rgba(0,0,0,0.12); }
+        .state-link-box a { color: #1e3a8a; text-decoration: none; font-weight: 600; font-size: 1.05rem; }
+        footer { background: #1e293b; color: white; padding: 2.5rem 0; text-align: center; }
+        footer a { color: #fbbf24; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+        @media (max-width: 1024px) {
+            .calc-layout { grid-template-columns: 1fr; }
+            .results-panel { position: static; margin-top: 2rem; max-height: none; }
+        }
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">🚗 Tax Title License Calculator</div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/#calculators">All States</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="/">Home</a> / <a href="/#calculators">State Calculators</a> / Illinois
+            </div>
+            <h1>Illinois Tax Title License Calculator 2026</h1>
+            <p>Calculate IL vehicle sales tax 7.25%-10.25%, Secretary of State fees, registration costs</p>
+            <p>Chicago has highest rate at 10.25% • $100 EV surcharge • Annual registration</p>
+        </div>
+    </section>
+
+    <section class="calculator-section">
+        <div class="container">
+            <div class="calc-layout">
+                <div class="calculator-main">
+                    <h2>Illinois TTL Fee Calculator</h2>
+                    
+                    <form id="ttlCalculator">
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label for="location">Location (Tax Rate)</label>
+                                <select id="location" required>
+                                    <option value="10.25">Chicago (10.25% - Highest in IL)</option>
+                                    <option value="9.25">Cook County outside Chicago (9.25%)</option>
+                                    <option value="8.75">Lake County (8.75%)</option>
+                                    <option value="8.25">DuPage County (8.25%)</option>
+                                    <option value="8.0">Kane County (8.0%)</option>
+                                    <option value="7.75">Will County (7.75%)</option>
+                                    <option value="7.75">McHenry County (7.75%)</option>
+                                    <option value="7.25">Downstate Illinois (7.25% - Base Rate)</option>
+                                </select>
+                                <div class="help-text">Chicago has Illinois' highest sales tax rate</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="vehiclePrice">Vehicle Purchase Price ($)</label>
+                                <input type="number" id="vehiclePrice" placeholder="30000" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="tradeIn">Trade-In Value ($) - Optional</label>
+                                <input type="number" id="tradeIn" placeholder="0">
+                                <div class="help-text">✅ Reduces taxable amount</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="dealerDiscount">Dealer Discount ($) - Optional</label>
+                                <input type="number" id="dealerDiscount" placeholder="0">
+                                <div class="help-text">Reduces taxable amount</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="mfgRebate">Manufacturer Rebate ($) - Optional</label>
+                                <input type="number" id="mfgRebate" placeholder="0">
+                                <div class="help-text">✅ Also reduces tax in IL</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="vehicleType">Vehicle Type</label>
+                                <select id="vehicleType" required>
+                                    <option value="gas">Gasoline / Diesel</option>
+                                    <option value="ev">Electric Vehicle (EV)</option>
+                                    <option value="phev">Plug-in Hybrid (PHEV)</option>
+                                </select>
+                                <div class="help-text">Only pure EVs pay $100 surcharge</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="purchaseType">Purchase Type</label>
+                                <select id="purchaseType" required>
+                                    <option value="dealer">Dealer Purchase</option>
+                                    <option value="private">Private Party Sale</option>
+                                </select>
+                                <div class="help-text">Affects tax calculation</div>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label style="margin-bottom: 0.8rem;">Additional Options</label>
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="plateTransfer">
+                                    <label for="plateTransfer" style="margin: 0; font-weight: normal;">Transfer existing valid plates ($25 fee)</label>
+                                </div>
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="isChicago">
+                                    <label for="isChicago" style="margin: 0; font-weight: normal;">Chicago resident (city sticker required $92-$235)</label>
+                                </div>
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="dealerProcessing">
+                                    <label for="dealerProcessing" style="margin: 0; font-weight: normal;">Dealer electronic processing ($35 ERTP fee)</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="calculate-btn">Calculate Illinois TTL Fees</button>
+                    </form>
+
+                    <div class="warning-alert">
+                        <strong>⚠️ Chicago Alert:</strong> Chicago has Illinois' highest sales tax at 10.25%. Residents also need a city vehicle sticker ($92-$235 annually).
+                    </div>
+                </div>
+
+                <div class="results-panel">
+                    <h3>Your Illinois TTL Breakdown</h3>
+                    
+                    <div id="resultsContent" style="display: none;">
+                        <div class="result-section">
+                            <div class="result-section-title">Sales Tax Calculation</div>
+                            <div class="result-item">
+                                <span class="result-label">Vehicle Price</span>
+                                <span class="result-value" id="displayPrice">$0.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Trade-In Credit</span>
+                                <span class="result-value" id="displayTradeIn">-$0.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Dealer Discount</span>
+                                <span class="result-value" id="displayDiscount">-$0.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Manufacturer Rebate</span>
+                                <span class="result-value" id="displayRebate">-$0.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Taxable Amount</span>
+                                <span class="result-value" id="displayTaxable">$0.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Sales Tax (<span id="taxRate">0</span>%)</span>
+                                <span class="result-value" id="displaySalesTax">$0.00</span>
+                            </div>
+                        </div>
+
+                        <div class="result-section">
+                            <div class="result-section-title">Secretary of State Fees</div>
+                            <div class="result-item">
+                                <span class="result-label">Title Fee</span>
+                                <span class="result-value">$165.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Registration Fee (Annual)</span>
+                                <span class="result-value" id="displayRegistration">$151.00</span>
+                            </div>
+                            <div class="result-item" id="plateTransferRow" style="display: none;">
+                                <span class="result-label">Plate Transfer Fee</span>
+                                <span class="result-value">$25.00</span>
+                            </div>
+                            <div class="result-item" id="ertpRow" style="display: none;">
+                                <span class="result-label">Electronic Registration (ERTP)</span>
+                                <span class="result-value">$35.00</span>
+                            </div>
+                        </div>
+
+                        <div class="result-total">
+                            <div class="result-item">
+                                <span class="result-label" style="font-size: 1.1rem;">TOTAL TTL FEES</span>
+                                <span class="result-value total-amount" id="displayTotal">$0.00</span>
+                            </div>
+                            <div class="result-item" style="font-size: 0.9rem; opacity: 0.9;">
+                                <span class="result-label">Total Out-the-Door Cost</span>
+                                <span class="result-value" id="displayOutTheDoor">$0.00</span>
+                            </div>
+                        </div>
+
+                        <div id="notesSection" class="info-alert" style="display: none;">
+                            <strong>Important Notes:</strong>
+                            <ul id="notesList" style="margin-top: 0.5rem; margin-left: 1.2rem;"></ul>
+                        </div>
+                    </div>
+
+                    <div id="placeholderContent">
+                        <p style="text-align: center; color: #9ca3af; padding: 2rem;">
+                            Enter your vehicle information and click Calculate to see your complete Illinois TTL breakdown
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-wrapper">
+                <h2>Complete Guide to Illinois Tax Title License Fees 2026</h2>
+                
+                <p>When purchasing a vehicle in Illinois, understanding tax title and license (TTL) fees helps you budget accurately for your total out-the-door costs. Illinois has one of the widest ranges of vehicle sales tax rates in the nation, from 7.25% in most downstate areas to 10.25% in Chicago - one of the highest combined rates in the entire United States. Both trade-in credits and manufacturer rebates reduce your taxable amount in Illinois, providing substantial savings opportunities. Our comprehensive Illinois tax title license calculator accounts for all state and local fees including the $100 electric vehicle surcharge that took effect in 2020.</p>
+
+                <div class="info-box">
+                    <h3>📋 Official Illinois Resources</h3>
+                    <p>For the most current information on Illinois vehicle registration and fees, visit the <a href="https://www.ilsos.gov" style="color: #3b82f6;" target="_blank" rel="nofollow">Illinois Secretary of State</a>. Check <a href="https://www.ilsos.gov/departments/vehicles/basicfees.html" style="color: #3b82f6;" target="_blank" rel="nofollow">fee schedules</a> and review private party tax requirements at the <a href="https://tax.illinois.gov/research/taxinformation/sales/vehicle.html" style="color: #3b82f6;" target="_blank" rel="nofollow">Illinois Department of Revenue</a>.</p>
+                </div>
+
+                <h2>Illinois Vehicle Sales Tax - Chicago Has the Highest Rate</h2>
+                
+                <p>Illinois charges a base state sales tax of 7.25% on vehicle purchases. However, local jurisdictions add their own sales taxes, creating combined rates that range from 7.25% to over 10.25% depending on where you register the vehicle. Chicago has the highest rate at 10.25%, combining the 7.25% state tax with a 3% local tax. This makes Chicago one of the most expensive places in the nation to purchase a vehicle based on sales tax alone.</p>
+
+                <p>The good news for Illinois buyers is that both trade-in credits and manufacturer rebates reduce your taxable amount. When you trade in your old vehicle to a dealer, the trade-in value is subtracted from the purchase price before calculating sales tax. Similarly, manufacturer rebates also reduce the taxable amount, saving you hundreds or thousands of dollars depending on the rebate size and your local tax rate.</p>
+
+                <table class="fee-table">
+                    <tr>
+                        <th>Illinois Location</th>
+                        <th>Combined Sales Tax Rate</th>
+                        <th>Components</th>
+                    </tr>
+                    <tr>
+                        <td>Chicago</td>
+                        <td>10.25%</td>
+                        <td>7.25% state + 3% local</td>
+                    </tr>
+                    <tr>
+                        <td>Cook County (outside Chicago)</td>
+                        <td>9.25%</td>
+                        <td>7.25% state + 2% local</td>
+                    </tr>
+                    <tr>
+                        <td>Lake County</td>
+                        <td>8.75%</td>
+                        <td>7.25% state + 1.5% local</td>
+                    </tr>
+                    <tr>
+                        <td>DuPage County</td>
+                        <td>8.25%</td>
+                        <td>7.25% state + 1% local</td>
+                    </tr>
+                    <tr>
+                        <td>Most Downstate Counties</td>
+                        <td>7.25%</td>
+                        <td>State rate only</td>
+                    </tr>
+                </table>
+
+                <h3>How Illinois Trade-In Credits Work</h3>
+
+                <p>Illinois allows trade-in credits to reduce your taxable amount when you purchase a vehicle from a licensed dealer and trade in your old vehicle as part of the transaction. The trade-in value is subtracted from the purchase price before sales tax is calculated, potentially saving you hundreds or thousands of dollars.</p>
+
+                <div class="info-box">
+                    <h3>💰 Illinois Tax Savings Example</h3>
+                    <p><strong>Scenario:</strong> $40,000 vehicle in Chicago with $10,000 trade-in and $2,000 manufacturer rebate</p>
+                    
+                    <p><strong>Tax Calculation:</strong></p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>Vehicle Price: $40,000</li>
+                        <li>Trade-In Value: -$10,000 (✅ reduces tax)</li>
+                        <li>Manufacturer Rebate: -$2,000 (✅ reduces tax in IL!)</li>
+                        <li><strong>Taxable Amount: $28,000</strong></li>
+                        <li>Sales Tax (10.25%): $28,000 × 0.1025 = <strong>$2,870</strong></li>
+                    </ul>
+                    
+                    <p><strong>Tax Savings:</strong></p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>Trade-in saved: $10,000 × 0.1025 = $1,025</li>
+                        <li>Rebate saved: $2,000 × 0.1025 = $205</li>
+                        <li><strong>Total savings: $1,230 in sales tax</strong></li>
+                    </ul>
+                </div>
+
+                <h2>Illinois Secretary of State Fees and Registration Costs</h2>
+
+                <p>The Illinois Secretary of State (equivalent to the DMV in other states) charges several fees when you purchase and register a vehicle. The title fee is a flat $165 regardless of vehicle type or value. The registration fee for standard passenger vehicles is $151 annually, with electric vehicles paying an additional $100 surcharge for a total of $251 per year.</p>
+
+                <table class="fee-table">
+                    <tr>
+                        <th>Fee Type</th>
+                        <th>Amount</th>
+                        <th>Frequency</th>
+                    </tr>
+                    <tr>
+                        <td>Title Fee</td>
+                        <td>$165</td>
+                        <td>One-time (at purchase)</td>
+                    </tr>
+                    <tr>
+                        <td>Standard Registration</td>
+                        <td>$151</td>
+                        <td>Annual</td>
+                    </tr>
+                    <tr>
+                        <td>Electric Vehicle Registration</td>
+                        <td>$251</td>
+                        <td>Annual ($151 + $100 EV surcharge)</td>
+                    </tr>
+                    <tr>
+                        <td>Plate Transfer Fee</td>
+                        <td>$25</td>
+                        <td>One-time (if reusing plates)</td>
+                    </tr>
+                    <tr>
+                        <td>Electronic Registration (ERTP)</td>
+                        <td>$35</td>
+                        <td>One-time (dealer processing)</td>
+                    </tr>
+                    <tr>
+                        <td>Duplicate Title</td>
+                        <td>$50</td>
+                        <td>As needed</td>
+                    </tr>
+                </table>
+
+                <h3>Annual Registration Renewal</h3>
+
+                <p>Unlike many states that offer multi-year registration options, Illinois requires annual registration renewals for all passenger vehicles. Your registration expires one year from the month it was issued, and you must renew it each year by paying the $151 registration fee (or $251 for electric vehicles). Most Illinois residents receive their renewal notice by mail approximately one month before expiration.</p>
+
+                <p>You can renew your registration online through the Illinois Secretary of State website, by mail, or in person at a Secretary of State facility. Online renewal is typically the fastest and most convenient option, allowing you to print a temporary registration immediately while waiting for your new sticker to arrive by mail.</p>
+
+                <h2>Electric Vehicle Surcharge - $100 Annual Fee</h2>
+
+                <p>Illinois charges an annual $100 surcharge for battery electric vehicles (BEVs) in addition to the standard $151 registration fee, bringing the total annual registration cost for electric vehicles to $251. This surcharge was implemented in 2020 to ensure electric vehicle owners contribute to road and bridge maintenance, as they pay little or no gasoline tax which traditionally funds infrastructure projects.</p>
+
+                <p>The EV surcharge applies only to fully electric vehicles that are powered solely by batteries. Plug-in hybrid electric vehicles (PHEVs) and regular hybrid vehicles are NOT subject to the $100 surcharge and pay only the standard $151 registration fee. This distinction is important when budgeting for your total vehicle costs.</p>
+
+                <h3>History of Illinois EV Fee</h3>
+
+                <p>Illinois legislators originally proposed a $1,000 annual fee for electric vehicles in 2019, which would have been one of the highest EV fees in the nation. After significant pushback from electric vehicle manufacturers, environmental groups, and EV owners, the legislature reduced the fee to $100 annually. This more reasonable fee structure ensures EV owners contribute their fair share to infrastructure funding without creating a major disincentive to electric vehicle adoption.</p>
+
+                <p>The $100 EV surcharge is collected as part of your annual registration renewal. No special electric vehicle license plate is required in Illinois - the EV designation is simply noted in your registration records and the appropriate fee is charged automatically.</p>
+
+                <h2>Private Party Vehicle Sales in Illinois</h2>
+
+                <p>When purchasing a vehicle from a private party (individual seller rather than a licensed dealer), Illinois uses a tiered tax system administered by the Illinois Department of Revenue. You must complete Form RUT-50 (Private Party Vehicle Use Tax Return) and pay the appropriate tax amount based on Chart RUT-5, which is updated annually.</p>
+
+                <p>The private party vehicle use tax is calculated based on the higher of the purchase price or the fair market value of the vehicle. For vehicles with a purchase price under $15,000, the tax may be based on the model year of the vehicle using a predetermined schedule. This system ensures that tax is collected fairly even when vehicles are sold below market value.</p>
+
+                <p>Trade-in credits do not apply to private party sales because you are not trading your old vehicle to a licensed dealer. The full purchase price (or fair market value, whichever is higher) is subject to the use tax. You pay this tax when you register the vehicle at the Secretary of State office, and you must provide Form RUT-50 along with your title and registration application.</p>
+
+                <h2>Chicago City Sticker Requirement</h2>
+
+                <p>Chicago residents must purchase and display a city vehicle sticker in addition to their Illinois license plates and registration. The city sticker costs between $92 and $235 annually depending on vehicle size, with passenger cars typically paying $92 per year. The sticker must be prominently displayed on the lower driver's side corner of your front windshield.</p>
+
+                <p>Failure to display a valid Chicago city sticker can result in tickets and fines, even if your Illinois registration is current. The city sticker requirement is separate from state registration and is strictly enforced through parking enforcement and automated camera systems. Chicago residents should budget for this additional annual cost when purchasing a vehicle.</p>
+
+                <p>City stickers can be purchased online through the City of Chicago website, by mail, or in person at participating locations. You must provide proof of residency and vehicle ownership. The sticker expires on June 30th each year regardless of when you purchase it, so pro-rated pricing is not available if you buy your sticker mid-year.</p>
+
+                <h2>Illinois Dealer Documentation Fee Cap</h2>
+
+                <p>Illinois law caps dealer documentation fees at a specific amount that is adjusted annually for inflation. For 2026, the maximum dealer doc fee is $377.63. This cap applies to all licensed dealerships in Illinois and represents the maximum amount dealers can charge for preparing and filing your purchase paperwork.</p>
+
+                <p>Dealer documentation fees are subject to Illinois sales tax, which means the actual cost to you is higher than the stated fee. At Chicago's 10.25% rate, a $377.63 doc fee actually costs you $416.32 after tax. At the 7.25% downstate rate, the same fee costs $405.02 after tax.</p>
+
+                <p>Many dealers also charge an Electronic Registration Transfer Program (ERTP) fee of $35 when they process your title and registration electronically. While this fee provides convenience by allowing you to avoid visiting a Secretary of State facility yourself, it is optional and you can choose to handle the registration yourself if you prefer to save the $35 fee.</p>
+
+                <h2>Plate Transfer Option</h2>
+
+                <p>If you already own a vehicle registered in Illinois and are replacing it with a different vehicle, you can transfer your existing license plates to the new vehicle for a $25 transfer fee. This can save you money compared to getting entirely new registration, and it allows you to keep your familiar license plate number.</p>
+
+                <p>To transfer plates in Illinois, your existing plates must have valid registration and you must surrender the registration for your old vehicle. You bring your existing plates to the Secretary of State facility when registering your new vehicle, pay the $25 transfer fee along with the $165 title fee, and your plates are transferred to the new vehicle. Your registration expiration date typically carries over from your old vehicle.</p>
+
+                <h2>How to Calculate Your Illinois TTL Fees</h2>
+
+                <p>To manually calculate your complete Illinois tax title and license costs, follow this step-by-step process for the most accurate estimate.</p>
+
+                <div class="info-box">
+                    <h3>📊 Illinois TTL Calculation Formula</h3>
+                    <p><strong>Step 1: Calculate Sales Tax</strong></p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>Determine your local tax rate (7.25% to 10.25%)</li>
+                        <li>Taxable Amount = Purchase Price - Trade-In - Dealer Discounts - Manufacturer Rebates</li>
+                        <li>Sales Tax = Taxable Amount × Tax Rate</li>
+                    </ul>
+                    <p><strong>Step 2: Add Title Fee</strong></p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>Title Fee: $165 (flat rate)</li>
+                    </ul>
+                    <p><strong>Step 3: Add Registration Fee</strong></p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>Standard Vehicle: $151 (annual)</li>
+                        <li>Electric Vehicle: $251 (annual, includes $100 EV surcharge)</li>
+                    </ul>
+                    <p><strong>Step 4: Add Optional Fees</strong></p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>Plate Transfer: $25 (if reusing plates)</li>
+                        <li>ERTP: $35 (if dealer processes electronically)</li>
+                        <li>Chicago City Sticker: $92-$235 (if Chicago resident)</li>
+                    </ul>
+                    <p><strong>Step 5: Total TTL Fees</strong></p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>Total = Sales Tax + Title + Registration + Optional Fees</li>
+                    </ul>
+                </div>
+
+                <h2>Frequently Asked Questions - Illinois TTL Calculator</h2>
+
+                <h3>What is the vehicle sales tax rate in Illinois?</h3>
+                <p>Illinois vehicle sales tax ranges from 7.25% to over 10.25% depending on your location. Chicago has the highest rate at 10.25%, while most downstate areas charge the base 7.25% state rate. Cook County outside Chicago charges 9.25%, and collar counties range from 7.75% to 8.75%.</p>
+
+                <h3>Does Illinois allow trade-in tax credit?</h3>
+                <p>Yes, Illinois allows trade-in credits to reduce your taxable amount when you purchase from a licensed dealer. The trade-in value is subtracted from the purchase price before calculating sales tax, potentially saving you hundreds or thousands of dollars.</p>
+
+                <h3>What is the electric vehicle surcharge in Illinois?</h3>
+                <p>Illinois charges a $100 annual surcharge for battery electric vehicles in addition to the standard $151 registration fee, bringing the total annual registration to $251. This surcharge applies only to pure electric vehicles, not plug-in hybrids or regular hybrids.</p>
+
+                <h3>How much are Illinois registration fees?</h3>
+                <p>Illinois charges $151 annually for standard passenger vehicle registration and $251 annually for electric vehicles (which includes the $100 EV surcharge). These fees must be paid every year, as Illinois does not offer multi-year registration options for passenger vehicles.</p>
+
+                <h3>What is the Illinois title fee?</h3>
+                <p>The Illinois title fee is $165 for all vehicles. This is a one-time fee paid when you purchase a vehicle and transfer ownership. If you later need a duplicate title due to loss or damage, the duplicate title fee is $50.</p>
+
+                <h3>What is the ERTP fee in Illinois?</h3>
+                <p>The Electronic Registration Transfer Program (ERTP) fee is $35 and is charged by dealers when they process your title and registration electronically. This fee is optional - you can choose to handle the registration yourself at a Secretary of State facility to avoid this fee.</p>
+
+                <h3>Do Chicago residents need a city sticker?</h3>
+                <p>Yes, all Chicago residents must purchase and display a city vehicle sticker on their windshield. The annual cost ranges from $92 to $235 depending on vehicle size. This is separate from your Illinois registration and is strictly enforced with tickets for non-compliance.</p>
+
+                <h3>Is there a dealer doc fee cap in Illinois?</h3>
+                <p>Yes, Illinois caps dealer documentation fees at $377.63 for 2026 (adjusted annually for inflation). This fee is subject to sales tax, so the actual cost is higher. Dealers cannot legally charge more than this amount for documentation.</p>
+
+                <h3>How is private party vehicle tax calculated in Illinois?</h3>
+                <p>Private party sales use Form RUT-50 and Chart RUT-5 to determine tax. The tax is based on the higher of the purchase price or fair market value. For vehicles under $15,000, the tax may be based on model year. No trade-in credits apply to private sales.</p>
+
+                <h3>Can I transfer my license plates in Illinois?</h3>
+                <p>Yes, you can transfer your existing Illinois license plates to a new vehicle for a $25 transfer fee. This allows you to keep your plate number and can be more convenient than getting entirely new registration.</p>
+
+                <p>For additional assistance with Illinois vehicle registration and tax title license questions, visit your local <a href="https://www.ilsos.gov/departments/facilities/home.html" style="color: #3b82f6;" target="_blank" rel="nofollow">Secretary of State facility</a>. Our Illinois tax title license calculator provides accurate estimates based on current 2026 regulations, but always verify final costs with the Secretary of State before completing your purchase.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="related-states">
+        <div class="container">
+            <h2 style="text-align: center; color: #1e3a8a; margin-bottom: 2rem;">Tax Title License Calculators for Other States</h2>
+            <div class="states-grid">
+                <div class="state-link-box">
+                    <a href="/texas-vehicle-tax-title-and-license-calculator">Texas TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/california-tax-title-and-license-calculator">California TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/florida-tax-title-and-license-calculator">Florida TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/new-york-tax-title-and-license-calculator">New York TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/pennsylvania-tax-title-and-license-calculator">Pennsylvania TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/ohio-vehicle-tax-calculator">Ohio TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/georgia-tax-title-and-license-calculator">Georgia TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/">View All States →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tax Title License Calculator | <a href="/">Home</a> | <a href="/#calculators">All State Calculators</a></p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">Disclaimer: This calculator provides estimates based on current Illinois law. Verify with Secretary of State for official fees.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('ttlCalculator').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const taxRate = parseFloat(document.getElementById('location').value) / 100;
+            const vehiclePrice = parseFloat(document.getElementById('vehiclePrice').value) || 0;
+            const tradeIn = parseFloat(document.getElementById('tradeIn').value) || 0;
+            const dealerDiscount = parseFloat(document.getElementById('dealerDiscount').value) || 0;
+            const mfgRebate = parseFloat(document.getElementById('mfgRebate').value) || 0;
+            const vehicleType = document.getElementById('vehicleType').value;
+            const purchaseType = document.getElementById('purchaseType').value;
+            const plateTransfer = document.getElementById('plateTransfer').checked;
+            const isChicago = document.getElementById('isChicago').checked;
+            const dealerProcessing = document.getElementById('dealerProcessing').checked;
+            
+            const notes = [];
+            
+            // Sales Tax - ALL deductions reduce tax in IL
+            const taxableAmount = Math.max(0, vehiclePrice - tradeIn - dealerDiscount - mfgRebate);
+            const salesTax = taxableAmount * taxRate;
+            
+            if (tradeIn > 0) {
+                notes.push(`✅ Trade-in saved you $${(tradeIn * taxRate).toFixed(2)} in sales tax`);
+            }
+            
+            if (dealerDiscount > 0) {
+                notes.push(`Dealer discount saved you $${(dealerDiscount * taxRate).toFixed(2)} in sales tax`);
+            }
+            
+            if (mfgRebate > 0) {
+                notes.push(`✅ Manufacturer rebate saved you $${(mfgRebate * taxRate).toFixed(2)} in sales tax`);
+            }
+            
+            // Title Fee - always $165
+            const titleFee = 165;
+            
+            // Registration Fee - $151 base, $251 for EVs
+            let registrationFee = 151;
+            if (vehicleType === 'ev') {
+                registrationFee = 251;
+                notes.push('⚡ Electric vehicle pays $100 annual surcharge (total $251)');
+            }
+            
+            // Plate Transfer Fee
+            let plateFee = 0;
+            const plateTransferRow = document.getElementById('plateTransferRow');
+            if (plateTransfer) {
+                plateFee = 25;
+                plateTransferRow.style.display = 'flex';
+                notes.push('Transferring existing plates for $25');
+            } else {
+                plateTransferRow.style.display = 'none';
+            }
+            
+            // ERTP Fee
+            let ertpFee = 0;
+            const ertpRow = document.getElementById('ertpRow');
+            if (dealerProcessing) {
+                ertpFee = 35;
+                ertpRow.style.display = 'flex';
+            } else {
+                ertpRow.style.display = 'none';
+            }
+            
+            // Chicago city sticker alert
+            if (isChicago) {
+                notes.push('🏙️ Chicago residents need city sticker ($92-$235 annually, not included in total)');
+            }
+            
+            if (taxRate >= 0.10) {
+                notes.push('⚠️ Chicago has Illinois\' highest sales tax at 10.25%');
+            }
+            
+            if (purchaseType === 'private') {
+                notes.push('Private party sales use Form RUT-50 and may have different tax calculation');
+            }
+            
+            // Calculate totals
+            const totalTTL = salesTax + titleFee + registrationFee + plateFee + ertpFee;
+            const outTheDoor = vehiclePrice + totalTTL - tradeIn - mfgRebate;
+            
+            // Display results
+            document.getElementById('displayPrice').textContent = '$' + vehiclePrice.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('displayTradeIn').textContent = '-$' + tradeIn.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('displayDiscount').textContent = '-$' + dealerDiscount.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('displayRebate').textContent = '-$' + mfgRebate.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('displayTaxable').textContent = '$' + taxableAmount.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('taxRate').textContent = (taxRate * 100).toFixed(2);
+            document.getElementById('displaySalesTax').textContent = '$' + salesTax.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('displayRegistration').textContent = '$' + registrationFee.toFixed(2);
+            document.getElementById('displayTotal').textContent = '$' + totalTTL.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('displayOutTheDoor').textContent = '$' + outTheDoor.toLocaleString('en-US', {minimumFractionDigits: 2});
+            
+            // Display notes
+            const notesSection = document.getElementById('notesSection');
+            const notesList = document.getElementById('notesList');
+            if (notes.length > 0) {
+                notesList.innerHTML = notes.map(note => `<li>${note}</li>`).join('');
+                notesSection.style.display = 'block';
+            } else {
+                notesSection.style.display = 'none';
+            }
+            
+            // Show results
+            document.getElementById('placeholderContent').style.display = 'none';
+            document.getElementById('resultsContent').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

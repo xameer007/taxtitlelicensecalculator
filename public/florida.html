@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Florida tax title license calculator 2025. Calculate FL vehicle sales tax 6%-7.5%, DMV fees, registration costs. Trade-in credit allowed. Free Florida TTL calculator with county rates.">
+    <title>Florida Tax Title License Calculator 2025 - FL TTL Fees & DMV Costs</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background-color: #f8f9fa; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+        
+        header { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 1rem 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.3rem; font-weight: bold; }
+        .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+        .nav-links a { color: white; text-decoration: none; transition: opacity 0.3s; }
+        .nav-links a:hover { opacity: 0.8; }
+        
+        .hero { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 3rem 0; text-align: center; }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 1rem; line-height: 1.2; }
+        .hero p { font-size: 1.1rem; opacity: 0.95; margin-bottom: 0.5rem; }
+        .breadcrumb { margin-bottom: 1rem; opacity: 0.9; font-size: 0.95rem; }
+        .breadcrumb a { color: #fbbf24; text-decoration: none; }
+        
+        .calculator-section { background: white; padding: 3rem 0; }
+        .calc-layout { display: grid; grid-template-columns: 1.2fr 1fr; gap: 2rem; max-width: 1300px; margin: 0 auto; }
+        
+        .calculator-main { background: #f8f9fa; padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .calculator-main h2 { color: #1e3a8a; margin-bottom: 2rem; text-align: center; font-size: 1.8rem; }
+        
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group.full-width { grid-column: 1 / -1; }
+        .form-group label { display: block; margin-bottom: 0.6rem; font-weight: 600; color: #1e3a8a; font-size: 0.95rem; }
+        .form-group input, .form-group select { width: 100%; padding: 0.85rem; border: 2px solid #e5e7eb; border-radius: 6px; font-size: 1rem; transition: border-color 0.3s; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+        
+        .help-text { font-size: 0.85rem; color: #6b7280; margin-top: 0.4rem; display: flex; align-items: center; gap: 0.3rem; }
+        .help-icon { display: inline-block; width: 16px; height: 16px; background: #3b82f6; color: white; border-radius: 50%; text-align: center; line-height: 16px; font-size: 0.7rem; cursor: help; }
+        
+        .calculate-btn { width: 100%; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; padding: 1.1rem; border: none; border-radius: 8px; font-size: 1.15rem; font-weight: bold; cursor: pointer; transition: transform 0.2s, box-shadow 0.3s; margin-top: 1rem; }
+        .calculate-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4); }
+        
+        .results-panel { background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); position: sticky; top: 2rem; max-height: 90vh; overflow-y: auto; }
+        .results-panel h3 { color: #1e3a8a; margin-bottom: 1.5rem; font-size: 1.5rem; text-align: center; }
+        
+        .result-section { margin-bottom: 2rem; }
+        .result-section-title { font-size: 1.1rem; font-weight: 600; color: #1e3a8a; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e5e7eb; }
+        
+        .result-item { display: flex; justify-content: space-between; padding: 0.7rem 0; border-bottom: 1px solid #f3f4f6; }
+        .result-item:last-child { border-bottom: none; }
+        .result-label { color: #6b7280; font-size: 0.95rem; }
+        .result-value { font-weight: 600; color: #1f2937; }
+        
+        .result-total { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 1.3rem; border-radius: 8px; margin-top: 1.5rem; }
+        .result-total .result-item { border-bottom: none; padding: 0.4rem 0; }
+        .result-total .result-label, .result-total .result-value { color: white; }
+        .result-total .total-amount { font-size: 2rem; font-weight: bold; }
+        
+        .info-alert { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 1rem; margin: 1.5rem 0; border-radius: 4px; font-size: 0.9rem; color: #1e40af; }
+        .warning-alert { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 1rem; margin: 1.5rem 0; border-radius: 4px; font-size: 0.9rem; color: #92400e; }
+        
+        .content-section { padding: 4rem 0; background: white; }
+        .content-wrapper { max-width: 1100px; margin: 0 auto; }
+        .content-wrapper h2 { color: #1e3a8a; margin-bottom: 1.5rem; font-size: 2rem; margin-top: 3rem; }
+        .content-wrapper h2:first-child { margin-top: 0; }
+        .content-wrapper h3 { color: #1e3a8a; margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.5rem; }
+        .content-wrapper p { margin-bottom: 1.2rem; color: #555; line-height: 1.8; }
+        .content-wrapper ul { margin-left: 2rem; margin-bottom: 1.5rem; }
+        .content-wrapper li { margin-bottom: 0.8rem; color: #555; line-height: 1.7; }
+        .content-wrapper strong { color: #1e3a8a; }
+        
+        .info-box { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 1.5rem; margin: 2rem 0; border-radius: 5px; }
+        .info-box h3 { color: #1e3a8a; margin-bottom: 1rem; margin-top: 0; }
+        
+        .fee-table { width: 100%; border-collapse: collapse; margin: 2rem 0; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .fee-table th { background: #1e3a8a; color: white; padding: 1rem; text-align: left; font-weight: 600; }
+        .fee-table td { padding: 0.9rem 1rem; border-bottom: 1px solid #e5e7eb; }
+        .fee-table tr:hover { background: #f8f9fa; }
+        
+        .related-states { padding: 3rem 0; background: #f8f9fa; }
+        .states-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; margin-top: 2rem; }
+        .state-link-box { background: white; padding: 1.2rem; border-radius: 8px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: transform 0.3s, box-shadow 0.3s; border-left: 4px solid #3b82f6; }
+        .state-link-box:hover { transform: translateY(-3px); box-shadow: 0 4px 15px rgba(0,0,0,0.12); }
+        .state-link-box a { color: #1e3a8a; text-decoration: none; font-weight: 600; font-size: 1.05rem; }
+        
+        footer { background: #1e293b; color: white; padding: 2.5rem 0; text-align: center; }
+        footer a { color: #fbbf24; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+        
+        @media (max-width: 1024px) {
+            .calc-layout { grid-template-columns: 1fr; }
+            .results-panel { position: static; margin-top: 2rem; max-height: none; }
+        }
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">🚗 Tax Title License Calculator</div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/#calculators">All States</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="/">Home</a> / <a href="/#calculators">State Calculators</a> / Florida
+            </div>
+            <h1>Florida Tax Title License Calculator 2025</h1>
+            <p>Calculate FL vehicle sales tax 6%-7.5%, DMV fees, and registration costs</p>
+            <p>Trade-in credit allowed • No state income tax • County surtax on first $5,000</p>
+        </div>
+    </section>
+
+    <section class="calculator-section">
+        <div class="container">
+            <div class="calc-layout">
+                <div class="calculator-main">
+                    <h2>Florida TTL Fee Calculator</h2>
+                    
+                    <form id="ttlCalculator">
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label for="county">County</label>
+                                <select id="county" required>
+                                    <option value="6.0">No Surtax County (6.0%)</option>
+                                    <option value="6.5">0.5% Surtax County (6.5%)</option>
+                                    <option value="7.0">1.0% Surtax County (7.0%)</option>
+                                    <option value="7.5">1.5% Surtax County (7.5%)</option>
+                                    <optgroup label="Popular Counties">
+                                        <option value="7.5">Miami-Dade (7.5%)</option>
+                                        <option value="7.0">Broward (7.0%)</option>
+                                        <option value="7.0">Palm Beach (7.0%)</option>
+                                        <option value="7.5">Hillsborough (7.5%)</option>
+                                        <option value="7.5">Orange (7.5%)</option>
+                                        <option value="7.0">Pinellas (7.0%)</option>
+                                        <option value="7.0">Duval (7.0%)</option>
+                                        <option value="7.0">Lee (7.0%)</option>
+                                    </optgroup>
+                                </select>
+                                <div class="help-text">
+                                    <span class="help-icon">?</span>
+                                    Surtax applies only to first $5,000 of purchase price
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="vehiclePrice">Vehicle Purchase Price ($)</label>
+                                <input type="number" id="vehiclePrice" placeholder="30000" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="tradeIn">Trade-In Value ($) - Optional</label>
+                                <input type="number" id="tradeIn" placeholder="0">
+                                <div class="help-text">✅ Trade-in reduces taxable amount in FL</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="vehicleWeight">Vehicle Weight (lbs)</label>
+                                <select id="vehicleWeight" required>
+                                    <option value="27.60">Up to 2,499 lbs</option>
+                                    <option value="35.60" selected>2,500 - 3,499 lbs</option>
+                                    <option value="45.60">3,500 - 4,999 lbs</option>
+                                    <option value="57.60">5,000+ lbs</option>
+                                </select>
+                                <div class="help-text">Affects registration fee</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="vehicleType">Vehicle Type</label>
+                                <select id="vehicleType" required>
+                                    <option value="passenger">Passenger Car</option>
+                                    <option value="truck">Pickup Truck</option>
+                                    <option value="suv">SUV</option>
+                                    <option value="electric">Electric Vehicle</option>
+                                    <option value="hybrid">Hybrid Vehicle</option>
+                                    <option value="motorcycle">Motorcycle</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="registrationType">Registration Type</label>
+                                <select id="registrationType" required>
+                                    <option value="new">New Vehicle (Initial Registration)</option>
+                                    <option value="used">Used Vehicle Purchase</option>
+                                    <option value="transfer">Transfer Florida Plate</option>
+                                    <option value="renewal">Annual Renewal</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="calculate-btn">Calculate Florida TTL Fees</button>
+                    </form>
+
+                    <div class="info-alert">
+                        <strong>✅ Florida Allows Trade-In Credit:</strong> Unlike California, Florida deducts your trade-in value from the purchase price before calculating sales tax, saving you money!
+                    </div>
+                </div>
+
+                <div class="results-panel">
+                    <h3>Your Florida TTL Breakdown</h3>
+                    
+                    <div id="resultsContent" style="display: none;">
+                        <div class="result-section">
+                            <div class="result-section-title">Sales Tax Calculation</div>
+                            <div class="result-item">
+                                <span class="result-label">Vehicle Price</span>
+                                <span class="result-value" id="displayPrice">$0.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Trade-In Credit</span>
+                                <span class="result-value" id="displayTradeIn">-$0.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Taxable Amount</span>
+                                <span class="result-value" id="displayTaxable">$0.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">State Sales Tax (6%)</span>
+                                <span class="result-value" id="displayStateTax">$0.00</span>
+                            </div>
+                            <div class="result-item" id="surtaxRow">
+                                <span class="result-label">County Surtax (on first $5,000)</span>
+                                <span class="result-value" id="displaySurtax">$0.00</span>
+                            </div>
+                        </div>
+
+                        <div class="result-section">
+                            <div class="result-section-title">DMV Fees & Registration</div>
+                            <div class="result-item" id="titleRow">
+                                <span class="result-label">Title Fee</span>
+                                <span class="result-value">$77.25</span>
+                            </div>
+                            <div class="result-item" id="initialRegRow">
+                                <span class="result-label">Initial Registration Fee</span>
+                                <span class="result-value">$225.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">License Plate Fee</span>
+                                <span class="result-value" id="displayPlateFee">$0.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Weight-Based Registration</span>
+                                <span class="result-value" id="displayWeightFee">$0.00</span>
+                            </div>
+                        </div>
+
+                        <div class="result-total">
+                            <div class="result-item">
+                                <span class="result-label" style="font-size: 1.1rem;">TOTAL TTL FEES</span>
+                                <span class="result-value total-amount" id="displayTotal">$0.00</span>
+                            </div>
+                            <div class="result-item" style="font-size: 0.9rem; opacity: 0.9;">
+                                <span class="result-label">Total Out-the-Door Cost</span>
+                                <span class="result-value" id="displayOutTheDoor">$0.00</span>
+                            </div>
+                        </div>
+
+                        <div id="notesSection" class="info-alert" style="display: none;">
+                            <strong>Important Notes:</strong>
+                            <ul id="notesList" style="margin-top: 0.5rem; margin-left: 1.2rem;"></ul>
+                        </div>
+                    </div>
+
+                    <div id="placeholderContent">
+                        <p style="text-align: center; color: #9ca3af; padding: 2rem;">
+                            Enter your vehicle information and click Calculate to see your complete Florida TTL breakdown
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-wrapper">
+                <h2>Complete Guide to Florida Tax Title License Fees 2025</h2>
+                
+                <p>When purchasing a vehicle in Florida, understanding tax title and license (TTL) fees helps you budget accurately for your total out-the-door cost. Florida has a relatively straightforward vehicle tax system with a 6% state sales tax plus optional county discretionary surtaxes up to 1.5% (applied only to the first $5,000 of the purchase price). Florida allows trade-in credits to reduce your taxable amount, making it more favorable than states like California. Our comprehensive Florida tax title license calculator helps you estimate exact costs before completing your vehicle purchase.</p>
+
+                <div class="info-box">
+                    <h3>📋 Official Florida DMV Resources</h3>
+                    <p>For the most current information on Florida vehicle registration and fees, visit the <a href="https://www.flhsmv.gov/" class="external-link" target="_blank" rel="nofollow">Florida Department of Highway Safety and Motor Vehicles</a>. You can also check sales tax information at the <a href="https://floridarevenue.com/" class="external-link" target="_blank" rel="nofollow">Florida Department of Revenue</a> and find your local county tax collector office for registration services.</p>
+                </div>
+
+                <h2>Florida Vehicle Sales Tax - 6% State Plus County Surtax</h2>
+                
+                <p>Florida charges a uniform 6% state sales tax on all vehicle purchases statewide. This rate is consistent across all 67 Florida counties and applies to cars, trucks, SUVs, motorcycles, and recreational vehicles. Unlike some states with multiple tax tiers, Florida's state rate is straightforward and easy to calculate.</p>
+
+                <p>However, many Florida counties have added discretionary sales surtaxes ranging from 0.5% to 1.5% to fund local infrastructure, transportation, schools, and other county priorities. The important distinction is that these county surtaxes apply only to the first $5,000 of the vehicle purchase price, creating a capped local tax amount:</p>
+
+                <ul>
+                    <li><strong>0.5% Surtax Counties:</strong> Maximum $25 county tax</li>
+                    <li><strong>1.0% Surtax Counties:</strong> Maximum $50 county tax</li>
+                    <li><strong>1.5% Surtax Counties:</strong> Maximum $75 county tax</li>
+                </ul>
+
+                <p>This capped structure means that whether you purchase a $20,000 Honda Civic or a $100,000 Tesla Model S in the same county, you pay the same county surtax amount. Only the 6% state tax applies to the full purchase price.</p>
+
+                <table class="fee-table">
+                    <tr>
+                        <th>Florida County</th>
+                        <th>Total Tax Rate</th>
+                        <th>Max Surtax Amount</th>
+                    </tr>
+                    <tr>
+                        <td>Miami-Dade</td>
+                        <td>7.5%</td>
+                        <td>$75 (1.5% on first $5,000)</td>
+                    </tr>
+                    <tr>
+                        <td>Broward (Fort Lauderdale)</td>
+                        <td>7.0%</td>
+                        <td>$50 (1.0% on first $5,000)</td>
+                    </tr>
+                    <tr>
+                        <td>Palm Beach</td>
+                        <td>7.0%</td>
+                        <td>$50 (1.0% on first $5,000)</td>
+                    </tr>
+                    <tr>
+                        <td>Hillsborough (Tampa)</td>
+                        <td>7.5%</td>
+                        <td>$75 (1.5% on first $5,000)</td>
+                    </tr>
+                    <tr>
+                        <td>Orange (Orlando)</td>
+                        <td>7.5%</td>
+                        <td>$75 (1.5% on first $5,000)</td>
+                    </tr>
+                    <tr>
+                        <td>Pinellas (St. Petersburg)</td>
+                        <td>7.0%</td>
+                        <td>$50 (1.0% on first $5,000)</td>
+                    </tr>
+                    <tr>
+                        <td>Duval (Jacksonville)</td>
+                        <td>7.0%</td>
+                        <td>$50 (1.0% on first $5,000)</td>
+                    </tr>
+                    <tr>
+                        <td>Lee (Fort Myers)</td>
+                        <td>7.0%</td>
+                        <td>$50 (1.0% on first $5,000)</td>
+                    </tr>
+                </table>
+
+                <h3>Florida Allows Trade-In Tax Credit</h3>
+
+                <p>One of Florida's most taxpayer-friendly features is the trade-in tax credit. When you trade in your old vehicle to a licensed dealer as part of purchasing a new or used vehicle, you only pay sales tax on the difference between the new vehicle price and your trade-in value. This credit applies to both the 6% state tax and any county surtax.</p>
+
+                <p>The trade-in credit creates substantial savings, especially on higher-priced vehicles:</p>
+
+                <div class="info-box">
+                    <h3>💰 Florida Trade-In Tax Savings Example</h3>
+                    <p><strong>Without Trade-In:</strong></p>
+                    <ul>
+                        <li>Vehicle Price: $35,000</li>
+                        <li>State Tax (6%): $2,100</li>
+                        <li>County Surtax (1.5% on $5,000): $75</li>
+                        <li><strong>Total Sales Tax: $2,175</strong></li>
+                    </ul>
+                    <p><strong>With $12,000 Trade-In:</strong></p>
+                    <ul>
+                        <li>Vehicle Price: $35,000</li>
+                        <li>Trade-In Value: -$12,000</li>
+                        <li>Taxable Amount: $23,000</li>
+                        <li>State Tax (6%): $1,380</li>
+                        <li>County Surtax (1.5% on $5,000): $75</li>
+                        <li><strong>Total Sales Tax: $1,455</strong></li>
+                        <li><strong>Tax Savings: $720</strong></li>
+                    </ul>
+                </div>
+
+                <p>To qualify for the trade-in credit, the trade-in must occur with a licensed Florida dealer as part of the same transaction. Private party trades do not qualify for the tax credit. Both vehicles must be titled motor vehicles - you cannot trade an ATV for a car and receive the tax benefit.</p>
+
+                <h2>Florida DMV Title and Registration Fees</h2>
+
+                <p>Florida charges several fees when titling and registering a vehicle. These fees are standardized statewide by Florida Statute and collected by county tax collector offices acting as agents for the Florida Department of Highway Safety and Motor Vehicles (FLHSMV):</p>
+
+                <table class="fee-table">
+                    <tr>
+                        <th>Fee Type</th>
+                        <th>Amount</th>
+                        <th>When Applied</th>
+                    </tr>
+                    <tr>
+                        <td>Certificate of Title</td>
+                        <td>$77.25</td>
+                        <td>New vehicle purchase or transfer</td>
+                    </tr>
+                    <tr>
+                        <td>Initial Registration Fee</td>
+                        <td>$225.00</td>
+                        <td>One-time when no FL plate to transfer</td>
+                    </tr>
+                    <tr>
+                        <td>License Plate</td>
+                        <td>$28.00</td>
+                        <td>New standard plate</td>
+                    </tr>
+                    <tr>
+                        <td>Plate Transfer Fee</td>
+                        <td>$7.85</td>
+                        <td>Moving existing plate to new vehicle</td>
+                    </tr>
+                    <tr>
+                        <td>Weight-Based Registration (Annual)</td>
+                        <td>$14.50-$57.60</td>
+                        <td>Based on vehicle weight</td>
+                    </tr>
+                </table>
+
+                <h3>Initial Registration Fee - $225</h3>
+
+                <p>Florida's most significant one-time fee is the $225 initial registration fee, which applies when you purchase a vehicle and have no existing Florida license plate to transfer. This fee is substantially higher than most states and is required regardless of vehicle type or value.</p>
+
+                <p>However, if you already own a Florida-registered vehicle and are replacing it, you can transfer your existing license plate to the new vehicle for just $7.85, avoiding the $225 initial registration fee. This makes vehicle replacement much more affordable for existing Florida residents.</p>
+
+                <h3>Weight-Based Annual Registration Fees</h3>
+
+                <p>Florida's ongoing registration fees are based on vehicle weight, creating a tiered system for annual renewals:</p>
+
+                <ul>
+                    <li><strong>Up to 2,499 lbs:</strong> $14.50 annual registration</li>
+                    <li><strong>2,500 - 3,499 lbs:</strong> $27.60 annual registration</li>
+                    <li><strong>3,500 - 4,999 lbs:</strong> $35.60 annual registration</li>
+                    <li><strong>5,000+ lbs:</strong> $45.60-$57.60 annual registration</li>
+                </ul>
+
+                <p>Most passenger cars fall into the 2,500-3,499 lb category ($27.60 annually), while SUVs and trucks typically register in the 3,500-4,999 lb range ($35.60 annually). Heavy trucks and commercial vehicles over 10,000 lbs have separate fee schedules with significantly higher costs.</p>
+
+                <h2>Florida Electric Vehicle Registration Fees 2025</h2>
+
+                <p>As of 2025, Florida does not charge additional annual registration fees for electric vehicles or plug-in hybrids, making it one of the most EV-friendly states for registration costs. Proposed legislation in 2023-2024 (SB 28 and SB 1070) would have added $200 annual EV fees and $50 hybrid fees, but these bills did not pass.</p>
+
+                <p>Current Florida EV registration includes:</p>
+
+                <ul>
+                    <li><strong>Sales Tax:</strong> Full 6% + county surtax (no EV exemption)</li>
+                    <li><strong>Trade-In Credit:</strong> Available for EVs just like gas vehicles</li>
+                    <li><strong>Registration Fees:</strong> Standard weight-based fees apply</li>
+                    <li><strong>No EV Surcharge:</strong> Unlike Texas ($200) or California-equivalent costs</li>
+                    <li><strong>Specialty EV Plates:</strong> Optional "Electric Vehicle" specialty plate available</li>
+                </ul>
+
+                <p>This makes Florida particularly attractive for EV ownership from a registration cost perspective. A Tesla Model 3 or Model Y pays the same annual registration as a comparable gas-powered sedan or SUV.</p>
+
+                <h2>Florida Dealer Documentary Fees - No State Cap</h2>
+
+                <p>Unlike states like California ($85 cap) or Texas (no cap), Florida law does not limit dealer documentary fees. The average dealer doc fee in Florida is approximately $670, though fees can range from $300 to $900+ depending on the dealership.</p>
+
+                <p>Because doc fees are not capped by state law, they're fully negotiable between you and the dealer. When purchasing a vehicle in Florida, always request an itemized breakdown of all fees and question any excessive charges:</p>
+
+                <ul>
+                    <li><strong>Documentation Fee:</strong> $300-$900 (average $670, fully negotiable)</li>
+                    <li><strong>Electronic Filing Fee:</strong> Typically $5-$25 (reasonable)</li>
+                    <li><strong>Dealer Prep Fee:</strong> Often $200-$500 (negotiable/optional)</li>
+                    <li><strong>Market Adjustment:</strong> Should be negotiated to $0 (not a real fee)</li>
+                </ul>
+
+                <p>Florida law requires dealers to disclose all fees separately on the purchase contract. Doc fees are subject to sales tax in Florida, so a $700 doc fee actually costs you $742 at 6% tax. Always negotiate doc fees before agreeing to purchase.</p>
+
+                <h2>Out-of-State Vehicle Purchases and Florida Use Tax</h2>
+
+                <p>When you purchase a vehicle outside Florida and bring it into the state, you must pay Florida use tax when registering the vehicle. Florida use tax is functionally identical to sales tax at 6% plus applicable county surtax, collected by the county tax collector when you register the vehicle.</p>
+
+                <p>Florida provides a credit for sales tax paid to other states:</p>
+
+                <ul>
+                    <li><strong>Other State Tax Equal or Higher:</strong> No additional Florida tax due</li>
+                    <li><strong>Other State Tax Lower:</strong> Pay the difference to Florida</li>
+                    <li><strong>No Tax State (e.g., Oregon):</strong> Pay full 6% Florida use tax</li>
+                </ul>
+
+                <p>For example, if you purchased a vehicle in Georgia (4% sales tax) and paid $1,200 in Georgia tax, you'll owe Florida an additional $600 to reach the 6% Florida rate plus any applicable county surtax. If you purchased in California (9.5% tax) and paid $2,850, you owe no additional Florida tax as California's rate exceeded Florida's.</p>
+
+                <p>To register an out-of-state vehicle in Florida, you'll need:</p>
+
+                <ul>
+                    <li><strong>Out-of-State Title:</strong> Properly signed by seller</li>
+                    <li><strong>Proof of Tax Paid:</strong> Sales receipt showing tax paid elsewhere</li>
+                    <li><strong>VIN Inspection:</strong> Required for all out-of-state vehicles</li>
+                    <li><strong>Florida Insurance:</strong> Proof of FL auto insurance required</li>
+                    <li><strong>Use Tax Payment:</strong> Pay difference if Florida rate is higher</li>
+                    <li><strong>Title Fee:</strong> $77.25</li>
+                    <li><strong>Registration Fees:</strong> Based on whether you have FL plate to transfer</li>
+                </ul>
+
+                <h2>Private Party Vehicle Sales in Florida</h2>
+
+                <p>When buying a vehicle from a private party (individual seller, not a dealer) in Florida, you're responsible for paying use tax directly to the county tax collector when you register the vehicle. Private party sales require careful documentation to avoid disputes:</p>
+
+                <ul>
+                    <li><strong>Bill of Sale:</strong> Document with VIN, purchase price, date, signatures</li>
+                    <li><strong>Florida Title:</strong> Signed by seller in proper location with odometer disclosure</li>
+                    <li><strong>Use Tax:</strong> 6% on purchase price (or DMV assessed value if higher)</li>
+                    <li><strong>County Surtax:</strong> Applicable surtax on first $5,000</li>
+                    <li><strong>No Trade-In Credit:</strong> Trade-in credits apply only with licensed dealers</li>
+                </ul>
+
+                <p>Florida DMV may challenge suspiciously low reported purchase prices on private party sales. If the reported price is significantly below market value, the tax collector may assess use tax based on their market value tables rather than your reported price. Always report the actual purchase price truthfully to avoid penalties.</p>
+
+                <h2>Gift and Family Transfer Exemptions</h2>
+
+                <p>Florida provides sales tax exemptions for certain vehicle transfers between family members. To qualify for the gift exemption, the vehicle must be transferred without any payment or valuable consideration:</p>
+
+                <ul>
+                    <li><strong>Eligible Relationships:</strong> Spouse, parent, child, grandparent, grandchild, sibling (by blood or adoption)</li>
+                    <li><strong>Required Documentation:</strong> Completed affidavit stating gift transfer, signed by both parties</li>
+                    <li><strong>Title Requirement:</strong> Title must indicate "gift" rather than a purchase price</li>
+                    <li><strong>No Money Exchange:</strong> Even $1 payment disqualifies the gift exemption</li>
+                </ul>
+
+                <p>When properly documented, gift transfers pay only the $77.25 title fee plus applicable registration fees - no sales or use tax. This exemption can save thousands of dollars on expensive vehicles transferred between family members.</p>
+
+                <h2>Florida Vehicle Registration Renewal Process</h2>
+
+                <p>Annual registration renewals in Florida are straightforward and can be completed online, by mail, or in person at county tax collector offices. Renewal fees include only the weight-based annual registration fee plus any optional specialty plate fees - you don't pay the title fee or initial registration fee again.</p>
+
+                <ul>
+                    <li><strong>Online Renewal:</strong> Available at county tax collector websites ($2-$3 convenience fee)</li>
+                    <li><strong>Mail Renewal:</strong> Send payment by mail ($5.45 mail processing fee)</li>
+                    <li><strong>In-Person Renewal:</strong> Visit county tax collector office (no extra fee)</li>
+                    <li><strong>Renewal Period:</strong> Can renew up to 3 months in advance</li>
+                    <li><strong>Late Penalties:</strong> $5-$25 late fees if renewed after expiration</li>
+                </ul>
+
+                <p>Most counties offer kiosk renewals at convenient locations (grocery stores, shopping centers) for instant registration renewal without waiting in line.</p>
+
+                <h2>How to Calculate Your Florida TTL Fees</h2>
+
+                <p>To manually calculate your complete Florida tax title and license costs, follow this formula:</p>
+
+                <div class="info-box">
+                    <h3>📊 Florida TTL Calculation Formula</h3>
+                    <p><strong>Step 1: Calculate State Sales Tax (6%)</strong></p>
+                    <ul>
+                        <li>Taxable Amount = Purchase Price - Trade-In Value</li>
+                        <li>State Tax = Taxable Amount × 6%</li>
+                    </ul>
+                    <p><strong>Step 2: Calculate County Surtax</strong></p>
+                    <ul>
+                        <li>Surtax Base = Minimum of ($5,000 or Taxable Amount)</li>
+                        <li>County Surtax = Surtax Base × County Rate</li>
+                        <li>Maximum surtax: $75 (at 1.5% rate)</li>
+                    </ul>
+                    <p><strong>Step 3: Add Title and Registration Fees</strong></p>
+                    <ul>
+                        <li>Title: $77.25 (one-time)</li>
+                        <li>Initial Registration: $225.00 (if no plate to transfer)</li>
+                        <li>OR Plate Transfer: $7.85 (if transferring existing plate)</li>
+                        <li>License Plate: $28.00 (if new plate needed)</li>
+                        <li>Weight-Based Registration: $14.50-$57.60 (annual)</li>
+                    </ul>
+                    <p><strong>Step 4: Total TTL Fees</strong></p>
+                    <ul>
+                        <li>Total = State Tax + County Surtax + All DMV Fees</li>
+                    </ul>
+                </div>
+
+                <h2>Frequently Asked Questions - Florida TTL Calculator</h2>
+
+                <h3>What is the vehicle sales tax rate in Florida?</h3>
+                <p>Florida charges 6% state sales tax on all vehicle purchases plus optional county discretionary surtaxes from 0.5% to 1.5%. The county surtax applies only to the first $5,000 of the purchase price, creating maximum total rates of 6%-7.5% depending on your county.</p>
+
+                <h3>Does Florida allow trade-in tax credit?</h3>
+                <p>Yes, Florida allows trade-in credits when you trade your old vehicle to a licensed dealer. You only pay sales tax on the difference between the new vehicle price and your trade-in value, applying to both state tax and county surtax.</p>
+
+                <h3>How much is the initial registration fee in Florida?</h3>
+                <p>Florida charges a $225 one-time initial registration fee when you purchase a vehicle and have no existing Florida plate to transfer. If you're replacing a vehicle and transferring your existing plate, you pay only $7.85 instead of $225.</p>
+
+                <h3>What is Florida's title transfer fee?</h3>
+                <p>The Florida certificate of title fee is $77.25 for all vehicle title transfers. This is a one-time fee paid when purchasing a vehicle or transferring ownership.</p>
+
+                <h3>Does Florida charge extra fees for electric vehicles?</h3>
+                <p>No, as of 2025 Florida does not charge additional registration fees for electric vehicles or hybrids. EVs pay the same weight-based registration fees as comparable gas-powered vehicles. Proposed legislation for EV fees ($200 annually) has not been enacted.</p>
+
+                <h3>How much are Florida dealer doc fees?</h3>
+                <p>Florida has no legal cap on dealer documentary fees. The average is approximately $670, but fees range from $300-$900+ depending on the dealership. Doc fees are fully negotiable and subject to the 6% sales tax.</p>
+
+                <h3>Do I pay Florida sales tax on an out-of-state vehicle purchase?</h3>
+                <p>Yes, you pay Florida use tax (6% plus county surtax) when registering an out-of-state vehicle in Florida. Florida provides credit for sales tax paid to other states, so you only pay the difference if Florida's rate is higher.</p>
+
+                <h3>Are vehicle gifts exempt from Florida sales tax?</h3>
+                <p>Yes, vehicles transferred as gifts between immediate family members (spouse, parent, child, grandparent, grandchild, sibling) are exempt from sales tax. The title must indicate "gift" and no money can be exchanged. You still pay title ($77.25) and registration fees.</p>
+
+                <h3>How are Florida registration fees calculated?</h3>
+                <p>Florida annual registration fees are based on vehicle weight: $14.50-$27.60 for most passenger cars, $35.60-$45.60 for SUVs and trucks. The first registration also includes a $225 initial registration fee unless you're transferring an existing Florida plate.</p>
+
+                <h3>Can I renew my Florida registration online?</h3>
+                <p>Yes, most Florida counties offer online registration renewal through county tax collector websites. There's typically a $2-$3 convenience fee for online renewal. You can also renew by mail ($5.45 fee) or in person at tax collector offices.</p>
+
+                <p>For additional assistance with Florida vehicle registration and tax title license questions, contact your local <a href="https://www.flhsmv.gov/locations/" class="external-link" target="_blank" rel="nofollow">county tax collector office</a> or visit the <a href="https://www.flhsmv.gov/" class="external-link" target="_blank" rel="nofollow">Florida Department of Highway Safety and Motor Vehicles</a>. Our Florida tax title license calculator provides accurate estimates based on current 2025 regulations, but always verify final costs with your county tax collector before completing your purchase.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="related-states">
+        <div class="container">
+            <h2 style="text-align: center; color: #1e3a8a; margin-bottom: 2rem;">Tax Title License Calculators for Other States</h2>
+            <div class="states-grid">
+                <div class="state-link-box">
+                    <a href="/texas-vehicle-tax-title-and-license-calculator/">Texas TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/california-tax-title-and-license-calculator/">California TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/new-york-tax-title-and-license-calculator/">New York TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/tax-title-and-license-calculator-arizona/">Arizona TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/georgia-tax-title-and-license-calculator/">Georgia TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/north-carolina-ttl-calculator/">North Carolina TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/illinois-tax-title-and-license-calculator/">Illinois TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/">View All States →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Tax Title License Calculator | <a href="/">Home</a> | <a href="/#calculators">All State Calculators</a></p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">Disclaimer: This calculator provides estimates based on current Florida law. Verify with your county tax collector for official fees.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('ttlCalculator').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const countyRate = parseFloat(document.getElementById('county').value);
+            const vehiclePrice = parseFloat(document.getElementById('vehiclePrice').value) || 0;
+            const tradeIn = parseFloat(document.getElementById('tradeIn').value) || 0;
+            const vehicleWeight = parseFloat(document.getElementById('vehicleWeight').value);
+            const registrationType = document.getElementById('registrationType').value;
+            
+            const notes = [];
+            
+            // Sales Tax Calculation - FLORIDA ALLOWS TRADE-IN CREDIT
+            const taxableAmount = Math.max(0, vehiclePrice - tradeIn);
+            
+            // State Tax (6% on full amount)
+            const stateTax = taxableAmount * 0.06;
+            
+            // County Surtax (applies only to first $5,000)
+            const surtaxRate = countyRate - 6.0;
+            const surtaxBase = Math.min(5000, taxableAmount);
+            const countySurtax = surtaxBase * (surtaxRate / 100);
+            
+            const totalSalesTax = stateTax + countySurtax;
+            
+            if (tradeIn > 0) {
+                const taxSavings = (tradeIn * 0.06) + (Math.min(5000, tradeIn) * (surtaxRate / 100));
+                notes.push(`✅ Trade-in saved you $${taxSavings.toFixed(2)} in sales tax`);
+            }
+            
+            // Title Fee
+            let titleFee = 0;
+            const titleRow = document.getElementById('titleRow');
+            if (registrationType !== 'renewal') {
+                titleFee = 77.25;
+                titleRow.style.display = 'flex';
+            } else {
+                titleRow.style.display = 'none';
+            }
+            
+            // Initial Registration or Transfer
+            let initialRegFee = 0;
+            let plateFee = 0;
+            const initialRegRow = document.getElementById('initialRegRow');
+            
+            if (registrationType === 'new' || registrationType === 'used') {
+                initialRegFee = 225;
+                plateFee = 28;
+                initialRegRow.style.display = 'flex';
+                notes.push('$225 initial registration fee applies (first-time FL registration)');
+            } else if (registrationType === 'transfer') {
+                plateFee = 7.85;
+                initialRegRow.style.display = 'none';
+                notes.push('Transferring existing FL plate: $7.85 (saves $225 initial registration fee)');
+            } else {
+                plateFee = 0;
+                initialRegRow.style.display = 'none';
+            }
+            
+            // Weight-based registration (annual)
+            const weightFee = vehicleWeight;
+            
+            // Surtax display
+            const surtaxRow = document.getElementById('surtaxRow');
+            if (countySurtax > 0) {
+                surtaxRow.style.display = 'flex';
+                notes.push(`County surtax applied to first $${surtaxBase.toLocaleString()} only`);
+            } else {
+                surtaxRow.style.display = 'none';
+            }
+            
+            // Calculate totals
+            const totalTTL = totalSalesTax + titleFee + initialRegFee + plateFee + weightFee;
+            const outTheDoor = vehiclePrice + totalTTL;
+            
+            // Display results
+            document.getElementById('displayPrice').textContent = '$' + vehiclePrice.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('displayTradeIn').textContent = '-$' + tradeIn.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('displayTaxable').textContent = '$' + taxableAmount.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('displayStateTax').textContent = '$' + stateTax.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('displaySurtax').textContent = '$' + countySurtax.toFixed(2);
+            document.getElementById('displayPlateFee').textContent = '$' + plateFee.toFixed(2);
+            document.getElementById('displayWeightFee').textContent = '$' + weightFee.toFixed(2);
+            document.getElementById('displayTotal').textContent = '$' + totalTTL.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('displayOutTheDoor').textContent = '$' + outTheDoor.toLocaleString('en-US', {minimumFractionDigits: 2});
+            
+            // Display notes
+            const notesSection = document.getElementById('notesSection');
+            const notesList = document.getElementById('notesList');
+            if (notes.length > 0) {
+                notesList.innerHTML = notes.map(note => `<li>${note}</li>`).join('');
+                notesSection.style.display = 'block';
+            } else {
+                notesSection.style.display = 'none';
+            }
+            
+            // Show results
+            document.getElementById('placeholderContent').style.display = 'none';
+            document.getElementById('resultsContent').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

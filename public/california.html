@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="California tax title license calculator 2025. Calculate CA vehicle sales tax 7.25%-10.75%, DMV fees, VLF 0.65%, and registration costs. Accurate California TTL calculator with county-specific rates.">
+    <title>California Tax Title License Calculator 2025 - CA TTL Fees & VLF</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background-color: #f8f9fa; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Header */
+        header { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 1rem 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.3rem; font-weight: bold; }
+        .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+        .nav-links a { color: white; text-decoration: none; transition: opacity 0.3s; }
+        .nav-links a:hover { opacity: 0.8; }
+        
+        /* Hero */
+        .hero { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 3rem 0; text-align: center; }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 1rem; line-height: 1.2; }
+        .hero p { font-size: 1.1rem; opacity: 0.95; margin-bottom: 0.5rem; }
+        .breadcrumb { margin-bottom: 1rem; opacity: 0.9; font-size: 0.95rem; }
+        .breadcrumb a { color: #fbbf24; text-decoration: none; }
+        
+        /* Calculator Section */
+        .calculator-section { background: white; padding: 3rem 0; }
+        .calc-layout { display: grid; grid-template-columns: 1.2fr 1fr; gap: 2rem; max-width: 1300px; margin: 0 auto; }
+        
+        .calculator-main { background: #f8f9fa; padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .calculator-main h2 { color: #1e3a8a; margin-bottom: 2rem; text-align: center; font-size: 1.8rem; }
+        
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group.full-width { grid-column: 1 / -1; }
+        .form-group label { display: block; margin-bottom: 0.6rem; font-weight: 600; color: #1e3a8a; font-size: 0.95rem; }
+        .form-group input, .form-group select { width: 100%; padding: 0.85rem; border: 2px solid #e5e7eb; border-radius: 6px; font-size: 1rem; transition: border-color 0.3s; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+        
+        .help-text { font-size: 0.85rem; color: #6b7280; margin-top: 0.4rem; display: flex; align-items: center; gap: 0.3rem; }
+        .help-text a { color: #3b82f6; text-decoration: none; }
+        .help-text a:hover { text-decoration: underline; }
+        .help-icon { display: inline-block; width: 16px; height: 16px; background: #3b82f6; color: white; border-radius: 50%; text-align: center; line-height: 16px; font-size: 0.7rem; cursor: help; }
+        
+        .calculate-btn { width: 100%; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; padding: 1.1rem; border: none; border-radius: 8px; font-size: 1.15rem; font-weight: bold; cursor: pointer; transition: transform 0.2s, box-shadow 0.3s; margin-top: 1rem; }
+        .calculate-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4); }
+        .calculate-btn:active { transform: translateY(0); }
+        
+        /* Results Panel */
+        .results-panel { background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); position: sticky; top: 2rem; max-height: 90vh; overflow-y: auto; }
+        .results-panel h3 { color: #1e3a8a; margin-bottom: 1.5rem; font-size: 1.5rem; text-align: center; }
+        
+        .result-section { margin-bottom: 2rem; }
+        .result-section-title { font-size: 1.1rem; font-weight: 600; color: #1e3a8a; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e5e7eb; }
+        
+        .result-item { display: flex; justify-content: space-between; padding: 0.7rem 0; border-bottom: 1px solid #f3f4f6; }
+        .result-item:last-child { border-bottom: none; }
+        .result-label { color: #6b7280; font-size: 0.95rem; }
+        .result-value { font-weight: 600; color: #1f2937; }
+        
+        .result-total { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 1.3rem; border-radius: 8px; margin-top: 1.5rem; }
+        .result-total .result-item { border-bottom: none; padding: 0.4rem 0; }
+        .result-total .result-label, .result-total .result-value { color: white; }
+        .result-total .total-amount { font-size: 2rem; font-weight: bold; }
+        
+        .info-alert { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 1rem; margin: 1.5rem 0; border-radius: 4px; font-size: 0.9rem; color: #1e40af; }
+        .warning-alert { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 1rem; margin: 1.5rem 0; border-radius: 4px; font-size: 0.9rem; color: #92400e; }
+        
+        /* Content Section */
+        .content-section { padding: 4rem 0; background: white; }
+        .content-wrapper { max-width: 1100px; margin: 0 auto; }
+        .content-wrapper h2 { color: #1e3a8a; margin-bottom: 1.5rem; font-size: 2rem; margin-top: 3rem; }
+        .content-wrapper h2:first-child { margin-top: 0; }
+        .content-wrapper h3 { color: #1e3a8a; margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.5rem; }
+        .content-wrapper p { margin-bottom: 1.2rem; color: #555; line-height: 1.8; }
+        .content-wrapper ul { margin-left: 2rem; margin-bottom: 1.5rem; }
+        .content-wrapper li { margin-bottom: 0.8rem; color: #555; line-height: 1.7; }
+        .content-wrapper strong { color: #1e3a8a; }
+        
+        .info-box { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 1.5rem; margin: 2rem 0; border-radius: 5px; }
+        .info-box h3 { color: #1e3a8a; margin-bottom: 1rem; margin-top: 0; }
+        .info-box ul { margin-top: 1rem; }
+        
+        .external-link { color: #3b82f6; text-decoration: none; font-weight: 600; }
+        .external-link:hover { text-decoration: underline; }
+        
+        /* Table Styles */
+        .fee-table { width: 100%; border-collapse: collapse; margin: 2rem 0; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .fee-table th { background: #1e3a8a; color: white; padding: 1rem; text-align: left; font-weight: 600; }
+        .fee-table td { padding: 0.9rem 1rem; border-bottom: 1px solid #e5e7eb; }
+        .fee-table tr:hover { background: #f8f9fa; }
+        
+        /* Related States */
+        .related-states { padding: 3rem 0; background: #f8f9fa; }
+        .states-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; margin-top: 2rem; }
+        .state-link-box { background: white; padding: 1.2rem; border-radius: 8px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: transform 0.3s, box-shadow 0.3s; border-left: 4px solid #3b82f6; }
+        .state-link-box:hover { transform: translateY(-3px); box-shadow: 0 4px 15px rgba(0,0,0,0.12); }
+        .state-link-box a { color: #1e3a8a; text-decoration: none; font-weight: 600; font-size: 1.05rem; }
+        
+        /* Footer */
+        footer { background: #1e293b; color: white; padding: 2.5rem 0; text-align: center; }
+        footer a { color: #fbbf24; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+        
+        @media (max-width: 1024px) {
+            .calc-layout { grid-template-columns: 1fr; }
+            .results-panel { position: static; margin-top: 2rem; max-height: none; }
+        }
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2rem; }
+            .content-wrapper h2 { font-size: 1.7rem; }
+            .content-wrapper h3 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">🚗 Tax Title License Calculator</div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/#calculators">All States</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="/">Home</a> / <a href="/#calculators">State Calculators</a> / California
+            </div>
+            <h1>California Tax Title License Calculator 2025</h1>
+            <p>Calculate CA vehicle sales tax 7.25%-10.75%, DMV fees, and VLF 0.65%</p>
+            <p>No trade-in credit • Value-based registration • County-specific rates</p>
+        </div>
+    </section>
+
+    <section class="calculator-section">
+        <div class="container">
+            <div class="calc-layout">
+                <!-- Calculator Form -->
+                <div class="calculator-main">
+                    <h2>California TTL Fee Calculator</h2>
+                    
+                    <form id="ttlCalculator">
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label for="location">County / City</label>
+                                <select id="location" required>
+                                    <optgroup label="Los Angeles County">
+                                        <option value="9.5">Los Angeles City (9.5%)</option>
+                                        <option value="10.25">Santa Monica (10.25%)</option>
+                                        <option value="10.5">Pasadena (10.5%)</option>
+                                        <option value="10.75">Inglewood (10.75%)</option>
+                                        <option value="9.5">Other LA County (9.5%)</option>
+                                    </optgroup>
+                                    <optgroup label="San Diego County">
+                                        <option value="7.75">San Diego (7.75%)</option>
+                                        <option value="7.75">Chula Vista (7.75%)</option>
+                                    </optgroup>
+                                    <optgroup label="Orange County">
+                                        <option value="7.75">Anaheim (7.75%)</option>
+                                        <option value="7.75">Irvine (7.75%)</option>
+                                        <option value="7.75">Santa Ana (7.75%)</option>
+                                    </optgroup>
+                                    <optgroup label="San Francisco Bay Area">
+                                        <option value="8.625">San Francisco (8.625%)</option>
+                                        <option value="10.75">Oakland (10.75%)</option>
+                                        <option value="9.875">San Jose (9.875%)</option>
+                                        <option value="9.375">San Mateo (9.375%)</option>
+                                    </optgroup>
+                                    <optgroup label="Other Major Cities">
+                                        <option value="8.975">Fresno (8.975%)</option>
+                                        <option value="8.75">Sacramento (8.75%)</option>
+                                        <option value="8.75">Bakersfield (8.75%)</option>
+                                        <option value="8.75">Riverside (8.75%)</option>
+                                        <option value="7.25">Other Counties (7.25%)</option>
+                                    </optgroup>
+                                </select>
+                                <div class="help-text">
+                                    <span class="help-icon">?</span>
+                                    Tax rate based on registration address, not purchase location
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="vehiclePrice">Vehicle Purchase Price ($)</label>
+                                <input type="number" id="vehiclePrice" placeholder="35000" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="vehicleAge">Vehicle Age (years)</label>
+                                <input type="number" id="vehicleAge" placeholder="0" min="0" max="20" required>
+                                <div class="help-text">For VLF depreciation calculation</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="tradeIn">Trade-In Value ($) - Optional</label>
+                                <input type="number" id="tradeIn" placeholder="0">
+                                <div class="help-text">⚠️ Does NOT reduce sales tax in CA</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="vehicleType">Vehicle Type</label>
+                                <select id="vehicleType" required>
+                                    <option value="passenger">Passenger Car</option>
+                                    <option value="truck">Pickup Truck</option>
+                                    <option value="suv">SUV</option>
+                                    <option value="electric">Electric Vehicle</option>
+                                    <option value="hybrid">Hybrid Vehicle</option>
+                                    <option value="motorcycle">Motorcycle</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="registrationType">Registration Type</label>
+                                <select id="registrationType" required>
+                                    <option value="new">New Vehicle Registration</option>
+                                    <option value="used">Used Vehicle Purchase</option>
+                                    <option value="out-of-state">Out-of-State Vehicle</option>
+                                    <option value="renewal">Annual Renewal</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="calculate-btn">Calculate California TTL Fees</button>
+                    </form>
+
+                    <div class="warning-alert">
+                        <strong>⚠️ California Does NOT Allow Trade-In Credit:</strong> Unlike most states, California charges sales tax on the full vehicle price regardless of trade-in value.
+                    </div>
+                </div>
+
+                <!-- Results Panel -->
+                <div class="results-panel">
+                    <h3>Your California TTL Breakdown</h3>
+                    
+                    <div id="resultsContent" style="display: none;">
+                        <div class="result-section">
+                            <div class="result-section-title">Sales Tax Calculation</div>
+                            <div class="result-item">
+                                <span class="result-label">Vehicle Price</span>
+                                <span class="result-value" id="displayPrice">$0.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Trade-In Value</span>
+                                <span class="result-value" id="displayTradeIn">$0.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Taxable Amount</span>
+                                <span class="result-value" id="displayTaxable">$0.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Sales Tax (<span id="taxRate">0</span>%)</span>
+                                <span class="result-value" id="displaySalesTax">$0.00</span>
+                            </div>
+                        </div>
+
+                        <div class="result-section">
+                            <div class="result-section-title">DMV Fees & Registration</div>
+                            <div class="result-item">
+                                <span class="result-label">Title Fee</span>
+                                <span class="result-value">$23.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Registration Fee</span>
+                                <span class="result-value">$46.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Vehicle License Fee (VLF 0.65%)</span>
+                                <span class="result-value" id="displayVLF">$0.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Transportation Improvement Fee</span>
+                                <span class="result-value" id="displayTIF">$0.00</span>
+                            </div>
+                            <div class="result-item" id="smogRow">
+                                <span class="result-label">Smog Transfer Fee</span>
+                                <span class="result-value">$8.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">CHP Fee</span>
+                                <span class="result-value">$28.00</span>
+                            </div>
+                        </div>
+
+                        <div class="result-total">
+                            <div class="result-item">
+                                <span class="result-label" style="font-size: 1.1rem;">TOTAL TTL FEES</span>
+                                <span class="result-value total-amount" id="displayTotal">$0.00</span>
+                            </div>
+                            <div class="result-item" style="font-size: 0.9rem; opacity: 0.9;">
+                                <span class="result-label">Total Out-the-Door Cost</span>
+                                <span class="result-value" id="displayOutTheDoor">$0.00</span>
+                            </div>
+                        </div>
+
+                        <div id="notesSection" class="info-alert" style="display: none;">
+                            <strong>Important Notes:</strong>
+                            <ul id="notesList" style="margin-top: 0.5rem; margin-left: 1.2rem;"></ul>
+                        </div>
+                    </div>
+
+                    <div id="placeholderContent">
+                        <p style="text-align: center; color: #9ca3af; padding: 2rem;">
+                            Enter your vehicle information and click Calculate to see your complete California TTL breakdown
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="container">
+            <div class="content-wrapper">
+                <h2>Complete Guide to California Tax Title License Fees 2025</h2>
+                
+                <p>When purchasing a vehicle in California, understanding tax title and license (TTL) fees is essential for accurate budgeting. California has one of the most complex and expensive vehicle registration systems in the United States, with sales tax rates ranging from 7.25% to 10.75% depending on your county and city, plus a value-based Vehicle License Fee (VLF) of 0.65% annually. Our comprehensive California tax title license calculator helps you estimate exact costs including all DMV fees before completing your vehicle purchase.</p>
+
+                <div class="info-box">
+                    <h3>📋 Official California DMV Resources</h3>
+                    <p>For the most current information on California vehicle registration and fees, visit the official <a href="https://www.dmv.ca.gov/" class="external-link" target="_blank" rel="nofollow">California Department of Motor Vehicles</a>. You can also use the <a href="https://www.dmv.ca.gov/portal/vehicle-registration/registration-fees/vehicle-registration-fee-calculator/" class="external-link" target="_blank" rel="nofollow">CA DMV Fee Calculator</a> and check sales tax rates at the <a href="https://cdtfa.ca.gov/taxes-and-fees/sales-use-tax-rates.htm" class="external-link" target="_blank" rel="nofollow">California Department of Tax and Fee Administration</a>.</p>
+                </div>
+
+                <h2>California Vehicle Sales Tax - 7.25% to 10.75%</h2>
+                
+                <p>California charges a statewide base sales tax rate of 7.25% on all vehicle purchases, consisting of 6% state tax plus 1.25% mandatory local allocation. However, the actual rate you pay varies significantly by location because counties, cities, and special districts can add additional local taxes up to 2.5%, resulting in combined rates ranging from 7.25% to 10.75% across the state.</p>
+
+                <p>The California vehicle sales tax rate is determined by your registration address (where you live), not where you purchase the vehicle. This means if you live in Los Angeles but buy a car in Orange County, you'll pay the Los Angeles County rate of 9.5% when you register the vehicle. The tax is collected either by the dealer at the time of purchase or paid directly to the DMV for private party sales.</p>
+
+                <table class="fee-table">
+                    <tr>
+                        <th>Major California Cities</th>
+                        <th>Sales Tax Rate</th>
+                        <th>County</th>
+                    </tr>
+                    <tr>
+                        <td>Los Angeles</td>
+                        <td>9.5%</td>
+                        <td>Los Angeles County</td>
+                    </tr>
+                    <tr>
+                        <td>San Francisco</td>
+                        <td>8.625%</td>
+                        <td>San Francisco County</td>
+                    </tr>
+                    <tr>
+                        <td>San Diego</td>
+                        <td>7.75%</td>
+                        <td>San Diego County</td>
+                    </tr>
+                    <tr>
+                        <td>San Jose</td>
+                        <td>9.875%</td>
+                        <td>Santa Clara County</td>
+                    </tr>
+                    <tr>
+                        <td>Oakland</td>
+                        <td>10.75%</td>
+                        <td>Alameda County</td>
+                    </tr>
+                    <tr>
+                        <td>Fresno</td>
+                        <td>8.975%</td>
+                        <td>Fresno County</td>
+                    </tr>
+                    <tr>
+                        <td>Sacramento</td>
+                        <td>8.75%</td>
+                        <td>Sacramento County</td>
+                    </tr>
+                    <tr>
+                        <td>Pasadena</td>
+                        <td>10.5%</td>
+                        <td>Los Angeles County</td>
+                    </tr>
+                </table>
+
+                <h3>California Does NOT Allow Trade-In Credit</h3>
+
+                <p>One of the most important and costly differences in California vehicle taxation is that trade-in values do NOT reduce your sales tax liability. In most states, you only pay sales tax on the difference between your new vehicle price and your trade-in value. However, California law requires dealers to include the trade-in allowance in the sales price for tax purposes, meaning you pay sales tax on the full purchase price regardless of your trade-in.</p>
+
+                <p>This California rule significantly increases your tax title and license costs compared to states that allow trade-in credits. For example:</p>
+
+                <div class="info-box">
+                    <h3>💰 California vs. Texas Trade-In Tax Comparison</h3>
+                    <p><strong>Example: $40,000 vehicle with $15,000 trade-in</strong></p>
+                    <p><strong>Texas (with trade-in credit):</strong></p>
+                    <ul>
+                        <li>Taxable Amount: $40,000 - $15,000 = $25,000</li>
+                        <li>Sales Tax (6.25%): $1,562.50</li>
+                    </ul>
+                    <p><strong>California (NO trade-in credit):</strong></p>
+                    <ul>
+                        <li>Taxable Amount: $40,000 (full price)</li>
+                        <li>Sales Tax (9.5% LA): $3,800</li>
+                        <li><strong>Extra Cost: $2,237.50</strong></li>
+                    </ul>
+                </div>
+
+                <h2>Vehicle License Fee (VLF) - California's Annual Tax</h2>
+
+                <p>The Vehicle License Fee (VLF) is California's most distinctive vehicle cost component. Unlike most states with flat registration fees, California charges an annual fee equal to 0.65% of your vehicle's assessed value. The VLF is calculated based on the vehicle's purchase price when new, depreciated by 10% each year for the first 11 years of ownership.</p>
+
+                <p>The VLF replaced California's personal property tax on vehicles and is the portion of your registration fee that's tax-deductible on your federal income tax return. The fee is substantial for expensive vehicles but decreases as the vehicle ages:</p>
+
+                <ul>
+                    <li><strong>Year 1:</strong> 0.65% of $50,000 = $325 VLF</li>
+                    <li><strong>Year 2:</strong> 0.65% of $45,000 (90% of original) = $292.50</li>
+                    <li><strong>Year 3:</strong> 0.65% of $40,500 (90% of Year 2) = $263.25</li>
+                    <li><strong>Year 5:</strong> 0.65% of $32,805 = $213.23</li>
+                    <li><strong>Year 10:</strong> 0.65% of $17,433 = $113.31</li>
+                </ul>
+
+                <p>The VLF depreciation schedule continues until Year 11, after which the vehicle maintains the Year 11 value for VLF calculation purposes. You can verify your VLF amount using the official <a href="https://www.dmv.ca.gov/portal/vehicle-registration/registration-fees/vehicle-registration-fee-calculator/" class="external-link" target="_blank" rel="nofollow">California DMV VLF Calculator</a>.</p>
+
+                <h2>California DMV Title and Registration Fees</h2>
+
+                <p>California charges several mandatory fees when registering a vehicle. These fees are consistent statewide and apply to all vehicle purchases and registrations:</p>
+
+                <table class="fee-table">
+                    <tr>
+                        <th>Fee Type</th>
+                        <th>Amount</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>Certificate of Title</td>
+                        <td>$23</td>
+                        <td>One-time title transfer fee</td>
+                    </tr>
+                    <tr>
+                        <td>Registration Fee</td>
+                        <td>$46</td>
+                        <td>Annual base registration</td>
+                    </tr>
+                    <tr>
+                        <td>Vehicle License Fee (VLF)</td>
+                        <td>0.65% of value</td>
+                        <td>Annual, decreases with age</td>
+                    </tr>
+                    <tr>
+                        <td>Transportation Improvement Fee</td>
+                        <td>$25-$175</td>
+                        <td>Based on vehicle value</td>
+                    </tr>
+                    <tr>
+                        <td>California Highway Patrol Fee</td>
+                        <td>$28</td>
+                        <td>Annual enforcement fee</td>
+                    </tr>
+                    <tr>
+                        <td>Smog Transfer Fee</td>
+                        <td>$8</td>
+                        <td>Vehicles 4+ years old exempt from smog</td>
+                    </tr>
+                    <tr>
+                        <td>License Plates (new)</td>
+                        <td>$29</td>
+                        <td>If new plates needed</td>
+                    </tr>
+                </table>
+
+                <h3>Transportation Improvement Fee (TIF)</h3>
+
+                <p>California's Transportation Improvement Fee is an additional annual charge based on your vehicle's market value. The TIF was implemented to fund road repairs and transportation infrastructure and is assessed on a sliding scale:</p>
+
+                <ul>
+                    <li><strong>$0 to $4,999:</strong> $25 TIF</li>
+                    <li><strong>$5,000 to $24,999:</strong> $50 TIF</li>
+                    <li><strong>$25,000 to $34,999:</strong> $100 TIF</li>
+                    <li><strong>$35,000 to $59,999:</strong> $150 TIF</li>
+                    <li><strong>$60,000 and above:</strong> $175 TIF</li>
+                </ul>
+
+                <p>Vehicles over 10,000 pounds gross vehicle weight are exempt from the TIF. The fee is assessed annually based on the vehicle's depreciated value, so it may decrease over time as your vehicle ages.</p>
+
+                <h2>California Smog Certification Requirements</h2>
+
+                <p>California has the strictest vehicle emissions standards in the nation. Most vehicles must pass a smog check before registration, though there are important exemptions:</p>
+
+                <ul>
+                    <li><strong>Exempt:</strong> New vehicles (less than 4 model years old)</li>
+                    <li><strong>Exempt:</strong> Electric vehicles and some hybrid vehicles</li>
+                    <li><strong>Exempt:</strong> Diesel vehicles model year 1997 and older, or over 14,000 lbs</li>
+                    <li><strong>Exempt:</strong> Motorcycles model year 1975 and older</li>
+                    <li><strong>Required:</strong> Gasoline vehicles 4+ model years old (biennial testing)</li>
+                    <li><strong>Required:</strong> Diesel vehicles 1998-2006 model years over 14,000 lbs (annual)</li>
+                </ul>
+
+                <p>Smog inspections cost $30-$75 at certified STAR stations. While new vehicles are exempt from smog inspections for the first 4 years, they still pay an $8 smog transfer fee at registration. Failed smog tests require repairs before the vehicle can be registered, potentially costing hundreds to thousands of dollars for older vehicles.</p>
+
+                <p>California offers a $500 Consumer Assistance Program (CAP) for income-eligible residents to help pay for smog-related repairs. You can find authorized smog check stations at the <a href="https://www.bar.ca.gov/services/smog-check-station-locator" class="external-link" target="_blank" rel="nofollow">Bureau of Automotive Repair website</a>.</p>
+
+                <h2>Out-of-State Vehicle Transfers to California</h2>
+
+                <p>When bringing an out-of-state vehicle into California, you must register it within 20 days of establishing California residency or accepting employment in the state. The registration process includes paying California use tax (equivalent to sales tax) and meeting all DMV requirements:</p>
+
+                <ul>
+                    <li><strong>Use Tax:</strong> Pay California sales tax based on your registration address rate</li>
+                    <li><strong>Tax Credit:</strong> Credit allowed for sales tax paid in another state, but only up to the California amount</li>
+                    <li><strong>VIN Verification:</strong> Required for all out-of-state vehicles ($23)</li>
+                    <li><strong>Smog Certification:</strong> Must pass California smog test (exemptions apply)</li>
+                    <li><strong>Title Transfer:</strong> Submit out-of-state title plus California title fee ($23)</li>
+                    <li><strong>Registration Fees:</strong> Pay all standard California fees (VLF, TIF, registration, CHP)</li>
+                </ul>
+
+                <p>If you paid sales tax in another state, you receive credit only up to the California amount. For example, if you paid 6% tax in another state but California's rate at your address is 9.5%, you must pay the 3.5% difference to California. However, if you paid 10% in another state and California's rate is 9.5%, you don't receive a refund of the excess.</p>
+
+                <p>Total costs for transferring an out-of-state vehicle to California typically range from $2,000 to $5,000 depending on vehicle value, tax differential, and whether major repairs are needed to pass smog certification.</p>
+
+                <h2>California Dealer Documentary Fee - $85 Maximum</h2>
+
+                <p>California law caps dealer documentary fees at $85, one of the lowest in the nation. The doc fee covers the dealer's administrative costs for processing DMV paperwork, and dealers cannot charge more than $85 regardless of vehicle type or price. This fee is also subject to sales tax in California.</p>
+
+                <p>When purchasing from a California dealer, verify that all fees are properly disclosed and explained:</p>
+
+                <ul>
+                    <li><strong>Documentary Fee:</strong> Maximum $85 (taxable)</li>
+                    <li><strong>Tire Fee:</strong> $1.75 per tire (4 tires = $7)</li>
+                    <li><strong>Electronic Filing Fee:</strong> Varies, typically $5-$15</li>
+                    <li><strong>Advertising Fees:</strong> Illegal in California (cannot be charged)</li>
+                </ul>
+
+                <p>Be wary of dealers attempting to charge excessive fees beyond the legal $85 documentation limit. Any "dealer preparation" or "market adjustment" fees should be negotiated or eliminated entirely as they're not state-mandated charges.</p>
+
+                <h2>California Electric Vehicle and Hybrid Registration</h2>
+
+                <p>California does not charge additional annual registration fees for electric vehicles or hybrids, unlike many states. However, EV and hybrid owners should be aware of these registration considerations:</p>
+
+                <ul>
+                    <li><strong>Sales Tax:</strong> Full sales tax applies (no EV exemption)</li>
+                    <li><strong>VLF:</strong> Standard 0.65% VLF applies based on vehicle value</li>
+                    <li><strong>Smog Exempt:</strong> EVs and some hybrids exempt from smog certification</li>
+                    <li><strong>HOV Lane Access:</strong> Special Clean Air Vehicle stickers available ($22)</li>
+                    <li><strong>Rebates:</strong> California Clean Fuel Reward available (varies by model)</li>
+                </ul>
+
+                <p>While California doesn't penalize EV ownership with extra fees, the state's high overall registration costs still apply. A $60,000 electric vehicle will pay approximately $550-$650 in annual registration fees (VLF $390 + TIF $175 + registration $46 + other fees), significantly higher than most other states.</p>
+
+                <h2>How to Calculate Your California TTL Fees</h2>
+
+                <p>To manually calculate your complete California tax title and license costs, follow this comprehensive formula:</p>
+
+                <div class="info-box">
+                    <h3>📊 California TTL Calculation Formula</h3>
+                    <p><strong>Step 1: Calculate Sales Tax</strong></p>
+                    <ul>
+                        <li>Look up your registration address tax rate (7.25%-10.75%)</li>
+                        <li>Sales Tax = Purchase Price × Tax Rate</li>
+                        <li>Note: Trade-in does NOT reduce taxable amount in CA</li>
+                    </ul>
+                    <p><strong>Step 2: Calculate VLF (Vehicle License Fee)</strong></p>
+                    <ul>
+                        <li>VLF = Purchase Price × 0.65%</li>
+                        <li>Apply 10% annual depreciation for used vehicles</li>
+                    </ul>
+                    <p><strong>Step 3: Determine TIF (Transportation Improvement Fee)</strong></p>
+                    <ul>
+                        <li>$0-$4,999: $25</li>
+                        <li>$5,000-$24,999: $50</li>
+                        <li>$25,000-$34,999: $100</li>
+                        <li>$35,000-$59,999: $150</li>
+                        <li>$60,000+: $175</li>
+                    </ul>
+                    <p><strong>Step 4: Add Fixed Fees</strong></p>
+                    <ul>
+                        <li>Title: $23</li>
+                        <li>Registration: $46</li>
+                        <li>CHP: $28</li>
+                        <li>Smog Transfer: $8 (if applicable)</li>
+                        <li>License Plates: $29 (if new plates)</li>
+                    </ul>
+                    <p><strong>Step 5: Total TTL Fees</strong></p>
+                    <ul>
+                        <li>Total = Sales Tax + VLF + TIF + All Fixed Fees</li>
+                    </ul>
+                </div>
+
+                <p>Our California tax title license calculator automates this entire process and includes all county-specific tax rates, VLF depreciation schedules, and TIF tiers for accurate cost estimates.</p>
+
+                <h2>California Registration Renewal Costs</h2>
+
+                <p>Annual registration renewal in California includes most of the same fees as initial registration, minus the one-time title fee. Your renewal notice will itemize all charges:</p>
+
+                <ul>
+                    <li><strong>Registration Fee:</strong> $46</li>
+                    <li><strong>Vehicle License Fee:</strong> 0.65% of depreciated value (decreases annually)</li>
+                    <li><strong>Transportation Improvement Fee:</strong> $25-$175 (may decrease with depreciation)</li>
+                    <li><strong>CHP Fee:</strong> $28</li>
+                    <li><strong>County/District Fees:</strong> Varies by location ($0-$50)</li>
+                    <li><strong>Smog Abatement Fee:</strong> $25 (gasoline vehicles only)</li>
+                </ul>
+
+                <p>Annual renewal costs for most vehicles range from $200-$500 depending on vehicle value and location. High-value vehicles in expensive counties can exceed $700 annually. You can renew online, by mail, or in person at the DMV, with online renewal offering the convenience of immediate confirmation.</p>
+
+                <h2>California Private Party Vehicle Sales</h2>
+
+                <p>When purchasing a vehicle from a private party in California, you're responsible for paying all taxes and fees directly to the DMV within 10 days of purchase. The process requires:</p>
+
+                <ul>
+                    <li><strong>Bill of Sale:</strong> Document purchase price and terms</li>
+                    <li><strong>California Title:</strong> Signed by seller with odometer disclosure</li>
+                    <li><strong>Use Tax:</strong> Pay sales tax based on higher of purchase price or DMV market value</li>
+                    <li><strong>Smog Certification:</strong> Seller must provide valid smog within 90 days (exemptions apply)</li>
+                    <li><strong>REG 343 Form:</strong> Statement of Facts if no smog certificate</li>
+                    <li><strong>Insurance:</strong> Proof of California auto insurance required</li>
+                </ul>
+
+                <p>For private party sales, California DMV may assess use tax based on their market value tables if they determine the reported purchase price is significantly below fair market value. Always document the actual transaction terms to avoid disputes.</p>
+
+                <h2>Late Registration Penalties in California</h2>
+
+                <p>California imposes substantial penalties for late vehicle registration to encourage timely compliance:</p>
+
+                <ul>
+                    <li><strong>1-10 Days Late:</strong> 10% penalty on VLF and weight fees</li>
+                    <li><strong>11-30 Days Late:</strong> 20% penalty on VLF and weight fees</li>
+                    <li><strong>31 Days to 1 Year:</strong> 40% penalty + $50 registration fee + $50 CHP fee</li>
+                    <li><strong>1-2 Years Late:</strong> 80% penalty + $50 registration + $50 CHP</li>
+                    <li><strong>2+ Years Late:</strong> 160% penalty + $100 registration + $100 CHP</li>
+                </ul>
+
+                <p>These penalties add up quickly on expensive vehicles due to the percentage-based VLF penalties. For example, a vehicle with $400 VLF that's 60 days late will incur a $160 VLF penalty plus $100 in flat fees, totaling $260 in penalties alone.</p>
+
+                <h2>Frequently Asked Questions - California TTL Calculator</h2>
+
+                <h3>What is the vehicle sales tax rate in California?</h3>
+                <p>California vehicle sales tax ranges from 7.25% to 10.75% depending on your registration address. The statewide base rate is 7.25%, with counties and cities adding local taxes up to 2.5%. Los Angeles charges 9.5%, San Francisco 8.625%, and Oakland 10.75%.</p>
+
+                <h3>Does California allow trade-in tax credit?</h3>
+                <p>No, California does NOT allow trade-in values to reduce your sales tax. You must pay sales tax on the full purchase price of the new vehicle regardless of trade-in value. This makes California vehicle purchases significantly more expensive than states offering trade-in credits.</p>
+
+                <h3>What is the Vehicle License Fee (VLF) in California?</h3>
+                <p>The VLF is an annual fee equal to 0.65% of your vehicle's assessed value. It's calculated on the purchase price when new, depreciated by 10% annually for 11 years. For a $50,000 vehicle, Year 1 VLF is $325, decreasing to approximately $113 by Year 10.</p>
+
+                <h3>How much are California DMV registration fees?</h3>
+                <p>California registration includes multiple components: $46 base registration, 0.65% VLF based on vehicle value, $25-$175 Transportation Improvement Fee, $28 CHP fee, and $23 title fee for new registrations. Total first-year costs typically range from $300-$800 depending on vehicle value.</p>
+
+                <h3>Do I need smog certification in California?</h3>
+                <p>Yes, most vehicles require biennial smog certification. Exemptions include vehicles less than 4 model years old, electric vehicles, some hybrids, and diesel vehicles 1997 and older. Smog tests cost $30-$75 at STAR-certified stations.</p>
+
+                <h3>What is California's dealer documentary fee limit?</h3>
+                <p>California law caps dealer documentary fees at $85 maximum. This fee is also subject to sales tax. Dealers cannot legally charge more than $85 for documentation regardless of vehicle type or price.</p>
+
+                <h3>How do out-of-state vehicles get registered in California?</h3>
+                <p>Out-of-state vehicles must be registered within 20 days of establishing residency. You'll pay California use tax (minus credit for tax paid elsewhere), VIN verification ($23), title fee ($23), smog certification (if required), and all standard registration fees. Total costs typically $2,000-$5,000.</p>
+
+                <h3>Are electric vehicles exempt from California registration fees?</h3>
+                <p>No, California does not charge additional EV fees like some states, but EVs pay all standard fees including sales tax and VLF. EVs are exempt from smog certification requirements but pay an $8 smog transfer fee.</p>
+
+                <h3>Can I deduct California vehicle fees on my taxes?</h3>
+                <p>Yes, the Vehicle License Fee (VLF) portion of your registration is tax-deductible on federal income tax as a personal property tax. Use the <a href="https://www.dmv.ca.gov/portal/vehicle-registration/registration-fees/vehicle-registration-fee-calculator/" class="external-link" target="_blank" rel="nofollow">DMV VLF Calculator</a> to determine your deductible amount.</p>
+
+                <h3>How long do I have to register a vehicle in California?</h3>
+                <p>You must register a purchased vehicle within 10 days of the purchase date. New California residents have 20 days from establishing residency. Late registration incurs penalties starting at 10% and increasing significantly after 30 days.</p>
+
+                <p>For additional assistance with California vehicle registration and tax title license questions, contact the <a href="https://www.dmv.ca.gov/portal/contact-us/" class="external-link" target="_blank" rel="nofollow">California DMV</a> directly or call 1-800-777-0133. Our California tax title license calculator provides accurate estimates based on current 2025 regulations, but always verify final costs with the DMV before completing your purchase.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related States Section -->
+    <section class="related-states">
+        <div class="container">
+            <h2 style="text-align: center; color: #1e3a8a; margin-bottom: 2rem; font-size: 1.8rem;">Tax Title License Calculators for Other States</h2>
+            <div class="states-grid">
+                <div class="state-link-box">
+                    <a href="/texas-vehicle-tax-title-and-license-calculator/">Texas TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/florida-tax-title-and-license-calculator/">Florida TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/new-york-tax-title-and-license-calculator/">New York TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/tax-title-and-license-calculator-arizona/">Arizona TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/georgia-tax-title-and-license-calculator/">Georgia TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/washington-tax-title-and-license-calculator/">Washington TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/nevada-vehicle-tax-title-and-license-calculator/">Nevada TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/">View All States →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Tax Title License Calculator | <a href="/">Home</a> | <a href="/#calculators">All State Calculators</a></p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">Disclaimer: This calculator provides estimates based on current California law. Verify with CA DMV for official fees.</p>
+        </div>
+    </footer>
+
+    <script>
+        // VLF Depreciation Schedule (10% per year for 11 years)
+        const vlfDepreciation = [1.0, 0.9, 0.81, 0.729, 0.656, 0.590, 0.531, 0.478, 0.430, 0.387, 0.348, 0.348];
+        
+        document.getElementById('ttlCalculator').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const taxRate = parseFloat(document.getElementById('location').value);
+            let vehiclePrice = parseFloat(document.getElementById('vehiclePrice').value) || 0;
+            const vehicleAge = parseInt(document.getElementById('vehicleAge').value) || 0;
+            const tradeIn = parseFloat(document.getElementById('tradeIn').value) || 0;
+            const vehicleType = document.getElementById('vehicleType').value;
+            const registrationType = document.getElementById('registrationType').value;
+            
+            const notes = [];
+            
+            // Sales Tax - NO TRADE-IN CREDIT IN CALIFORNIA
+            const taxableAmount = vehiclePrice;
+            const salesTax = taxableAmount * (taxRate / 100);
+            
+            if (tradeIn > 0) {
+                notes.push(`⚠️ California does NOT allow trade-in credit. You pay tax on full $${vehiclePrice.toLocaleString()} price.`);
+                notes.push(`In Texas, this same purchase would save you $${(tradeIn * 0.0625).toFixed(2)} in trade-in tax credit.`);
+            }
+            
+            // Title Fee
+            let titleFee = 0;
+            if (registrationType !== 'renewal') {
+                titleFee = 23;
+            }
+            
+            // VLF Calculation (0.65% of depreciated value)
+            const ageIndex = Math.min(vehicleAge, 11);
+            const depreciatedValue = vehiclePrice * vlfDepreciation[ageIndex];
+            const vlf = depreciatedValue * 0.0065;
+            
+            // Transportation Improvement Fee (TIF)
+            let tif = 0;
+            if (depreciatedValue < 5000) {
+                tif = 25;
+            } else if (depreciatedValue < 25000) {
+                tif = 50;
+            } else if (depreciatedValue < 35000) {
+                tif = 100;
+            } else if (depreciatedValue < 60000) {
+                tif = 150;
+            } else {
+                tif = 175;
+            }
+            
+            // Registration Fee
+            const registrationFee = 46;
+            const chpFee = 28;
+            
+            // Smog Transfer Fee (exempt for new vehicles < 4 years)
+            let smogFee = 0;
+            const smogRow = document.getElementById('smogRow');
+            if (vehicleAge < 4 || vehicleType === 'electric') {
+                smogFee = 8;
+                smogRow.style.display = 'flex';
+                if (vehicleType === 'electric') {
+                    notes.push('Electric vehicles exempt from smog testing but pay $8 smog transfer fee');
+                } else {
+                    notes.push('Vehicles under 4 years old are smog-exempt but pay $8 smog transfer fee');
+                }
+            } else {
+                smogRow.style.display = 'none';
+                notes.push('Smog certification required at registration ($30-$75 at STAR stations)');
+            }
+            
+            // Calculate total
+            const totalTTL = salesTax + titleFee + registrationFee + vlf + tif + chpFee + smogFee;
+            const outTheDoor = vehiclePrice + totalTTL;
+            
+            // VLF info note
+            notes.push(`VLF calculated on ${(vlfDepreciation[ageIndex] * 100).toFixed(0)}% of purchase price (vehicle age: ${vehicleAge} years)`);
+            
+            if (vehiclePrice >= 60000) {
+                notes.push('High-value vehicle: Maximum TIF of $175 applies');
+            }
+            
+            // Display results
+            document.getElementById('displayPrice').textContent = '$' + vehiclePrice.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('displayTradeIn').textContent = '$' + tradeIn.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('displayTaxable').textContent = '$' + taxableAmount.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('taxRate').textContent = taxRate.toFixed(2);
+            document.getElementById('displaySalesTax').textContent = '$' + salesTax.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('displayVLF').textContent = '$' + vlf.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('displayTIF').textContent = '$' + tif.toFixed(2);
+            document.getElementById('displayTotal').textContent = '$' + totalTTL.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('displayOutTheDoor').textContent = '$' + outTheDoor.toLocaleString('en-US', {minimumFractionDigits: 2});
+            
+            // Display notes
+            const notesSection = document.getElementById('notesSection');
+            const notesList = document.getElementById('notesList');
+            if (notes.length > 0) {
+                notesList.innerHTML = notes.map(note => `<li>${note}</li>`).join('');
+                notesSection.style.display = 'block';
+            } else {
+                notesSection.style.display = 'none';
+            }
+            
+            // Show results
+            document.getElementById('placeholderContent').style.display = 'none';
+            document.getElementById('resultsContent').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

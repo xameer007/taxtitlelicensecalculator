@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pennsylvania tax title license calculator 2026. Calculate PA vehicle sales tax 6%-8%, DMV fees, registration costs. Trade-in credit allowed. Free PA TTL calculator with $250 EV road use charge.">
+    <title>Pennsylvania Tax Title License Calculator 2026 - PA TTL Fees & PennDOT</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background-color: #f8f9fa; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+        
+        header { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 1rem 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.3rem; font-weight: bold; }
+        .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+        .nav-links a { color: white; text-decoration: none; transition: opacity 0.3s; }
+        .nav-links a:hover { opacity: 0.8; }
+        
+        .hero { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 3rem 0; text-align: center; }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 1rem; line-height: 1.2; }
+        .hero p { font-size: 1.1rem; opacity: 0.95; margin-bottom: 0.5rem; }
+        .breadcrumb { margin-bottom: 1rem; opacity: 0.9; font-size: 0.95rem; }
+        .breadcrumb a { color: #fbbf24; text-decoration: none; }
+        
+        .calculator-section { background: white; padding: 3rem 0; }
+        .calc-layout { display: grid; grid-template-columns: 1.2fr 1fr; gap: 2rem; max-width: 1300px; margin: 0 auto; }
+        
+        .calculator-main { background: #f8f9fa; padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .calculator-main h2 { color: #1e3a8a; margin-bottom: 2rem; text-align: center; font-size: 1.8rem; }
+        
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group.full-width { grid-column: 1 / -1; }
+        .form-group label { display: block; margin-bottom: 0.6rem; font-weight: 600; color: #1e3a8a; font-size: 0.95rem; }
+        .form-group input, .form-group select { width: 100%; padding: 0.85rem; border: 2px solid #e5e7eb; border-radius: 6px; font-size: 1rem; transition: border-color 0.3s; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+        
+        .help-text { font-size: 0.85rem; color: #6b7280; margin-top: 0.4rem; }
+        .checkbox-group { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem; }
+        .checkbox-group input[type="checkbox"] { width: auto; }
+        
+        .calculate-btn { width: 100%; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; padding: 1.1rem; border: none; border-radius: 8px; font-size: 1.15rem; font-weight: bold; cursor: pointer; transition: transform 0.2s, box-shadow 0.3s; margin-top: 1rem; }
+        .calculate-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4); }
+        
+        .results-panel { background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); position: sticky; top: 2rem; max-height: 90vh; overflow-y: auto; }
+        .results-panel h3 { color: #1e3a8a; margin-bottom: 1.5rem; font-size: 1.5rem; text-align: center; }
+        
+        .result-section { margin-bottom: 2rem; }
+        .result-section-title { font-size: 1.1rem; font-weight: 600; color: #1e3a8a; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e5e7eb; }
+        
+        .result-item { display: flex; justify-content: space-between; padding: 0.7rem 0; border-bottom: 1px solid #f3f4f6; }
+        .result-item:last-child { border-bottom: none; }
+        .result-label { color: #6b7280; font-size: 0.95rem; }
+        .result-value { font-weight: 600; color: #1f2937; }
+        
+        .result-total { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 1.3rem; border-radius: 8px; margin-top: 1.5rem; }
+        .result-total .result-item { border-bottom: none; padding: 0.4rem 0; }
+        .result-total .result-label, .result-total .result-value { color: white; }
+        .result-total .total-amount { font-size: 2rem; font-weight: bold; }
+        
+        .info-alert { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 1rem; margin: 1.5rem 0; border-radius: 4px; font-size: 0.9rem; color: #1e40af; }
+        .success-alert { background: #f0fdf4; border-left: 4px solid #10b981; padding: 1rem; margin: 1.5rem 0; border-radius: 4px; font-size: 0.9rem; color: #065f46; }
+        
+        .content-section { padding: 4rem 0; background: white; }
+        .content-wrapper { max-width: 1100px; margin: 0 auto; }
+        .content-wrapper h2 { color: #1e3a8a; margin-bottom: 1.5rem; font-size: 2rem; margin-top: 3rem; }
+        .content-wrapper h2:first-child { margin-top: 0; }
+        .content-wrapper h3 { color: #1e3a8a; margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.5rem; }
+        .content-wrapper p { margin-bottom: 1.2rem; color: #555; line-height: 1.8; }
+        .content-wrapper ul { margin-left: 2rem; margin-bottom: 1.5rem; }
+        .content-wrapper li { margin-bottom: 0.8rem; color: #555; line-height: 1.7; }
+        .content-wrapper strong { color: #1e3a8a; }
+        
+        .info-box { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 1.5rem; margin: 2rem 0; border-radius: 5px; }
+        .info-box h3 { color: #1e3a8a; margin-bottom: 1rem; margin-top: 0; }
+        
+        .fee-table { width: 100%; border-collapse: collapse; margin: 2rem 0; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .fee-table th { background: #1e3a8a; color: white; padding: 1rem; text-align: left; font-weight: 600; }
+        .fee-table td { padding: 0.9rem 1rem; border-bottom: 1px solid #e5e7eb; }
+        .fee-table tr:hover { background: #f8f9fa; }
+        
+        .related-states { padding: 3rem 0; background: #f8f9fa; }
+        .states-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; margin-top: 2rem; }
+        .state-link-box { background: white; padding: 1.2rem; border-radius: 8px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: transform 0.3s, box-shadow 0.3s; border-left: 4px solid #3b82f6; }
+        .state-link-box:hover { transform: translateY(-3px); box-shadow: 0 4px 15px rgba(0,0,0,0.12); }
+        .state-link-box a { color: #1e3a8a; text-decoration: none; font-weight: 600; font-size: 1.05rem; }
+        
+        footer { background: #1e293b; color: white; padding: 2.5rem 0; text-align: center; }
+        footer a { color: #fbbf24; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+        
+        @media (max-width: 1024px) {
+            .calc-layout { grid-template-columns: 1fr; }
+            .results-panel { position: static; margin-top: 2rem; max-height: none; }
+        }
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">🚗 Tax Title License Calculator</div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/#calculators">All States</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="/">Home</a> / <a href="/#calculators">State Calculators</a> / Pennsylvania
+            </div>
+            <h1>Pennsylvania Tax Title License Calculator 2026</h1>
+            <p>Calculate PA vehicle sales tax 6%-8%, PennDOT fees, and registration costs</p>
+            <p>Trade-in & rebate credits allowed • $250 EV road use charge • Simple fees</p>
+        </div>
+    </section>
+
+    <section class="calculator-section">
+        <div class="container">
+            <div class="calc-layout">
+                <div class="calculator-main">
+                    <h2>Pennsylvania TTL Fee Calculator</h2>
+                    
+                    <form id="ttlCalculator">
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label for="county">County / City</label>
+                                <select id="county" required>
+                                    <option value="6">Most PA Counties (6%)</option>
+                                    <option value="7">Allegheny County - Pittsburgh (7%)</option>
+                                    <option value="8">Philadelphia (8%)</option>
+                                </select>
+                                <div class="help-text">PA has only 3 tax rates statewide</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="vehiclePrice">Vehicle Purchase Price ($)</label>
+                                <input type="number" id="vehiclePrice" placeholder="30000" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="tradeIn">Trade-In Value ($) - Optional</label>
+                                <input type="number" id="tradeIn" placeholder="0">
+                                <div class="help-text">✅ Reduces taxable amount</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="dealerDiscount">Dealer Discount ($) - Optional</label>
+                                <input type="number" id="dealerDiscount" placeholder="0">
+                                <div class="help-text">Reduces taxable amount</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="mfgRebate">Manufacturer Rebate ($) - Optional</label>
+                                <input type="number" id="mfgRebate" placeholder="0">
+                                <div class="help-text">✅ Rebates also reduce tax in PA!</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="vehicleType">Vehicle Type</label>
+                                <select id="vehicleType" required>
+                                    <option value="passenger">Passenger Car</option>
+                                    <option value="truck">Truck (under 5,000 lbs)</option>
+                                    <option value="motorcycle">Motorcycle</option>
+                                </select>
+                                <div class="help-text">Affects registration fee</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fuelType">Fuel Type</label>
+                                <select id="fuelType" required>
+                                    <option value="gas">Gasoline / Diesel</option>
+                                    <option value="ev">Electric Vehicle (EV)</option>
+                                    <option value="phev">Plug-in Hybrid (PHEV)</option>
+                                </select>
+                                <div class="help-text">EV/PHEV pay road use charge</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="registrationPeriod">Registration Period</label>
+                                <select id="registrationPeriod" required>
+                                    <option value="1">1 Year</option>
+                                    <option value="2">2 Years (same total cost)</option>
+                                </select>
+                                <div class="help-text">2-year saves on EV fee!</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="plateOption">License Plates</label>
+                                <select id="plateOption" required>
+                                    <option value="new">New Plates ($25)</option>
+                                    <option value="transfer">Transfer Existing PA Plates ($11)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label style="margin-bottom: 0.8rem;">Additional Fees</label>
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="isFinanced">
+                                    <label for="isFinanced" style="margin: 0; font-weight: normal;">Vehicle is financed (add $36 lien fee)</label>
+                                </div>
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="hasLocalFee">
+                                    <label for="hasLocalFee" style="margin: 0; font-weight: normal;">County charges $5 local use fee</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="calculate-btn">Calculate Pennsylvania TTL Fees</button>
+                    </form>
+
+                    <div class="success-alert">
+                        <strong>✅ PA Advantage:</strong> Unlike some states, Pennsylvania allows BOTH trade-ins AND manufacturer rebates to reduce your sales tax!
+                    </div>
+                </div>
+
+                <div class="results-panel">
+                    <h3>Your Pennsylvania TTL Breakdown</h3>
+                    
+                    <div id="resultsContent" style="display: none;">
+                        <div class="result-section">
+                            <div class="result-section-title">Sales Tax Calculation</div>
+                            <div class="result-item">
+                                <span class="result-label">Vehicle Price</span>
+                                <span class="result-value" id="displayPrice">$0.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Trade-In Credit</span>
+                                <span class="result-value" id="displayTradeIn">-$0.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Dealer Discount</span>
+                                <span class="result-value" id="displayDiscount">-$0.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Manufacturer Rebate</span>
+                                <span class="result-value" id="displayRebate">-$0.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Taxable Amount</span>
+                                <span class="result-value" id="displayTaxable">$0.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Sales Tax (<span id="taxRate">0</span>%)</span>
+                                <span class="result-value" id="displaySalesTax">$0.00</span>
+                            </div>
+                        </div>
+
+                        <div class="result-section">
+                            <div class="result-section-title">PennDOT Fees</div>
+                            <div class="result-item">
+                                <span class="result-label">Title Fee</span>
+                                <span class="result-value">$51.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">License Plate Fee</span>
+                                <span class="result-value" id="displayPlate">$0.00</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Registration Fee (<span id="regPeriod">1</span>-year)</span>
+                                <span class="result-value" id="displayRegistration">$0.00</span>
+                            </div>
+                            <div class="result-item" id="lienRow" style="display: none;">
+                                <span class="result-label">Lien Recording Fee</span>
+                                <span class="result-value">$36.00</span>
+                            </div>
+                            <div class="result-item" id="localFeeRow" style="display: none;">
+                                <span class="result-label">Local Use Fee</span>
+                                <span class="result-value">$5.00</span>
+                            </div>
+                            <div class="result-item" id="evFeeRow" style="display: none;">
+                                <span class="result-label" id="evFeeLabel">EV Road User Charge</span>
+                                <span class="result-value" id="displayEVFee">$0.00</span>
+                            </div>
+                        </div>
+
+                        <div class="result-total">
+                            <div class="result-item">
+                                <span class="result-label" style="font-size: 1.1rem;">TOTAL TTL FEES</span>
+                                <span class="result-value total-amount" id="displayTotal">$0.00</span>
+                            </div>
+                            <div class="result-item" style="font-size: 0.9rem; opacity: 0.9;">
+                                <span class="result-label">Total Out-the-Door Cost</span>
+                                <span class="result-value" id="displayOutTheDoor">$0.00</span>
+                            </div>
+                        </div>
+
+                        <div id="notesSection" class="info-alert" style="display: none;">
+                            <strong>Important Notes:</strong>
+                            <ul id="notesList" style="margin-top: 0.5rem; margin-left: 1.2rem;"></ul>
+                        </div>
+                    </div>
+
+                    <div id="placeholderContent">
+                        <p style="text-align: center; color: #9ca3af; padding: 2rem;">
+                            Enter your vehicle information and click Calculate to see your complete Pennsylvania TTL breakdown
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-wrapper">
+                <h2>Complete Guide to Pennsylvania Tax Title License Fees 2026</h2>
+                
+                <p>When purchasing a vehicle in Pennsylvania, understanding tax title and license (TTL) fees helps you budget accurately and avoid surprises. Pennsylvania has a straightforward vehicle tax system with just three tax rates statewide - 6% for most counties, 7% for Allegheny County (Pittsburgh area), and 8% for Philadelphia. Both trade-in credits and manufacturer rebates reduce your taxable amount, making Pennsylvania one of the more buyer-friendly states. Our comprehensive Pennsylvania tax title license calculator helps you estimate exact costs including the new electric vehicle road use charge that took effect in 2025.</p>
+
+                <div class="info-box">
+                    <h3>📋 Official Pennsylvania PennDOT Resources</h3>
+                    <p>For the most current information on Pennsylvania vehicle registration and fees, visit <a href="https://www.pa.gov/dmv" style="color: #3b82f6;" target="_blank" rel="nofollow">PennDOT</a>. Download the <a href="https://www.pa.gov/content/dam/copapwp-pagov/en/penndot/documents/public/dvspubsforms/bmv/bmv-forms/mv-70s.pdf" style="color: #3b82f6;" target="_blank" rel="nofollow">MV-70S Fee Schedule</a> for complete fee information, and check the <a href="https://www.pa.gov/agencies/dmv/vehicle-services/road-user-charge" style="color: #3b82f6;" target="_blank" rel="nofollow">Road User Charge page</a> for electric vehicle fees.</p>
+                </div>
+
+                <h2>Pennsylvania Vehicle Sales Tax - Three Simple Rates</h2>
+                
+                <p>Pennsylvania charges a vehicle sales tax of 6% for most of the state, with only two localities having different rates. Allegheny County (which includes Pittsburgh) charges 7%, and the City of Philadelphia charges 8%. This simplicity makes Pennsylvania easier to navigate than states with dozens of different county tax rates.</p>
+
+                <p>Pennsylvania allows both trade-in credits and manufacturer rebates to reduce your taxable amount. This is a significant advantage compared to states like New York, where manufacturer rebates do not reduce the tax base. The taxable amount is calculated as: Purchase Price minus Trade-In Value minus Dealer Discounts minus Manufacturer Rebates.</p>
+
+                <table class="fee-table">
+                    <tr>
+                        <th>Location</th>
+                        <th>Sales Tax Rate</th>
+                        <th>Counties Included</th>
+                    </tr>
+                    <tr>
+                        <td>Most of Pennsylvania</td>
+                        <td>6%</td>
+                        <td>All counties except those listed below</td>
+                    </tr>
+                    <tr>
+                        <td>Allegheny County</td>
+                        <td>7%</td>
+                        <td>Pittsburgh and surrounding areas</td>
+                    </tr>
+                    <tr>
+                        <td>Philadelphia</td>
+                        <td>8%</td>
+                        <td>City of Philadelphia only</td>
+                    </tr>
+                </table>
+
+                <h3>How Pennsylvania Sales Tax Works</h3>
+
+                <p>The sales tax is calculated on the purchase price of the vehicle minus any applicable deductions. Both the buyer and seller must understand what reduces the tax and what does not.</p>
+
+                <p>Deductions that reduce your taxable amount include trade-in value (the amount your old vehicle is worth when trading to a dealer), dealer discounts (negotiated price reductions from the dealer), and manufacturer rebates (incentives from the vehicle manufacturer). These all reduce your sales tax calculation.</p>
+
+                <p>Items that do not reduce the taxable amount include dealer documentation fees, warranties and service contracts, and aftermarket add-ons like window tinting or floor mats. Sales tax applies to these items as well.</p>
+
+                <div class="info-box">
+                    <h3>💰 Pennsylvania Tax Calculation Example</h3>
+                    <p><strong>Scenario:</strong> $35,000 vehicle in Allegheny County with $8,000 trade-in and $3,000 manufacturer rebate</p>
+                    
+                    <p><strong>Calculation:</strong></p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>Vehicle Price: $35,000</li>
+                        <li>Trade-In Value: -$8,000 (✅ reduces tax)</li>
+                        <li>Manufacturer Rebate: -$3,000 (✅ reduces tax in PA!)</li>
+                        <li><strong>Taxable Amount: $24,000</strong></li>
+                        <li>Sales Tax (7%): $24,000 × 0.07 = <strong>$1,680</strong></li>
+                    </ul>
+                    
+                    <p><strong>Tax Savings:</strong></p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>Trade-in saved: $8,000 × 0.07 = $560</li>
+                        <li>Rebate saved: $3,000 × 0.07 = $210</li>
+                        <li><strong>Total savings: $770 in sales tax</strong></li>
+                    </ul>
+                </div>
+
+                <h2>Pennsylvania DMV Fees and Registration Costs</h2>
+
+                <p>Pennsylvania's DMV fees (called PennDOT fees) are straightforward compared to many states. The title fee is a flat $51, registration fees vary by vehicle type, and you can choose between 1-year and 2-year registration periods.</p>
+
+                <table class="fee-table">
+                    <tr>
+                        <th>Fee Type</th>
+                        <th>1-Year Cost</th>
+                        <th>2-Year Cost</th>
+                    </tr>
+                    <tr>
+                        <td>Title Fee (one-time)</td>
+                        <td>$51</td>
+                        <td>$51</td>
+                    </tr>
+                    <tr>
+                        <td>Passenger Car Registration</td>
+                        <td>$48</td>
+                        <td>$96</td>
+                    </tr>
+                    <tr>
+                        <td>Truck (under 5,000 lbs)</td>
+                        <td>$67</td>
+                        <td>$134</td>
+                    </tr>
+                    <tr>
+                        <td>Motorcycle</td>
+                        <td>$20</td>
+                        <td>$40</td>
+                    </tr>
+                    <tr>
+                        <td>New License Plates</td>
+                        <td colspan="2">$25 (one-time)</td>
+                    </tr>
+                    <tr>
+                        <td>Plate Transfer</td>
+                        <td colspan="2">$11 (one-time)</td>
+                    </tr>
+                    <tr>
+                        <td>Lien Recording (if financed)</td>
+                        <td colspan="2">$36 (one-time)</td>
+                    </tr>
+                    <tr>
+                        <td>Local Use Fee (some counties)</td>
+                        <td>$5</td>
+                        <td>$10</td>
+                    </tr>
+                </table>
+
+                <h3>License Plate Options - New vs Transfer</h3>
+
+                <p>If you already own a Pennsylvania-registered vehicle, you can transfer your existing license plates to your new vehicle for just $11 instead of paying $25 for new plates. This saves you $14 and is often the smartest choice if you're replacing a vehicle you already own.</p>
+
+                <p>When you transfer plates, you also avoid paying the lien recording fee again if your new vehicle is financed, and you may avoid the local use fee in some counties. Always ask your PennDOT agent if plate transfer is an option for your situation.</p>
+
+                <h2>Electric Vehicle Road Use Charge - 2026 Rates</h2>
+
+                <p>Pennsylvania implemented a Road User Charge (RUC) for electric and plug-in hybrid vehicles starting in 2025, under Acts 85 and 149 of 2024. This charge ensures that electric vehicle owners contribute to road and bridge maintenance, as they pay little or no gasoline tax.</p>
+
+                <p>For 2026, the annual fees are $250 for fully electric vehicles (EVs) and $63 for plug-in hybrid electric vehicles (PHEVs). Vehicle owners can pay annually or opt for a 2-year payment that provides a discount.</p>
+
+                <table class="fee-table">
+                    <tr>
+                        <th>Vehicle Type</th>
+                        <th>1-Year Fee (2026)</th>
+                        <th>2-Year Fee (2026)</th>
+                        <th>Savings</th>
+                    </tr>
+                    <tr>
+                        <td>Electric Vehicle (EV)</td>
+                        <td>$250</td>
+                        <td>$500</td>
+                        <td>$0 (no discount in 2026)</td>
+                    </tr>
+                    <tr>
+                        <td>Plug-in Hybrid (PHEV)</td>
+                        <td>$63</td>
+                        <td>$126</td>
+                        <td>$0 (no discount in 2026)</td>
+                    </tr>
+                </table>
+
+                <p>Starting in 2027, Pennsylvania will adjust the Road User Charge annually based on the Consumer Price Index (inflation). The PHEV fee will always remain at 25% of the EV fee, rounded to the nearest dollar.</p>
+
+                <h3>Who Must Pay the Road User Charge</h3>
+
+                <p>The Road User Charge applies to electric vehicles and plug-in hybrid electric vehicles with a gross vehicle weight rating of 14,000 pounds or less. Owners whose vehicle registrations expire after May 2025 must pay this fee.</p>
+
+                <p>Certain vehicles are exempt from the Road User Charge including golf carts, electric motorcycles, vehicles from 1990 or older, and certain government vehicles.</p>
+
+                <h3>How to Pay the Road User Charge</h3>
+
+                <p>Currently, the Road User Charge is paid separately from your vehicle registration. PennDOT sends a payment notice by mail, and you must submit payment within 30 days. Starting in 2027, payment of the RUC will be required before you can renew your vehicle registration.</p>
+
+                <p>An online payment system became available in August 2025 at the PennDOT website. Starting in July 2026, EV and PHEV owners can opt for a monthly payment plan, making the cost more manageable by spreading it throughout the year.</p>
+
+                <h2>Lien Recording Fee for Financed Vehicles</h2>
+
+                <p>If you finance your vehicle purchase through a bank, credit union, or other lender, Pennsylvania charges a $36 lien recording fee. This fee allows PennDOT to record the lender's security interest in the vehicle on the title certificate.</p>
+
+                <p>The lien recording fee is a one-time charge paid when you first register the vehicle. If you later refinance the vehicle with a different lender, you may need to pay another lien recording fee to update the lienholder information.</p>
+
+                <p>Pennsylvania uses an electronic lien and title (ELT) system for most lenders. With ELT, the title certificate is held electronically rather than as a paper document, which streamlines the process when you pay off the loan or sell the vehicle.</p>
+
+                <h2>Private Party Vehicle Sales in Pennsylvania</h2>
+
+                <p>When purchasing a vehicle from a private party (an individual seller, not a licensed dealer), you must still pay Pennsylvania sales tax at the time of registration. The tax is based on the purchase price or the current market value of the vehicle, whichever is higher.</p>
+
+                <p>For private party sales, you need to complete Form MV-4ST (Vehicle Sales and Use Tax Return/Application for Registration) along with Form MV-1 (Application for Certificate of Title). Both the buyer and seller must sign the forms. A bill of sale is recommended but not required by Pennsylvania law.</p>
+
+                <p>Trade-in credits do not apply to private party sales because you are not trading your vehicle to a licensed dealer. The full purchase price is subject to sales tax. However, dealer discounts and manufacturer rebates would not typically apply to private sales either.</p>
+
+                <h3>Private Party Sale Requirements</h3>
+
+                <p>When buying from a private party in Pennsylvania, you need the certificate of title properly signed by the seller, including odometer disclosure if the vehicle is less than 10 years old, proof of Pennsylvania auto insurance before you can register the vehicle, completed Form MV-4ST for sales tax purposes, and payment for all applicable fees including sales tax, title fee, registration fee, and plate fees.</p>
+
+                <p>Pennsylvania law requires you to register the vehicle and transfer the title within 20 days of purchase. If you miss this deadline, you may face penalties and fines.</p>
+
+                <h2>Gift and Family Transfer Tax Exemptions</h2>
+
+                <p>Pennsylvania provides a sales tax exemption for vehicles transferred as gifts between immediate family members. To qualify for this exemption, the transfer must be a bona fide gift with no monetary consideration changing hands.</p>
+
+                <p>Eligible family relationships for the gift exemption include spouse to spouse, parent to child or child to parent, and grandparent to grandchild or grandchild to grandparent. Transfers between siblings, aunts, uncles, cousins, or in-laws do not qualify for the gift exemption.</p>
+
+                <p>To claim the gift exemption, you must complete Form MV-4ST and clearly indicate that the vehicle is being transferred as a gift. You must provide proof of the family relationship if requested by PennDOT. While you avoid the sales tax, you must still pay the title fee ($51), registration fees, and plate fees.</p>
+
+                <p>For expensive vehicles, the gift exemption can save thousands of dollars in sales tax. For example, a $40,000 vehicle gifted in Philadelphia would save $3,200 in sales tax (8% of $40,000).</p>
+
+                <h2>Out-of-State Vehicle Purchases and Pennsylvania Use Tax</h2>
+
+                <p>When Pennsylvania residents purchase vehicles out of state and bring them into Pennsylvania, they must pay Pennsylvania use tax when registering the vehicle. The use tax rate is the same as the sales tax rate for your county - 6%, 7%, or 8%.</p>
+
+                <p>Pennsylvania provides a credit for sales tax paid to other states. If you paid sales tax to another state that equals or exceeds Pennsylvania's rate, no additional tax is due. If the other state's tax is lower than Pennsylvania's rate, you pay the difference.</p>
+
+                <p>For example, if you buy a $30,000 vehicle in Delaware (which has no sales tax) and register it in Allegheny County, you would owe the full 7% Pennsylvania use tax of $2,100. If you bought the same vehicle in New Jersey and paid 6.625% sales tax ($1,988), you would owe Pennsylvania the difference of $112 to reach the 7% rate.</p>
+
+                <h3>Out-of-State Purchase Timeline</h3>
+
+                <p>You must register an out-of-state vehicle in Pennsylvania within 20 days of bringing it into the state or establishing Pennsylvania residency. You need the out-of-state title properly assigned to you, proof of sales tax paid in the other state (if applicable), Form MV-1 for title application, Form MV-4ST for tax purposes, proof of Pennsylvania insurance, and payment for all applicable Pennsylvania fees.</p>
+
+                <h2>Pennsylvania Dealer Documentation Fees</h2>
+
+                <p>Pennsylvania has no legal cap on dealer documentation fees, unlike some states. The average dealer doc fee in Pennsylvania is approximately $130, but fees can range from $50 to $300 or more depending on the dealership.</p>
+
+                <p>Dealer documentation fees are subject to Pennsylvania sales tax. At 8% in Philadelphia, a $130 doc fee actually costs you $140.40 after tax. At 6% in most counties, the same fee costs $137.80.</p>
+
+                <p>Documentation fees are negotiable in most cases. When negotiating your vehicle purchase, ask for an itemized breakdown of all fees and challenge any that seem excessive. Legitimate doc fees cover the actual cost of preparing paperwork, filing documents with PennDOT, and processing your sale.</p>
+
+                <p>Be wary of dealers who advertise low vehicle prices but make up the difference with excessive fees. Always calculate your total out-the-door cost including all taxes and fees before committing to a purchase.</p>
+
+                <h2>Local Use Fee - County-Specific Charge</h2>
+
+                <p>Some Pennsylvania counties charge a local use fee of $5 per year for vehicle registration. This fee is not imposed statewide - each county decides whether to charge it. Not all counties participate in the local use fee program.</p>
+
+                <p>The local use fee, when applicable, is paid annually along with your registration renewal. If you register for 2 years, you pay $10 for the local use fee ($5 × 2 years). Check with your county or PennDOT to determine if your county charges this fee.</p>
+
+                <h2>How to Calculate Your Pennsylvania TTL Fees</h2>
+
+                <p>To manually calculate your complete Pennsylvania tax title and license costs, follow this step-by-step process.</p>
+
+                <div class="info-box">
+                    <h3>📊 Pennsylvania TTL Calculation Formula</h3>
+                    <p><strong>Step 1: Calculate Sales Tax</strong></p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>Determine tax rate: 6% (most counties), 7% (Allegheny), or 8% (Philadelphia)</li>
+                        <li>Taxable Amount = Purchase Price - Trade-In - Dealer Discounts - Manufacturer Rebates</li>
+                        <li>Sales Tax = Taxable Amount × Tax Rate</li>
+                    </ul>
+                    <p><strong>Step 2: Add Title and Plate Fees</strong></p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>Title Fee: $51</li>
+                        <li>Plate Fee: $25 (new) or $11 (transfer)</li>
+                    </ul>
+                    <p><strong>Step 3: Add Registration Fee</strong></p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>Passenger Car: $48 (1-year) or $96 (2-year)</li>
+                        <li>Truck under 5,000 lbs: $67 (1-year) or $134 (2-year)</li>
+                        <li>Motorcycle: $20 (1-year) or $40 (2-year)</li>
+                    </ul>
+                    <p><strong>Step 4: Add Conditional Fees</strong></p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>Lien Recording: $36 (if financed)</li>
+                        <li>Local Use Fee: $5/year (if applicable)</li>
+                        <li>EV Road User Charge: $250 EV or $63 PHEV (2026 rates)</li>
+                    </ul>
+                    <p><strong>Step 5: Total TTL Fees</strong></p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>Total = Sales Tax + Title + Plates + Registration + Conditional Fees</li>
+                    </ul>
+                </div>
+
+                <h2>Frequently Asked Questions - Pennsylvania TTL Calculator</h2>
+
+                <h3>What is the vehicle sales tax rate in Pennsylvania?</h3>
+                <p>Pennsylvania charges 6% sales tax in most counties, 7% in Allegheny County (Pittsburgh area), and 8% in the City of Philadelphia. These are the only three tax rates statewide, making Pennsylvania simpler than states with dozens of different county rates.</p>
+
+                <h3>Does Pennsylvania allow trade-in tax credit?</h3>
+                <p>Yes, Pennsylvania allows trade-in credits to reduce your taxable amount when you trade your old vehicle to a licensed dealer. The trade-in value is subtracted from the purchase price before calculating sales tax.</p>
+
+                <h3>Do manufacturer rebates reduce sales tax in Pennsylvania?</h3>
+                <p>Yes, manufacturer rebates DO reduce the taxable amount in Pennsylvania. This is different from states like New York where rebates are taxable. Both trade-ins and rebates save you sales tax dollars in PA.</p>
+
+                <h3>What is the electric vehicle road use charge in Pennsylvania?</h3>
+                <p>Pennsylvania charges an annual Road User Charge of $250 for electric vehicles and $63 for plug-in hybrid vehicles as of 2026. This fee ensures EV owners contribute to road maintenance since they pay little or no gas tax.</p>
+
+                <h3>How much are Pennsylvania registration fees?</h3>
+                <p>Pennsylvania registration fees are $48 for a 1-year passenger car registration or $96 for 2 years. Trucks under 5,000 lbs pay $67 for 1 year or $134 for 2 years. Motorcycles pay $20 for 1 year or $40 for 2 years.</p>
+
+                <h3>What is the lien recording fee in Pennsylvania?</h3>
+                <p>If you finance your vehicle, Pennsylvania charges a one-time $36 lien recording fee. This fee allows PennDOT to record your lender's security interest on the title certificate.</p>
+
+                <h3>Can I transfer my license plates to a new vehicle in Pennsylvania?</h3>
+                <p>Yes, you can transfer your existing Pennsylvania license plates to a new vehicle for $11, which saves $14 compared to the $25 cost of new plates. Plate transfer is a smart choice when replacing a vehicle you already own.</p>
+
+                <h3>Are there sales tax exemptions for vehicle gifts in Pennsylvania?</h3>
+                <p>Yes, vehicles transferred as bona fide gifts between immediate family members (spouse, parent/child, grandparent/grandchild) are exempt from sales tax when properly documented. You must still pay title, registration, and plate fees.</p>
+
+                <h3>How long do I have to register an out-of-state vehicle in Pennsylvania?</h3>
+                <p>Pennsylvania residents must register out-of-state vehicles within 20 days of bringing the vehicle into the state or establishing Pennsylvania residency. Missing this deadline can result in penalties.</p>
+
+                <h3>Does Pennsylvania have dealer documentation fee caps?</h3>
+                <p>No, Pennsylvania has no legal limit on dealer documentation fees. The average is approximately $130, but doc fees can range from $50 to $300+. These fees are negotiable and subject to sales tax.</p>
+
+                <p>For additional assistance with Pennsylvania vehicle registration and tax title license questions, visit your local <a href="https://www.pa.gov/agencies/dmv/online-services/driver-and-vehicle-services/search-for-a-location.html" style="color: #3b82f6;" target="_blank" rel="nofollow">PennDOT location</a> or call 717-412-5300. Our Pennsylvania tax title license calculator provides accurate estimates based on current 2026 regulations, but always verify final costs with PennDOT before completing your purchase.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="related-states">
+        <div class="container">
+            <h2 style="text-align: center; color: #1e3a8a; margin-bottom: 2rem;">Tax Title License Calculators for Other States</h2>
+            <div class="states-grid">
+                <div class="state-link-box">
+                    <a href="/texas-vehicle-tax-title-and-license-calculator">Texas TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/california-tax-title-and-license-calculator">California TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/florida-tax-title-and-license-calculator">Florida TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/new-york-tax-title-and-license-calculator">New York TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/illinois-tax-title-license-calculator">Illinois TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/ohio-vehicle-tax-calculator">Ohio TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/georgia-tax-title-and-license-calculator">Georgia TTL Calculator</a>
+                </div>
+                <div class="state-link-box">
+                    <a href="/">View All States →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tax Title License Calculator | <a href="/">Home</a> | <a href="/#calculators">All State Calculators</a></p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">Disclaimer: This calculator provides estimates based on current Pennsylvania law. Verify with PennDOT for official fees.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('ttlCalculator').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const taxRate = parseFloat(document.getElementById('county').value) / 100;
+            const vehiclePrice = parseFloat(document.getElementById('vehiclePrice').value) || 0;
+            const tradeIn = parseFloat(document.getElementById('tradeIn').value) || 0;
+            const dealerDiscount = parseFloat(document.getElementById('dealerDiscount').value) || 0;
+            const mfgRebate = parseFloat(document.getElementById('mfgRebate').value) || 0;
+            const vehicleType = document.getElementById('vehicleType').value;
+            const fuelType = document.getElementById('fuelType').value;
+            const registrationPeriod = parseInt(document.getElementById('registrationPeriod').value);
+            const plateOption = document.getElementById('plateOption').value;
+            const isFinanced = document.getElementById('isFinanced').checked;
+            const hasLocalFee = document.getElementById('hasLocalFee').checked;
+            
+            const notes = [];
+            
+            // Sales Tax - ALL deductions reduce tax in PA
+            const taxableAmount = Math.max(0, vehiclePrice - tradeIn - dealerDiscount - mfgRebate);
+            const salesTax = taxableAmount * taxRate;
+            
+            if (tradeIn > 0) {
+                notes.push(`✅ Trade-in saved you $${(tradeIn * taxRate).toFixed(2)} in sales tax`);
+            }
+            
+            if (dealerDiscount > 0) {
+                notes.push(`Dealer discount saved you $${(dealerDiscount * taxRate).toFixed(2)} in sales tax`);
+            }
+            
+            if (mfgRebate > 0) {
+                notes.push(`✅ Manufacturer rebate saved you $${(mfgRebate * taxRate).toFixed(2)} in sales tax (PA allows this!)`);
+            }
+            
+            // Title Fee - always $51
+            const titleFee = 51;
+            
+            // Plate Fee
+            const plateFee = plateOption === 'new' ? 25 : 11;
+            if (plateOption === 'transfer') {
+                notes.push('Transferring plates saves you $14 vs new plates');
+            }
+            
+            // Registration Fee
+            let baseRegFee = 0;
+            if (vehicleType === 'passenger') {
+                baseRegFee = 48;
+            } else if (vehicleType === 'truck') {
+                baseRegFee = 67;
+            } else if (vehicleType === 'motorcycle') {
+                baseRegFee = 20;
+            }
+            const registrationFee = baseRegFee * registrationPeriod;
+            
+            // Lien Fee
+            let lienFee = 0;
+            const lienRow = document.getElementById('lienRow');
+            if (isFinanced) {
+                lienFee = 36;
+                lienRow.style.display = 'flex';
+            } else {
+                lienRow.style.display = 'none';
+            }
+            
+            // Local Use Fee
+            let localFee = 0;
+            const localFeeRow = document.getElementById('localFeeRow');
+            if (hasLocalFee) {
+                localFee = 5 * registrationPeriod;
+                localFeeRow.style.display = 'flex';
+            } else {
+                localFeeRow.style.display = 'none';
+            }
+            
+            // EV Road User Charge (2026 rates)
+            let evFee = 0;
+            const evFeeRow = document.getElementById('evFeeRow');
+            const evFeeLabel = document.getElementById('evFeeLabel');
+            
+            if (fuelType === 'ev') {
+                evFee = 250 * registrationPeriod;
+                evFeeLabel.textContent = 'EV Road User Charge (' + registrationPeriod + '-year)';
+                evFeeRow.style.display = 'flex';
+                notes.push(`EV Road User Charge: $250/year (2026 rate)`);
+            } else if (fuelType === 'phev') {
+                evFee = 63 * registrationPeriod;
+                evFeeLabel.textContent = 'PHEV Road User Charge (' + registrationPeriod + '-year)';
+                evFeeRow.style.display = 'flex';
+                notes.push(`PHEV Road User Charge: $63/year (2026 rate)`);
+            } else {
+                evFeeRow.style.display = 'none';
+            }
+            
+            // Calculate totals
+            const totalTTL = salesTax + titleFee + plateFee + registrationFee + lienFee + localFee + evFee;
+            const outTheDoor = vehiclePrice + totalTTL - tradeIn - mfgRebate;
+            
+            // Display results
+            document.getElementById('displayPrice').textContent = '$' + vehiclePrice.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('displayTradeIn').textContent = '-$' + tradeIn.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('displayDiscount').textContent = '-$' + dealerDiscount.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('displayRebate').textContent = '-$' + mfgRebate.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('displayTaxable').textContent = '$' + taxableAmount.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('taxRate').textContent = (taxRate * 100).toFixed(0);
+            document.getElementById('displaySalesTax').textContent = '$' + salesTax.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('displayPlate').textContent = '$' + plateFee.toFixed(2);
+            document.getElementById('regPeriod').textContent = registrationPeriod;
+            document.getElementById('displayRegistration').textContent = '$' + registrationFee.toFixed(2);
+            document.getElementById('displayEVFee').textContent = '$' + evFee.toFixed(2);
+            document.getElementById('displayTotal').textContent = '$' + totalTTL.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('displayOutTheDoor').textContent = '$' + outTheDoor.toLocaleString('en-US', {minimumFractionDigits: 2});
+            
+            // Display notes
+            const notesSection = document.getElementById('notesSection');
+            const notesList = document.getElementById('notesList');
+            if (notes.length > 0) {
+                notesList.innerHTML = notes.map(note => `<li>${note}</li>`).join('');
+                notesSection.style.display = 'block';
+            } else {
+                notesSection.style.display = 'none';
+            }
+            
+            // Show results
+            document.getElementById('placeholderContent').style.display = 'none';
+            document.getElementById('resultsContent').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

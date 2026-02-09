@@ -1,0 +1,9 @@
+{
+  "name": "ttl-calculator",
+  "version": "1.0.0",
+  "description": "Tax Title License Calculator for all US states",
+  "scripts": {
+    "dev": "npx serve public",
+    "build": "echo 'Static site - no build needed'"
+  }
+}

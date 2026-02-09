@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free New York tax title license calculator 2025. Calculate NY vehicle sales tax 4%-8.875%, DMV fees, registration costs, MCTD fees. Trade-in credit allowed. Accurate NY TTL calculator.">
+    <title>New York Tax Title License Calculator 2025 - NY TTL Fees & DMV Costs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+        
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            background: white;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        .breadcrumb span {
+            color: #6b7280;
+            margin: 0 0.5rem;
+        }
+        
+        /* Calculator Section */
+        .calculator-section {
+            padding: 3rem 0;
+        }
+        
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .calculator-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #1e3a8a;
+            font-weight: 600;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        
+        .calculate-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* Results Panel */
+        .results-panel {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 100px;
+        }
+        
+        .results-panel h3 {
+            color: #1e3a8a;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        
+        .result-row:last-child {
+            border-bottom: none;
+        }
+        
+        .result-label {
+            color: #6b7280;
+        }
+        
+        .result-value {
+            font-weight: 600;
+            color: #1e3a8a;
+        }
+        
+        .total-row {
+            background: #f0f9ff;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        
+        .total-row .result-label {
+            color: #1e3a8a;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .total-row .result-value {
+            color: #f59e0b;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .calculation-note {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #92400e;
+        }
+        
+        /* Content Section */
+        .content-section {
+            background: white;
+            padding: 3rem 0;
+        }
+        
+        .content-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .content-section h2 {
+            color: #1e3a8a;
+            font-size: 2rem;
+            margin: 2rem 0 1rem 0;
+        }
+        
+        .content-section h3 {
+            color: #1e3a8a;
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+        
+        .content-section p {
+            color: #4b5563;
+            line-height: 1.8;
+            margin-bottom: 1.2rem;
+        }
+        
+        .content-section ul,
+        .content-section ol {
+            margin: 1rem 0 1.5rem 2rem;
+            color: #4b5563;
+        }
+        
+        .content-section li {
+            margin-bottom: 0.8rem;
+            line-height: 1.7;
+        }
+        
+        .info-box {
+            background: #f0f9ff;
+            border-left: 4px solid #3b82f6;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        
+        .warning-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        
+        .fee-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .fee-table th,
+        .fee-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .fee-table th {
+            background: #1e3a8a;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .fee-table tr:hover {
+            background: #f9fafb;
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            background: #f8f9fa;
+            padding: 3rem 0;
+        }
+        
+        .faq-item {
+            background: white;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .faq-question {
+            color: #1e3a8a;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        
+        .faq-answer {
+            color: #4b5563;
+            line-height: 1.7;
+        }
+        
+        /* Related States */
+        .related-states {
+            background: white;
+            padding: 2rem 0;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .related-state {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s;
+        }
+        
+        .related-state:hover {
+            border-color: #3b82f6;
+            transform: translateY(-3px);
+        }
+        
+        .related-state a {
+            color: #1e3a8a;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1e293b;
+            color: white;
+            padding: 2.5rem 0;
+            text-align: center;
+        }
+        
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+        
+        footer a {
+            color: #fbbf24;
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .results-panel {
+                position: static;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">🚗 TTL Calculator</div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/#calculators">All States</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>New York Tax Title License Calculator 2025</h1>
+            <p>Calculate NY vehicle sales tax, DMV fees, and registration costs</p>
+        </div>
+    </section>
+
+    <div class="breadcrumb">
+        <div class="container">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>New York TTL Calculator</span>
+        </div>
+    </div>
+
+    <section class="calculator-section">
+        <div class="container">
+            <div class="calculator-grid">
+                <!-- Calculator Form -->
+                <div class="calculator-form">
+                    <h2 style="color: #1e3a8a; margin-bottom: 1.5rem;">Calculate Your NY Costs</h2>
+                    
+                    <div class="form-group">
+                        <label>Vehicle Purchase Price ($)</label>
+                        <input type="number" id="purchasePrice" placeholder="30000" min="0" step="100">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>County/City (Tax Rate)</label>
+                        <select id="county">
+                            <option value="8.875">New York City (Manhattan) - 8.875%</option>
+                            <option value="8.875">Brooklyn (Kings County) - 8.875%</option>
+                            <option value="8.875">Queens - 8.875%</option>
+                            <option value="8.875">Bronx - 8.875%</option>
+                            <option value="8.875">Staten Island (Richmond) - 8.875%</option>
+                            <option value="9.0">Nassau County - 9.0%</option>
+                            <option value="9.125">Suffolk County - 9.125%</option>
+                            <option value="8.375">Westchester County - 8.375%</option>
+                            <option value="8.125">Rockland County - 8.125%</option>
+                            <option value="8.125">Orange County - 8.125%</option>
+                            <option value="8.375">Putnam County - 8.375%</option>
+                            <option value="8.375">Dutchess County - 8.375%</option>
+                            <option value="8.0">Albany County - 8.0%</option>
+                            <option value="8.75">Erie County (Buffalo) - 8.75%</option>
+                            <option value="8.0">Monroe County (Rochester) - 8.0%</option>
+                            <option value="8.0">Onondaga County (Syracuse) - 8.0%</option>
+                            <option value="7.0">Saratoga County - 7.0%</option>
+                            <option value="7.75">Niagara County - 7.75%</option>
+                            <option value="7.0">Rensselaer County - 7.0%</option>
+                            <option value="7.5">Schenectady County - 7.5%</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Trade-In Value ($) - Optional</label>
+                        <input type="number" id="tradeInValue" placeholder="0" min="0" step="100">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Manufacturer Rebate ($) - Optional</label>
+                        <input type="number" id="rebateAmount" placeholder="0" min="0" step="100">
+                        <small style="color: #f59e0b; display: block; margin-top: 0.5rem;">⚠️ Rebates do NOT reduce sales tax in NY</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Vehicle Weight (lbs)</label>
+                        <select id="vehicleWeight">
+                            <option value="43">Under 1,650 lbs - $43.00</option>
+                            <option value="56" selected>1,651 - 3,000 lbs - $56.00</option>
+                            <option value="69">3,001 - 3,500 lbs - $69.00</option>
+                            <option value="93">3,501 - 4,000 lbs - $93.00</option>
+                            <option value="100">Over 4,000 lbs - $100.00</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Number of Cylinders</label>
+                        <select id="cylinders">
+                            <option value="4">4 cylinders</option>
+                            <option value="6">6+ cylinders (min $32.50 fee)</option>
+                            <option value="ev">Electric Vehicle (min $32.50 fee)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>MCTD County?</label>
+                        <select id="mctdCounty">
+                            <option value="yes" selected>Yes - NYC or 7 suburban counties ($50 fee)</option>
+                            <option value="no">No - Other NY counties ($0 fee)</option>
+                        </select>
+                        <small style="color: #6b7280; display: block; margin-top: 0.5rem;">MCTD: NYC + Nassau, Suffolk, Westchester, Rockland, Orange, Putnam, Dutchess</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>NYC Resident?</label>
+                        <select id="nycResident">
+                            <option value="yes">Yes - Add $30 vehicle use tax</option>
+                            <option value="no" selected>No - $0 vehicle use tax</option>
+                        </select>
+                    </div>
+                    
+                    <button class="calculate-btn" onclick="calculateNY()">Calculate Total Costs</button>
+                </div>
+
+                <!-- Results Panel -->
+                <div class="results-panel">
+                    <h3>💰 Your NY TTL Costs</h3>
+                    
+                    <div class="result-row">
+                        <span class="result-label">Purchase Price:</span>
+                        <span class="result-value" id="displayPrice">$0.00</span>
+                    </div>
+                    
+                    <div class="result-row">
+                        <span class="result-label">Trade-In Credit:</span>
+                        <span class="result-value" id="displayTradeIn">-$0.00</span>
+                    </div>
+                    
+                    <div class="result-row">
+                        <span class="result-label">Taxable Amount:</span>
+                        <span class="result-value" id="displayTaxable">$0.00</span>
+                    </div>
+                    
+                    <div class="result-row">
+                        <span class="result-label">Sales Tax:</span>
+                        <span class="result-value" id="displaySalesTax">$0.00</span>
+                    </div>
+                    
+                    <div class="result-row">
+                        <span class="result-label">Title Fee:</span>
+                        <span class="result-value">$50.00</span>
+                    </div>
+                    
+                    <div class="result-row">
+                        <span class="result-label">License Plate Fee:</span>
+                        <span class="result-value">$25.00</span>
+                    </div>
+                    
+                    <div class="result-row">
+                        <span class="result-label">Registration Fee (2-year):</span>
+                        <span class="result-value" id="displayRegistration">$56.00</span>
+                    </div>
+                    
+                    <div class="result-row">
+                        <span class="result-label">MCTD Supplemental Fee:</span>
+                        <span class="result-value" id="displayMCTD">$50.00</span>
+                    </div>
+                    
+                    <div class="result-row">
+                        <span class="result-label">NYC Vehicle Use Tax:</span>
+                        <span class="result-value" id="displayNYCTax">$0.00</span>
+                    </div>
+                    
+                    <div class="total-row">
+                        <div class="result-row">
+                            <span class="result-label">TOTAL TTL COSTS:</span>
+                            <span class="result-value" id="displayTotal">$0.00</span>
+                        </div>
+                    </div>
+                    
+                    <div class="calculation-note" id="calculationNote">
+                        Enter your vehicle details to calculate NY TTL costs.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-wrapper">
+                <h2>New York Tax Title License Calculator - Complete Guide 2025</h2>
+                
+                <p>Buying a vehicle in New York State comes with various taxes and fees that can add thousands of dollars to your purchase price. Our comprehensive New York TTL (Tax Title License) calculator helps you estimate the exact costs before you head to the dealership or DMV. Whether you're purchasing in New York City with its 8.875% sales tax or upstate counties with lower rates, understanding these costs is essential for proper budgeting.</p>
+
+                <p>New York's vehicle taxation system is unique with its Metropolitan Commuter Transportation District (MCTD) fees, weight-based registration structure, and varying local tax rates across the state's 62 counties. Unlike some states, New York allows trade-in credits to reduce your taxable amount, but manufacturer rebates do not receive the same treatment—they remain fully taxable. This guide breaks down every component of New York's vehicle costs so you can make informed decisions.</p>
+
+                <h2>Understanding New York Vehicle Sales Tax</h2>
+
+                <p>New York State charges a base sales tax rate of 4% on all vehicle purchases, which applies uniformly across the entire state. However, the total sales tax you'll pay varies significantly based on your county of residence, as local jurisdictions add their own sales tax on top of the state rate. Combined rates range from approximately 7% in some upstate counties to 9.125% in Suffolk County on Long Island.</p>
+
+                <h3>New York City Sales Tax - The Highest in the State</h3>
+
+                <p>New York City residents pay the highest combined sales tax rate in the state at 8.875%. This rate is uniform across all five boroughs—Manhattan, Brooklyn, Queens, The Bronx, and Staten Island. The NYC rate consists of three components: the 4% state tax, a 4.5% city tax, and the 0.375% MCTD surcharge that funds the Metropolitan Transportation Authority (MTA).</p>
+
+                <p>For example, if you purchase a $35,000 vehicle in Manhattan, your sales tax alone would be $3,106.25. This is one of the highest vehicle tax burdens in the nation, making it especially important for NYC buyers to understand trade-in credits and other cost-saving strategies.</p>
+
+                <div class="info-box">
+                    <strong>NYC Sales Tax Breakdown:</strong>
+                    <ul style="margin-top: 0.5rem;">
+                        <li>State: 4.0%</li>
+                        <li>City: 4.5%</li>
+                        <li>MCTD Surcharge: 0.375%</li>
+                        <li><strong>Total: 8.875%</strong></li>
+                    </ul>
+                </div>
+
+                <h3>MCTD Counties - The Metropolitan Transportation Surcharge</h3>
+
+                <p>The Metropolitan Commuter Transportation District encompasses 12 counties in the New York City metropolitan area. Residents of these counties pay an additional 0.375% sales tax surcharge on vehicle purchases to fund the MTA transit system. The MCTD counties are the five NYC boroughs (Bronx, Kings/Brooklyn, New York/Manhattan, Queens, Richmond/Staten Island), Nassau, Suffolk, Westchester, Rockland, Orange, Putnam, and Dutchess counties.</p>
+
+                <p>Beyond the sales tax surcharge, MCTD county residents also pay a $50 supplemental fee when registering a vehicle for the first time in New York. This fee is collected every two years with your registration renewal. If you're transferring plates from another vehicle you own, you don't pay this fee again.</p>
+
+                <h3>County Tax Rates Across New York</h3>
+
+                <p>New York's 62 counties each set their own local sales tax rates, creating significant variation in total vehicle costs. The difference between the lowest and highest tax rates can mean over $500 in savings on a $30,000 vehicle purchase. However, you cannot avoid higher taxes by registering in a different county—New York calculates sales tax based on where you reside, not where you purchase the vehicle.</p>
+
+                <table class="fee-table">
+                    <thead>
+                        <tr>
+                            <th>County/City</th>
+                            <th>State Tax</th>
+                            <th>Local Tax</th>
+                            <th>MCTD</th>
+                            <th>Total Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>New York City (All Boroughs)</td>
+                            <td>4.0%</td>
+                            <td>4.5%</td>
+                            <td>0.375%</td>
+                            <td><strong>8.875%</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Suffolk County</td>
+                            <td>4.0%</td>
+                            <td>4.75%</td>
+                            <td>0.375%</td>
+                            <td><strong>9.125%</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Nassau County</td>
+                            <td>4.0%</td>
+                            <td>4.625%</td>
+                            <td>0.375%</td>
+                            <td><strong>9.0%</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Westchester County</td>
+                            <td>4.0%</td>
+                            <td>4.0%</td>
+                            <td>0.375%</td>
+                            <td><strong>8.375%</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Erie County (Buffalo)</td>
+                            <td>4.0%</td>
+                            <td>4.75%</td>
+                            <td>0%</td>
+                            <td><strong>8.75%</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Monroe County (Rochester)</td>
+                            <td>4.0%</td>
+                            <td>4.0%</td>
+                            <td>0%</td>
+                            <td><strong>8.0%</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Albany County</td>
+                            <td>4.0%</td>
+                            <td>4.0%</td>
+                            <td>0%</td>
+                            <td><strong>8.0%</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Onondaga County (Syracuse)</td>
+                            <td>4.0%</td>
+                            <td>4.0%</td>
+                            <td>0%</td>
+                            <td><strong>8.0%</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>Trade-In Credits vs. Manufacturer Rebates</h2>
+
+                <p>New York allows you to deduct your trade-in value from the purchase price before calculating sales tax, which can save you hundreds or even thousands of dollars. However, there's an important distinction between trade-in credits and manufacturer rebates that many buyers don't understand.</p>
+
+                <h3>How Trade-In Credits Work in New York</h3>
+
+                <p>When you trade in your current vehicle at a dealership, the value of that trade-in reduces your taxable purchase price. This is one of the most significant tax benefits available to New York car buyers. This tax benefit only applies to dealer transactions. If you sell your old car privately and then purchase a new one, you don't get the trade-in credit because the transactions are separate.</p>
+
+                <div class="info-box">
+                    <strong>Example: Trade-In Tax Savings</strong><br><br>
+                    Purchase Price: $40,000<br>
+                    Trade-In Value: $10,000<br>
+                    Taxable Amount: $30,000 (after trade-in)<br>
+                    Tax Rate: 8.875% (NYC)<br>
+                    <br>
+                    <strong>Sales Tax: $2,662.50</strong><br>
+                    <strong>Tax Savings from Trade-In: $887.50</strong><br>
+                    (You save by trading in instead of selling privately)
+                </div>
+
+                <h3>Manufacturer Rebates Are Fully Taxable</h3>
+
+                <p>Unlike trade-in credits, manufacturer rebates and dealer cash incentives do NOT reduce your taxable amount in New York. According to NY Tax Law Section 1111, sales tax is calculated on the full purchase price before any rebates are applied. This surprises many buyers who assume rebates work the same way as trade-ins.</p>
+
+                <div class="warning-box">
+                    <strong>⚠️ Important: Rebates Don't Reduce Tax</strong><br><br>
+                    Purchase Price: $35,000<br>
+                    Manufacturer Rebate: $3,000<br>
+                    Trade-In Value: $8,000<br>
+                    <br>
+                    Taxable Amount: $27,000 ($35,000 - $8,000 trade-in)<br>
+                    The $3,000 rebate does NOT reduce the taxable amount<br>
+                    <br>
+                    While you still benefit from the rebate by reducing your out-of-pocket cost, you don't get the additional tax savings you would get from an equivalent trade-in value increase.
+                </div>
+
+                <h2>New York Vehicle Registration Fees</h2>
+
+                <p>New York's registration fee structure is weight-based and covers a two-year period. Unlike states with flat registration fees, New York charges more for heavier vehicles, which means trucks and SUVs typically cost more to register than compact cars.</p>
+
+                <h3>Weight-Based Registration Fee Schedule</h3>
+
+                <table class="fee-table">
+                    <thead>
+                        <tr>
+                            <th>Vehicle Weight</th>
+                            <th>2-Year Registration Fee</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Under 1,650 lbs</td>
+                            <td>$43.00</td>
+                        </tr>
+                        <tr>
+                            <td>1,651 - 3,000 lbs</td>
+                            <td>$56.00</td>
+                        </tr>
+                        <tr>
+                            <td>3,001 - 3,500 lbs</td>
+                            <td>$69.00</td>
+                        </tr>
+                        <tr>
+                            <td>3,501 - 4,000 lbs</td>
+                            <td>$93.00</td>
+                        </tr>
+                        <tr>
+                            <td>Over 4,000 lbs</td>
+                            <td>$100.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Special Rules for 6+ Cylinder and Electric Vehicles</h3>
+
+                <p>New York imposes a minimum registration fee of $32.50 for vehicles with six or more cylinders and for electric vehicles, regardless of weight. However, this is a minimum fee, not an additional charge. If the weight-based fee is higher than $32.50, you pay the higher amount. The $32.50 minimum only applies to very light 6-cylinder vehicles under 1,650 lbs, which are rare.</p>
+
+                <h2>Additional New York DMV Fees</h2>
+
+                <p>Beyond sales tax and registration, you'll need to pay several one-time fees when purchasing and titling a vehicle in New York. These fees are standardized across the state and don't vary by county.</p>
+
+                <table class="fee-table">
+                    <thead>
+                        <tr>
+                            <th>Fee Type</th>
+                            <th>Cost</th>
+                            <th>Frequency</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Title Fee</td>
+                            <td>$50.00</td>
+                            <td>One-time (per ownership transfer)</td>
+                        </tr>
+                        <tr>
+                            <td>License Plate Fee</td>
+                            <td>$25.00</td>
+                            <td>One-time (if new plates needed)</td>
+                        </tr>
+                        <tr>
+                            <td>Registration Fee</td>
+                            <td>$26.00 - $140.00</td>
+                            <td>Every 2 years (weight-based)</td>
+                        </tr>
+                        <tr>
+                            <td>MCTD Supplemental Fee</td>
+                            <td>$50.00</td>
+                            <td>Every 2 years (12 counties only)</td>
+                        </tr>
+                        <tr>
+                            <td>NYC Vehicle Use Tax</td>
+                            <td>$30.00</td>
+                            <td>Every 2 years (NYC residents only)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>NYC Vehicle Use Tax</h3>
+
+                <p>New York City residents pay an additional $30 vehicle use tax when registering or renewing registration for passenger vehicles. This tax is separate from the sales tax and is collected by the DMV on behalf of New York City. The fee applies to both original registrations and renewals, meaning you'll pay $15 per year for the two-year registration period. This tax only applies if your residence is within the five boroughs of New York City.</p>
+
+                <h2>Dealer Documentation Fees in New York</h2>
+
+                <p>New York dealerships charge documentation fees (doc fees) to cover the costs of preparing paperwork, processing DMV forms, and handling the title transfer. The average doc fee in New York is approximately $75, though individual dealers can charge more or less. Unlike some states, New York doesn't have a statutory cap on dealer doc fees. However, New York law requires dealers to disclose these fees clearly and charge them uniformly.</p>
+
+                <h2>Private Party Vehicle Purchases in New York</h2>
+
+                <p>Buying from a private seller instead of a dealer doesn't exempt you from sales tax in New York. You're still responsible for paying the full sales tax when you register the vehicle at the DMV. Both buyer and seller must complete Form DTF-802 (Statement of Transaction) documenting the sale price.</p>
+
+                <h3>Fair Market Value Considerations</h3>
+
+                <p>The New York DMV has the authority to assess sales tax based on the vehicle's fair market value rather than the stated purchase price if they believe the price is artificially low. The DMV uses resources like Kelley Blue Book to determine if a sale price is reasonable.</p>
+
+                <h3>Family Transfers and Gift Exemptions</h3>
+
+                <p>New York provides sales tax exemptions for certain family transfers. If you receive a vehicle as a gift from an immediate family member (spouse, parent, child, sibling), you don't pay sales tax. You'll need to complete Form DTF-802 and indicate the transfer is a gift. The family exemption only applies to immediate family members.</p>
+
+                <h2>Out-of-State Vehicle Purchases</h2>
+
+                <p>If you buy a vehicle in another state and bring it to New York, you still owe New York sales tax when you register the vehicle. However, New York provides a credit for sales tax paid in another state, potentially reducing your tax burden. To claim credit for out-of-state sales tax, you'll complete Form DTF-804 and provide proof that you paid tax to the other state.</p>
+
+                <h2>Leased Vehicles - Different Tax Treatment</h2>
+
+                <p>If you're leasing a vehicle in New York, sales tax is calculated differently than purchases. Sales tax on leases is applied to each monthly payment rather than the total vehicle value upfront. When you lease, you pay sales tax only on the portion of the vehicle you're using during the lease term. The tax is calculated on your monthly payment amount and included in each payment.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <div class="container">
+            <div class="content-wrapper">
+                <h2 style="color: #1e3a8a; text-align: center; margin-bottom: 2rem;">Frequently Asked Questions</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What is the vehicle sales tax rate in New York?</div>
+                    <div class="faq-answer">New York charges a 4% state sales tax on all vehicle purchases. However, local counties and cities add their own taxes, bringing total rates from 7% to 9.125% depending on your location. New York City has the state's highest rate at 8.875%, which includes the state tax (4%), city tax (4.5%), and MCTD surcharge (0.375%).</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Does New York allow trade-in tax credit?</div>
+                    <div class="faq-answer">Yes! New York allows you to deduct your trade-in value from the purchase price before calculating sales tax. This can save you hundreds or thousands depending on your tax rate. However, this benefit only applies to dealer transactions, not private party sales.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Do manufacturer rebates reduce sales tax in New York?</div>
+                    <div class="faq-answer">No. Unlike trade-in credits, manufacturer rebates and dealer cash incentives do NOT reduce your taxable amount in New York. According to NY Tax Law Section 1111, sales tax is calculated on the full purchase price before rebates.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What is the MCTD fee and who pays it?</div>
+                    <div class="faq-answer">The Metropolitan Commuter Transportation District (MCTD) fee is a $50 supplemental charge paid every two years by residents of 12 counties: the five NYC boroughs plus Nassau, Suffolk, Westchester, Rockland, Orange, Putnam, and Dutchess counties. This fee funds the MTA transit system. Additionally, these counties pay an extra 0.375% sales tax surcharge on vehicle purchases.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How much does it cost to register a car in New York?</div>
+                    <div class="faq-answer">New York registration fees are weight-based and cover two years. Fees range from $26 for vehicles under 1,650 lbs to $140 for vehicles over 4,000 lbs. Most passenger cars (1,651-3,000 lbs) cost $56 for two years. Vehicles with 6+ cylinders or electric vehicles have a minimum fee of $32.50 regardless of weight.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What are the DMV fees when buying a car in New York?</div>
+                    <div class="faq-answer">Basic NY DMV fees include: Title fee ($50), License plate fee ($25 for new plates), Registration fee ($26-$140 for 2 years based on weight), MCTD supplemental fee ($50 if in applicable counties), and NYC vehicle use tax ($30 for NYC residents only).</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Do I pay sales tax when buying from a private seller in New York?</div>
+                    <div class="faq-answer">Yes. Private party sales are fully taxable in New York. When you register the vehicle at the DMV, you'll pay sales tax based on the purchase price or fair market value, whichever is higher. Both buyer and seller must complete Form DTF-802 documenting the transaction.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Can I avoid New York sales tax by buying in another state?</div>
+                    <div class="faq-answer">No. If you're a New York resident, you must pay New York sales tax when you register the vehicle, regardless of where you bought it. New York provides a credit for sales tax paid in other states using Form DTF-804, but you'll owe the difference if the other state's rate is lower.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Are family car transfers taxable in New York?</div>
+                    <div class="faq-answer">Gifts from immediate family members (spouse, parent, child, sibling) are exempt from sales tax in New York. You'll complete Form DTF-802 indicating the transfer is a gift. However, transfers from extended family don't qualify for the exemption and are taxed based on fair market value.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What's the difference between sales tax on buying vs leasing in New York?</div>
+                    <div class="faq-answer">When you buy a vehicle, you pay sales tax on the full purchase price (minus trade-in) upfront. When you lease, you pay sales tax only on each monthly payment, not the entire vehicle value. Over a 36-month lease, total tax is typically much less than paying tax on the vehicle's full value upfront.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="related-states">
+        <div class="container">
+            <div class="content-wrapper">
+                <h2 style="color: #1e3a8a; text-align: center;">Calculate TTL Costs in Other States</h2>
+                <div class="related-grid">
+                    <div class="related-state">
+                        <a href="/texas-vehicle-tax-title-and-license-calculator">Texas TTL Calculator</a>
+                    </div>
+                    <div class="related-state">
+                        <a href="/california-tax-title-and-license-calculator">California TTL Calculator</a>
+                    </div>
+                    <div class="related-state">
+                        <a href="/florida-tax-title-and-license-calculator">Florida TTL Calculator</a>
+                    </div>
+                    <div class="related-state">
+                        <a href="/">All State Calculators</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Tax Title License Calculator | New York TTL Calculator</p>
+            <p style="margin-top: 1rem;">
+                <strong>Official Resources:</strong><br>
+                <a href="https://dmv.ny.gov/" target="_blank" rel="nofollow">New York DMV</a> | 
+                <a href="https://www.tax.ny.gov/" target="_blank" rel="nofollow">NY Dept of Taxation</a> | 
+                <a href="https://process.dmv.ny.gov/regfeecalc/" target="_blank" rel="nofollow">DMV Fee Calculator</a>
+            </p>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: #9ca3af;">
+                Disclaimer: This calculator provides estimates based on 2025 New York State laws and fee schedules. Actual costs may vary. Always verify with the NY DMV for official costs. Not legal or tax advice.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        function calculateNY() {
+            const purchasePrice = parseFloat(document.getElementById('purchasePrice').value) || 0;
+            const county = parseFloat(document.getElementById('county').value);
+            const tradeInValue = parseFloat(document.getElementById('tradeInValue').value) || 0;
+            const rebateAmount = parseFloat(document.getElementById('rebateAmount').value) || 0;
+            const vehicleWeight = parseFloat(document.getElementById('vehicleWeight').value);
+            const cylinders = document.getElementById('cylinders').value;
+            const mctdCounty = document.getElementById('mctdCounty').value;
+            const nycResident = document.getElementById('nycResident').value;
+            
+            if (purchasePrice <= 0) {
+                alert('Please enter a valid purchase price');
+                return;
+            }
+            
+            const taxableAmount = purchasePrice - tradeInValue;
+            const salesTax = taxableAmount * (county / 100);
+            
+            let registrationFee = vehicleWeight;
+            if (cylinders === '6' || cylinders === 'ev') {
+                registrationFee = Math.max(registrationFee, 32.50);
+            }
+            
+            const titleFee = 50.00;
+            const plateFee = 25.00;
+            const mctdFee = (mctdCounty === 'yes') ? 50.00 : 0.00;
+            const nycTax = (nycResident === 'yes') ? 30.00 : 0.00;
+            const totalCost = salesTax + titleFee + plateFee + registrationFee + mctdFee + nycTax;
+            
+            document.getElementById('displayPrice').textContent = '$' + purchasePrice.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('displayTradeIn').textContent = '-$' + tradeInValue.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('displayTaxable').textContent = '$' + taxableAmount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('displaySalesTax').textContent = '$' + salesTax.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('displayRegistration').textContent = '$' + registrationFee.toFixed(2);
+            document.getElementById('displayMCTD').textContent = '$' + mctdFee.toFixed(2);
+            document.getElementById('displayNYCTax').textContent = '$' + nycTax.toFixed(2);
+            document.getElementById('displayTotal').textContent = '$' + totalCost.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            
+            let note = `Sales tax calculated at ${county}% on $${taxableAmount.toLocaleString('en-US')}.`;
+            
+            if (tradeInValue > 0) {
+                const taxSavings = tradeInValue * (county / 100);
+                note += ` Trade-in saved you $${taxSavings.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} in sales tax!`;
+            }
+            
+            if (rebateAmount > 0) {
+                note += ` Note: Your $${rebateAmount.toLocaleString('en-US')} rebate does NOT reduce sales tax in NY.`;
+            }
+            
+            if (mctdCounty === 'yes') {
+                note += ` MCTD fee applies in your county.`;
+            }
+            
+            if (nycResident === 'yes') {
+                note += ` NYC vehicle use tax applies.`;
+            }
+            
+            document.getElementById('calculationNote').innerHTML = note;
+        }
+        
+        window.addEventListener('load', function() {
+            document.getElementById('purchasePrice').value = '30000';
+            calculateNY();
+        });
+    </script>
+</body>
+</html>

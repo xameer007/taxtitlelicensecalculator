@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free tax title license calculator for all 50 states. Calculate vehicle sales tax, DMV fees, and registration costs. Accurate TTL calculators with state-specific rules.">
+    <title>Tax Title License Calculator - Free TTL Calculator for All States 2025</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background-color: #f8f9fa; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Header */
+        header { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 1rem 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: bold; }
+        .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+        .nav-links a { color: white; text-decoration: none; transition: opacity 0.3s; }
+        .nav-links a:hover { opacity: 0.8; }
+        
+        /* Hero Section */
+        .hero { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 4rem 0; text-align: center; }
+        .hero h1 { font-size: 3rem; margin-bottom: 1.5rem; line-height: 1.2; }
+        .hero p { font-size: 1.3rem; opacity: 0.95; margin-bottom: 1rem; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .hero-features { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 3rem; max-width: 900px; margin-left: auto; margin-right: auto; }
+        .hero-feature { background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 8px; backdrop-filter: blur(10px); }
+        .hero-feature h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .hero-feature p { font-size: 0.95rem; opacity: 0.9; }
+        
+        /* Popular States Section */
+        .popular-states { padding: 4rem 0; background: white; }
+        .popular-states h2 { text-align: center; color: #1e3a8a; font-size: 2.5rem; margin-bottom: 1rem; }
+        .popular-states .subtitle { text-align: center; color: #6b7280; font-size: 1.1rem; margin-bottom: 3rem; }
+        .states-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+        .state-card { background: #f8f9fa; border-radius: 12px; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.3s, box-shadow 0.3s; border-left: 4px solid #3b82f6; }
+        .state-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        .state-card h3 { color: #1e3a8a; font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .state-card .tax-rate { color: #f59e0b; font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; }
+        .state-card ul { list-style: none; margin-bottom: 1.5rem; }
+        .state-card li { padding: 0.4rem 0; color: #555; font-size: 0.95rem; }
+        .state-card li:before { content: "✓ "; color: #10b981; font-weight: bold; margin-right: 0.5rem; }
+        .state-card a { display: inline-block; background: linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%); color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: 600; transition: transform 0.2s; }
+        .state-card a:hover { transform: scale(1.05); }
+        
+        /* All States Section */
+        .all-states { padding: 4rem 0; background: #f8f9fa; }
+        .all-states h2 { text-align: center; color: #1e3a8a; font-size: 2.5rem; margin-bottom: 3rem; }
+        .alphabetical-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
+        .state-link { background: white; padding: 1.2rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: all 0.3s; border-left: 3px solid #e5e7eb; }
+        .state-link:hover { border-left-color: #3b82f6; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transform: translateX(5px); }
+        .state-link a { color: #1e3a8a; text-decoration: none; font-weight: 600; font-size: 1.05rem; display: block; }
+        .state-link.available { border-left-color: #10b981; }
+        .state-link.coming-soon { opacity: 0.6; }
+        .state-link.coming-soon a { color: #6b7280; }
+        
+        /* Info Section */
+        .info-section { padding: 4rem 0; background: white; }
+        .info-content { max-width: 900px; margin: 0 auto; }
+        .info-content h2 { color: #1e3a8a; font-size: 2rem; margin-bottom: 1.5rem; }
+        .info-content p { color: #555; line-height: 1.8; margin-bottom: 1.2rem; font-size: 1.05rem; }
+        .info-content ul { margin-left: 2rem; margin-bottom: 1.5rem; }
+        .info-content li { color: #555; line-height: 1.7; margin-bottom: 0.8rem; }
+        
+        /* Footer */
+        footer { background: #1e293b; color: white; padding: 2.5rem 0; text-align: center; }
+        footer p { margin-bottom: 0.5rem; }
+        footer a { color: #fbbf24; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1.1rem; }
+            .hero-features { grid-template-columns: 1fr; }
+            .states-grid { grid-template-columns: 1fr; }
+            .alphabetical-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">🚗 Tax Title License Calculator</div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="#calculators">Calculators</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Free Tax Title License Calculator</h1>
+            <p>Calculate vehicle sales tax, DMV fees, and registration costs for all 50 states. Get accurate estimates before you buy.</p>
+            
+            <div class="hero-features">
+                <div class="hero-feature">
+                    <h3>📊 Accurate Calculations</h3>
+                    <p>State-specific rules and fee structures</p>
+                </div>
+                <div class="hero-feature">
+                    <h3>💰 Save Money</h3>
+                    <p>Know exact costs before purchase</p>
+                </div>
+                <div class="hero-feature">
+                    <h3>⚡ Instant Results</h3>
+                    <p>Complete breakdown in seconds</p>
+                </div>
+                <div class="hero-feature">
+                    <h3>🆓 100% Free</h3>
+                    <p>No registration required</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="popular-states">
+        <div class="container">
+            <h2>Popular State Calculators</h2>
+            <p class="subtitle">Start with these most-used TTL calculators</p>
+            
+            <div class="states-grid">
+                <div class="state-card">
+                    <h3>🌟 Texas</h3>
+                    <div class="tax-rate">6.25% Sales Tax</div>
+                    <ul>
+                        <li>SPV calculations included</li>
+                        <li>Trade-in credit allowed</li>
+                        <li>County-specific fees</li>
+                        <li>EV fee calculator</li>
+                    </ul>
+                    <a href="/texas-vehicle-tax-title-and-license-calculator">Calculate Texas TTL →</a>
+                </div>
+                
+                <div class="state-card">
+                    <h3>🌟 California</h3>
+                    <div class="tax-rate">7.25%-10.75% Sales Tax</div>
+                    <ul>
+                        <li>VLF 0.65% calculation</li>
+                        <li>NO trade-in credit</li>
+                        <li>County tax rates</li>
+                        <li>TIF fee included</li>
+                    </ul>
+                    <a href="/california-tax-title-and-license-calculator">Calculate California TTL →</a>
+                </div>
+                
+                <div class="state-card">
+                    <h3>🌟 Florida</h3>
+                    <div class="tax-rate">6%-7.5% Sales Tax</div>
+                    <ul>
+                        <li>Trade-in credit allowed</li>
+                        <li>Surtax on first $5,000</li>
+                        <li>Weight-based fees</li>
+                        <li>No EV surcharge</li>
+                    </ul>
+                    <a href="/florida-tax-title-and-license-calculator">Calculate Florida TTL →</a>
+                </div>
+                
+                <div class="state-card">
+                    <h3>🌟 New York</h3>
+                    <div class="tax-rate">4%-8.875% Sales Tax</div>
+                    <ul>
+                        <li>MCTD fee for 12 counties</li>
+                        <li>Trade-in credit allowed</li>
+                        <li>Weight-based registration</li>
+                        <li>Rebates don't reduce tax</li>
+                    </ul>
+                    <a href="/new-york-tax-title-and-license-calculator">Calculate New York TTL →</a>
+                </div>
+                
+                <div class="state-card">
+                    <h3>🌟 Pennsylvania</h3>
+                    <div class="tax-rate">6%-8% Sales Tax</div>
+                    <ul>
+                        <li>Only 3 tax rates statewide</li>
+                        <li>Trade-in & rebates reduce tax</li>
+                        <li>$250 EV road use charge</li>
+                        <li>Simple fee structure</li>
+                    </ul>
+                    <a href="/pennsylvania-tax-title-and-license-calculator">Calculate Pennsylvania TTL →</a>
+                </div>
+                
+                <div class="state-card">
+                    <h3>🌟 Illinois</h3>
+                    <div class="tax-rate">7.25%-10.25% Sales Tax</div>
+                    <ul>
+                        <li>Chicago highest at 10.25%</li>
+                        <li>Trade-in & rebates reduce tax</li>
+                        <li>$100 EV annual surcharge</li>
+                        <li>Annual registration $151</li>
+                    </ul>
+                    <a href="/illinois-tax-title-and-license-calculator">Calculate Illinois TTL →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="all-states" id="calculators">
+        <div class="container">
+            <h2>All State TTL Calculators</h2>
+            
+            <div class="alphabetical-grid">
+                <div class="state-link coming-soon">
+                    <a href="#">Alabama (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Alaska (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Arizona (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Arkansas (Coming Soon)</a>
+                </div>
+                <div class="state-link available">
+                    <a href="/california-tax-title-and-license-calculator">California ✓</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Colorado (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Connecticut (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Delaware (Coming Soon)</a>
+                </div>
+                <div class="state-link available">
+                    <a href="/florida-tax-title-and-license-calculator">Florida ✓</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Georgia (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Hawaii (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Idaho (Coming Soon)</a>
+                </div>
+                <div class="state-link available">
+                    <a href="/illinois-tax-title-and-license-calculator">Illinois ✓</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Indiana (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Iowa (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Kansas (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Kentucky (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Louisiana (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Maine (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Maryland (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Massachusetts (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Michigan (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Minnesota (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Mississippi (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Missouri (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Montana (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Nebraska (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Nevada (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">New Hampshire (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">New Jersey (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">New Mexico (Coming Soon)</a>
+                </div>
+                <div class="state-link available">
+                    <a href="/new-york-tax-title-and-license-calculator">New York ✓</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">North Carolina (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">North Dakota (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Ohio (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Oklahoma (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Oregon (Coming Soon)</a>
+                </div>
+                <div class="state-link available">
+                    <a href="/pennsylvania-tax-title-and-license-calculator">Pennsylvania ✓</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Rhode Island (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">South Carolina (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">South Dakota (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Tennessee (Coming Soon)</a>
+                </div>
+                <div class="state-link available">
+                    <a href="/texas-vehicle-tax-title-and-license-calculator">Texas ✓</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Utah (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Vermont (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Virginia (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Washington (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">West Virginia (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Wisconsin (Coming Soon)</a>
+                </div>
+                <div class="state-link coming-soon">
+                    <a href="#">Wyoming (Coming Soon)</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="info-section">
+        <div class="container">
+            <div class="info-content">
+                <h2>What is Tax Title and License (TTL)?</h2>
+                <p>Tax Title and License (TTL) fees represent the total cost of taxes and government fees you must pay when purchasing and registering a vehicle. These costs are separate from the vehicle's purchase price and vary significantly by state.</p>
+                
+                <h2>What's Included in TTL Fees?</h2>
+                <ul>
+                    <li><strong>Sales Tax:</strong> State and local taxes on the vehicle purchase price (varies by state: 0%-10%+)</li>
+                    <li><strong>Title Fee:</strong> One-time fee to transfer legal ownership ($15-$100+ depending on state)</li>
+                    <li><strong>Registration Fee:</strong> Annual or biennial fee to register the vehicle ($20-$500+ based on state rules)</li>
+                    <li><strong>License Plates:</strong> Cost of new license plates if needed ($10-$50 typical)</li>
+                    <li><strong>Additional Fees:</strong> Processing fees, emissions fees, EV fees, county fees (varies by state)</li>
+                </ul>
+                
+                <h2>Why Use Our TTL Calculator?</h2>
+                <p>Vehicle TTL costs can add thousands of dollars to your purchase. Our state-specific calculators help you:</p>
+                <ul>
+                    <li>Budget accurately before buying a vehicle</li>
+                    <li>Compare total costs between different states</li>
+                    <li>Understand complex state-specific rules (trade-in credits, county taxes, special fees)</li>
+                    <li>Avoid surprise costs at the dealership or DMV</li>
+                    <li>Calculate trade-in tax savings where applicable</li>
+                </ul>
+                
+                <h2>How to Use These Calculators</h2>
+                <p>Each state calculator is customized with that state's specific rules, tax rates, and fees. Simply:</p>
+                <ol style="margin-left: 2rem; margin-bottom: 1.5rem;">
+                    <li style="margin-bottom: 0.8rem;">Select your state from the list above</li>
+                    <li style="margin-bottom: 0.8rem;">Enter your vehicle's purchase price</li>
+                    <li style="margin-bottom: 0.8rem;">Select your county or city (if applicable)</li>
+                    <li style="margin-bottom: 0.8rem;">Add optional information (trade-in value, vehicle type, etc.)</li>
+                    <li style="margin-bottom: 0.8rem;">Get instant, accurate TTL cost breakdown</li>
+                </ol>
+                
+                <h2>State-Specific Features</h2>
+                <p>Our calculators include unique features for each state:</p>
+                <ul>
+                    <li><strong>Texas:</strong> Standard Presumptive Value (SPV) calculations for private sales</li>
+                    <li><strong>California:</strong> Vehicle License Fee (VLF) with depreciation schedules</li>
+                    <li><strong>Florida:</strong> County surtax capping at $5,000, weight-based registration</li>
+                    <li><strong>And more:</strong> Each state calculator reflects that state's unique tax laws and fee structures</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Tax Title License Calculator | Free TTL Calculator for All States</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">Disclaimer: Calculators provide estimates based on current state laws. Always verify with your local DMV for official fees.</p>
+        </div>
+    </footer>
+</body>
+</html>
